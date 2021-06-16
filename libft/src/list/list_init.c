@@ -6,8 +6,6 @@
 
 bool	list_init_cap(t_list *list, size_t data_size, size_t cap)
 {
-	if (cap < 0)
-		cap = 0;
 	list->data = malloc(data_size * cap);
 	if (!list->data)
 		return (false);
