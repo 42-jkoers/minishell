@@ -5,12 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/03 12:05:51 by jsimonis      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2021/06/16 13:35:28 by jsimonis      ########   odam.nl         */
-=======
-/*   Updated: 2021/05/22 17:24:09 by jsimonis      ########   odam.nl         */
->>>>>>> 40aa9788296ef7a63bb80bd01f58d53af2cfce9b
+/*   Created: 2021/06/16 17:49:35 by jsimonis      #+#    #+#                 */
+/*   Updated: 2021/06/16 17:49:37 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
