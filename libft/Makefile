@@ -46,8 +46,7 @@ $(OBJECTS): $(USE_OBJ_DIR)%.o: $(SRC_DIR)%.c $(INCLUDE_DIRS) Makefile \
 	echo $(INCLUDE)
 	$(CC) $(FLAGS) $(INCLUDE) -c -o $@ $<
 
-.PHONY: Sources.mk
-Sources.mk:
+Sources.mk: $(SRC_DIR)
 	printf "SOURCE_FILES = " > Sources.mk
 	find $(SRC_DIR) -type f -name *.c -exec echo "{} \\" \; >> Sources.mk
 
