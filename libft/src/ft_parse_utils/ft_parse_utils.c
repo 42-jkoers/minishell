@@ -6,13 +6,14 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/26 16:58:07 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/05/17 14:10:59 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/06/16 18:27:54 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parse_utils.h"
 #include "ft_error.h"
 #include "libft.h"
+#include "ft_ternary.h"
 
 // When we read a overflowing, its nice to read all the digits
 
@@ -22,30 +23,33 @@ static void	skip_digits(const char *str, int *current)
 		(*current)++;
 }
 
+// If you are complaining about the ter_int, well...
+// i can replace it with this beautiful piece of code:
+//	((~0) >> 1) + is_negative
+
 bool	read_int(const char *str, int *current, int *value)
 {
-	int		start;
-	bool	is_negative;
+	int				start;
+	bool			is_negative;
+	unsigned long	long_value;
 
 	start = *current;
-	*value = 0;
+	long_value = 0;
 	is_negative = skip_char(str, current, '-');
 	while (ft_isdigit(str[*current]))
 	{
-		*value = (*value) * 10 + str[*current] - '0';
-		if (*value < 0 && !(is_negative && *value == -2147483648))
+		long_value = long_value * 10 + str[*current] - '0';
+		if (long_value > 2147483647 && !(
+				is_negative && long_value == 2147483648))
 		{
 			set_error("Value out of range!", false);
-			if (is_negative)
-				*value = -2147483648;
-			*value = 2147483647;
+			*value = ter_int(is_negative, -2147483648, 2147483647);
 			skip_digits(str, current);
 			return (false);
 		}
 		(*current)++;
 	}
-	if (is_negative)
-		*value = - *value;
+	*value = ter_int(is_negative, -long_value, long_value);
 	return (start != *current);
 }
 
