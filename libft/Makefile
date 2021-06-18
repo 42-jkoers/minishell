@@ -1,55 +1,48 @@
 NAME = libft.a
 
+SOURCES_MK = Sources.mk
 SRC_DIR = src/
 OBJ_DIR = obj/
+PREREQ_DIR = prereq/
 DEBUG_DIR = obj_debug/
 INCLUDE_DIRS = include/
-INCLUDE = $(INCLUDE_DIRS:%=-I%)
-FLAGS = -DBUFFER_SIZE=128 -Wall -Wextra -Werror
 
-#SOURCE_FILES = $(shell find $(SRC_DIR) -type f -name *.c)
-include Sources.mk
+CFLAGS = -DBUFFER_SIZE=128 -Wall -Wextra -Werror
+CFLAGS += -O2
+CFLAGS += $(INCLUDE_DIRS:%=-I%)
 
-ifdef DEBUG
-FLAGS += -g
-USE_OBJ_DIR = $(DEBUG_DIR)
-OTHER_OBJ_DIR = $(OBJ_DIR)
-else
-FLAGS += -O2
-USE_OBJ_DIR = $(OBJ_DIR)
-OTHER_OBJ_DIR = $(DEBUG_DIR)
-endif
+include $(SOURCES_MK)
 
-OBJECTS = $(SOURCE_FILES:$(SRC_DIR)%.c=$(USE_OBJ_DIR)%.o)
+OBJECTS = $(SOURCE_FILES:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+PREREQS = $(SOURCE_FILES:$(SRC_DIR)%.c=$(PREREQ_DIR)%.d)
 
 .PHONY: all
-all:
-	$(MAKE) $(NAME)
+all: $(NAME)
 
-.PHONY: debug
-debug:
-	$(MAKE) DEBUG=1
+include $(PREREQS)
 
-# because we have used the S flag, it does not have a index, (faster)
-# run ar with the s flag to create the index
-$(NAME): $(OBJECTS) Makefile | $(OBJ_DIR) $(DEBUG_DIR)
+$(NAME): $(OBJECTS) Makefile | $(OBJ_DIR)
 	ar -rc $(NAME) $(OBJECTS)
 	# mark non-debug or debug dirty, after making libft.a
-	touch -c $$(find $(OTHER_OBJ_DIR))
 
-$(OBJ_DIR) $(DEBUG_DIR) $(SRC_DIR):
+$(OBJECTS): Makefile | $(SRC_DIR) $(OBJ_DIR)
+	mkdir -p $(shell dirname $@)
+	$(CC) $(CFLAGS) -c -o $@ $(@:$(OBJ_DIR)%.o=$(SRC_DIR)%.c)
+
+$(OBJ_DIR) $(SRC_DIR) $(PREREQ_DIR):
 	mkdir $@
 
-$(OBJECTS): $(USE_OBJ_DIR)%.o: $(SRC_DIR)%.c $(INCLUDE_DIRS) Makefile \
-	| $(SRC_DIR) $(USE_OBJ_DIR)
+# magic includes
+$(SOURCES_MK): $(SRC_DIR) Makefile
+	printf "SOURCE_FILES = " > $@
+	find $(SRC_DIR) -type f -name *.c -exec echo "{} \\" \; >> $@
+
+$(PREREQ_DIR)%.d: $(SRC_DIR)%.c
 	mkdir -p $(shell dirname $@)
-	echo $(INCLUDE)
-	$(CC) $(FLAGS) $(INCLUDE) -c -o $@ $<
+	printf "$(shell dirname $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$<))/" > $@
+	$(CC) -MM $< $(CFLAGS) >> $@
 
-Sources.mk: $(SRC_DIR)
-	printf "SOURCE_FILES = " > Sources.mk
-	find $(SRC_DIR) -type f -name *.c -exec echo "{} \\" \; >> Sources.mk
-
+# general management
 .PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR) $(DEBUG_DIR)
