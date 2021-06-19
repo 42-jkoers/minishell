@@ -12,7 +12,7 @@ BUILDDIR    	= obj
 
 LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
-LINK			=
+LINK			= -lreadline
 
 MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
 NAMES = $(MAINS:$(MAIN_DIR)/%.c=%)
@@ -27,10 +27,10 @@ SILECE_MAKE = | grep -v -E ".*Leaving directory|.*Entering directory"
 
 all: $(NAMES)
 
-$(NAMES): $(MAIN_DIR) $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
+$(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ mains/$@.c $\
-	$(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ $\
+	mains/$@.c $(LINK)
 
 # sources
 
@@ -42,13 +42,10 @@ ifneq ($(BUILDDIR),.)
 	/bin/rm -rf $(BUILDDIR)/
 endif
 
-fclean:
-	$(MAKE) clean $(SILECE_MAKE)
-	/bin/rm -f $(NAME)
+fclean: clean
+	/bin/rm -f $(NAMES)
 
-re:
-	$(MAKE) fclean $(SILECE_MAKE)
-	$(MAKE) all $(SILECE_MAKE)
+re: | fclean all
 
 $(BUILDDIR)/:
 	mkdir -p $(BUILDDIR)
