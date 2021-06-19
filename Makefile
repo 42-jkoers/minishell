@@ -1,11 +1,9 @@
-
-NAME      		= minishell
-
 CC          	= gcc
 
 #CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result
+CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result -Wno-unused-result
 
+MAIN_DIR		= mains
 SRCEXT      	= c
 SRCDIR      	= src
 HEADERDIRS		= include/ include/types include/functions libft/include
@@ -16,6 +14,9 @@ LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
 LINK			=
 
+MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
+NAMES = $(MAINS:$(MAIN_DIR)/%.c=%)
+
 include sources.mk
 
 OBJ	= $(foreach src,$(SRC),$(BUILDDIR)/$(notdir $(src:.$(SRCEXT)=.$(OBJEXT))))
@@ -24,11 +25,11 @@ VPATH = $(shell find $(SRCDIR) -type d | tr '\n' ':' | sed -E 's/(.*):/\1/')
 .SUFFIXES:
 SILECE_MAKE = | grep -v -E ".*Leaving directory|.*Entering directory"
 
-all: $(NAME)
+all: $(NAMES)
 
-$(NAME): $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
+$(NAMES): $(MAIN_DIR) $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $(NAME) $\
+	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ mains/$@.c $\
 	$(LINK)
 
 # sources

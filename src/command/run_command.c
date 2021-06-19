@@ -9,6 +9,8 @@
 static char** convert_args_list(const t_list* args)
 {
 	char** ret = malloc((args->count + 1) * sizeof(char*));
+	if (ret == NULL)
+		exit(1);
 
 	for (size_t i = 0; i < args->count; i++)
 	{

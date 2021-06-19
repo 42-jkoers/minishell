@@ -7,7 +7,7 @@ int	main(int argc, char** argv)
 {
 	if (argc != 2)
 	{
-		write(STDOUT_FILENO, "Usage: [minishell] {exec_name}\n", 31);
+		write(STDOUT_FILENO, "Usage: [test_find_executable] {exec_name}\n", 31);
 		return 1;
 	}
 
