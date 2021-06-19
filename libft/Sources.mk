@@ -64,6 +64,7 @@ src/ft_str/ft_strcontains.c \
 src/ft_to/ft_toupper.c \
 src/ft_to/ft_tolower.c \
 src/list/list_un_init.c \
+src/list/list_foreach.c \
 src/list/list_init.c \
 src/list/list_index.c \
 src/list/list_clear.c \
