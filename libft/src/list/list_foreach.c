@@ -1,6 +1,6 @@
 #include "ft_list.h"
 
-void	list_foreach(t_list *list, const t_foreach_value foreach_value)
+void	list_foreach(const t_list *list, const t_foreach_value foreach_value)
 {
 	size_t	i;
 

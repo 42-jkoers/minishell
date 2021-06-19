@@ -2,17 +2,18 @@
 NAME      		= minishell
 
 CC          	= gcc
-CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-# CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3
+
+#CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
+CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result
 
 SRCEXT      	= c
 SRCDIR      	= src
-HEADERDIR		= include
+HEADERDIRS		= include/ include/types include/functions libft/include
 OBJEXT      	= o
 BUILDDIR    	= obj
 
 LIBS			= libft/libft.a
-INCLUDES		= -I$(HEADERDIR) -I../
+INCLUDES		= $(HEADERDIRS:%=-I%)
 LINK			=
 
 include sources.mk
