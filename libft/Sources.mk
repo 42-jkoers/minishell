@@ -82,6 +82,7 @@ src/ft_str/ft_strncmp.c \
 src/ft_str/ft_unicode_tochars.c \
 src/ft_str/ft_strcontains.c \
 src/ft_str/ft_strtrim.c \
+src/list/list_foreach.c \
 src/list/list_index.c \
 src/list/list_access.c \
 src/list/list_clear.c \

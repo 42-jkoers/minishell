@@ -23,7 +23,6 @@ include $(PREREQS)
 
 $(NAME): $(OBJECTS) Makefile | $(OBJ_DIR)
 	ar -rc $(NAME) $(OBJECTS)
-	# mark non-debug or debug dirty, after making libft.a
 
 $(OBJECTS): Makefile | $(SRC_DIR) $(OBJ_DIR)
 	mkdir -p $(shell dirname $@)
@@ -33,11 +32,17 @@ $(OBJ_DIR) $(SRC_DIR) $(PREREQ_DIR):
 	mkdir $@
 
 # magic includes
-$(SOURCES_MK): $(SRC_DIR) Makefile
+
+# make sure to delete the corrupted file in case of a error, since we will include that
+# and if its corrupted, the makefile will be "corrupted"
+
+.DELETE_ON_ERROR: $(SOURCES_MK)
+$(SOURCES_MK): Makefile
 	printf "SOURCE_FILES = " > $@
 	find $(SRC_DIR) -type f -name *.c -exec echo "{} \\" \; >> $@
 
-$(PREREQ_DIR)%.d: $(SRC_DIR)%.c
+.DELETE_ON_ERROR: $(PREREQ_DIR)%.d
+$(PREREQ_DIR)%.d: $(SRC_DIR)%.c | $(PREREQ_DIR)
 	mkdir -p $(shell dirname $@)
 	printf "$(shell dirname $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$<))/" > $@
 	$(CC) -MM $< $(CFLAGS) >> $@
@@ -45,4 +50,12 @@ $(PREREQ_DIR)%.d: $(SRC_DIR)%.c
 # general management
 .PHONY: clean
 clean:
-	rm -rf $(OBJ_DIR) $(DEBUG_DIR)
+	rm -rf $(OBJ_DIR)
+	rm -rf $(PREREQ_DIR)
+
+.PHONY: fclean
+fclean: clean
+	rm -f $(NAME)
+
+.PHONY: re
+re: | fclean all

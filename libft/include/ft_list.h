@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 17:49:35 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/06/16 17:49:37 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/06/19 17:02:57 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_list
 }				t_list;
 
 typedef void	(*t_free_values)(void *value);
+typedef void	(*t_foreach_value)(void *value);
 
 bool			list_init(t_list *list, size_t data_size) \
 __attribute__((warn_unused_result));
@@ -63,5 +64,6 @@ bool			list_remove(t_list *list, size_t index) \
 __attribute__((warn_unused_result));
 
 void			list_clear(t_list *list, const t_free_values free_values);
+void			list_foreach(t_list *list, const t_foreach_value foreach_value);
 
 #endif

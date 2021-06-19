@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"C_Cpp.default.includePath": [
+			"${default}",
+			"${workspaceFolder}/libft/include",
+			"${workspaceFolder}/include",
+			"${workspaceFolder}/include/types",
+			"${workspaceFolder}/include/functions",
+		]
+	}
+}
