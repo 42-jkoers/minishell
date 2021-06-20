@@ -1,6 +1,6 @@
-#include "t_command.h"
-#include "t_fd_override.h"
-#include "find_executable.h"
+#include "types/t_command.h"
+#include "types/t_fd_override.h"
+#include "functions/find_executable.h"
 
 #include <unistd.h>
 #include <sys/types.h>

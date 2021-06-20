@@ -1,10 +1,10 @@
 #ifndef T_COMMAND_H
 # define T_COMMAND_H
 
-# include "ft_list.h"
+# include "./libft/include/ft_list.h"
 
 // A command is a the lowest building block of a line
-// Just contains [echo, hello, "], everything is escaped and elements are just 
+// Just contains [echo, hello, "], everything is escaped and elements are just
 //a null terminated char*
 // Also its file descriptor overrides when using pipes or file inputs/outputs
 // And a list of fd's to close, good practice to close unused fd's

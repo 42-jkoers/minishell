@@ -12,11 +12,12 @@ OBJEXT      	= o
 BUILDDIR    	= obj
 
 LIBS			= libft/libft.a
-INCLUDES		= -I$(HEADERDIR) -I../
-LINK			=
+INCLUDES		= -I$(HEADERDIR) -I.
+LINK			= -lreadline
 
 include sources.mk
 
+OBJ_WILDCARD = $(BUILDDIR)/*.$(OBJEXT)
 OBJ	= $(foreach src,$(SRC),$(BUILDDIR)/$(notdir $(src:.$(SRCEXT)=.$(OBJEXT))))
 
 VPATH = $(shell find $(SRCDIR) -type d | tr '\n' ':' | sed -E 's/(.*):/\1/')
@@ -27,13 +28,15 @@ all: $(NAME)
 
 $(NAME): $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $(NAME) $\
-	$(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WILDCARD) $(LIBS) -o $(NAME) $(LINK)
 
 # sources
 
 $(BUILDDIR)/%.$(OBJEXT): %.$(SRCEXT) $(HEADERDIR) $(SETTINGS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(BUILDDIR)/$(notdir $@) $(LINK)
+
+install-dependicy:
+	sudo apt-get install libreadline-dev
 
 clean:
 ifneq ($(BUILDDIR),.)
