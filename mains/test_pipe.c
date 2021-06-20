@@ -8,25 +8,26 @@
 
 int main()
 {
-	t_command left;
-	t_command right;
+	// ls | grep test | wc -l
+	t_command commands[3];
 
-	command_init(&left, "ls");
-	command_init(&right, "grep");
+	command_init(&commands[0], "ls");
+	command_init(&commands[1], "grep");
+	command_init(&commands[2], "wc");
 
-	command_add_arg(&right, "test");
+	command_add_arg(&commands[1], "test");
+	command_add_arg(&commands[2], "-l");
 
-	command_add_pipe(&left, &right);
+	command_add_pipe(&commands[0], &commands[1]);
+	command_add_pipe(&commands[1], &commands[2]);
 
-	// ls | grep test
-	pid_t pid_left = command_run(&left);
-	pid_t pid_right = command_run(&right);
+	pid_t pids[3];
+	pids[0] = command_run(&commands[0]);
+	pids[1] = command_run(&commands[1]);
+	pids[2] = command_run(&commands[2]);
 
-	int left_status;
-	waitpid(pid_left,  &left_status,  0);
-	printf("ls exited!\n");
-
-	int right_status;
-	waitpid(pid_right, &right_status, 0);
-	printf("grep exited!\n");
+	int status;
+	waitpid(pids[0], &status, 0);
+	waitpid(pids[1], &status, 0);
+	waitpid(pids[2], &status, 0);
 }
