@@ -6,6 +6,7 @@
 
 // list_push can fail, but ill assume you have changed it so that it just exit(1)'s
 
+// thats alot of closing the same fd's :P
 void command_add_pipe(t_command* left, t_command* right)
 {
 	int fd[2];

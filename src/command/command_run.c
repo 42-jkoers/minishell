@@ -14,7 +14,7 @@ static char** convert_args_list(const t_list* args)
 
 	for (size_t i = 0; i < args->count; i++)
 	{
-		ret[i] = list_index(args, i);
+		ret[i] = *((char**)list_index(args, i));
 	}
 	ret[args->count] = NULL;
 

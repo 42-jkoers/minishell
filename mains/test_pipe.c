@@ -14,7 +14,7 @@ int main()
 	command_init(&left, "ls");
 	command_init(&right, "grep");
 
-	list_push(&right.args, &"test");
+	command_add_arg(&right, "test");
 
 	command_add_pipe(&left, &right);
 
