@@ -14,7 +14,7 @@ static char** convert_args_list(const t_list* args)
 
 	for (size_t i = 0; i < args->count; i++)
 	{
-		ret[args->count] = list_index(args, i);
+		ret[i] = list_index(args, i);
 	}
 	ret[args->count] = NULL;
 
@@ -37,11 +37,14 @@ static void close_fd(int* fd)
 
 // TODO: buildins and use modified env
 
-pid_t run_command(const t_command* command)
+pid_t command_run(const t_command* command)
 {
 	pid_t pid = fork();
 	if (pid != 0)
+	{
+		list_foreach(&command->main_close_fds, (const t_foreach_value)close_fd);
 		return pid;
+	}
 
 	apply_fd_overrides(&command->fd_overrides);
 	list_foreach(&command->child_close_fds, (const t_foreach_value)close_fd);

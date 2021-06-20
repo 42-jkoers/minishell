@@ -1,7 +1,7 @@
 CC          	= gcc
 
 #CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result -Wno-unused-result
+CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result -Wno-unused-result -g
 
 MAIN_DIR		= mains
 SRCEXT      	= c
@@ -29,8 +29,7 @@ all: $(NAMES)
 
 $(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ $\
-	mains/$@.c $(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ mains/$@.c $(LINK)
 
 # sources
 

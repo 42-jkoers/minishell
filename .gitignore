@@ -4,5 +4,4 @@
 *.a
 *.o
 a.out
-/promt_test
-/test_find_executable
+/test_*
