@@ -15,6 +15,7 @@ typedef struct s_command
 	t_list	args;
 	t_list	fd_overrides;
 	t_list	child_close_fds;
+	t_list	main_close_fds;
 }	t_command;
 
 #endif

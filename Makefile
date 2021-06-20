@@ -1,19 +1,21 @@
-
-NAME      		= minishell
-
 CC          	= gcc
-CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-# CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3
 
+#CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
+CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result -Wno-unused-result -g
+
+MAIN_DIR		= mains
 SRCEXT      	= c
 SRCDIR      	= src
-HEADERDIR		= include
+HEADERDIRS		= include/ include/types include/functions libft/include
 OBJEXT      	= o
 BUILDDIR    	= obj
 
 LIBS			= libft/libft.a
-INCLUDES		= -I$(HEADERDIR) -I.
+INCLUDES		= $(HEADERDIRS:%=-I%)
 LINK			= -lreadline
+
+MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
+NAMES = $(MAINS:$(MAIN_DIR)/%.c=%)
 
 include sources.mk
 
@@ -24,11 +26,11 @@ VPATH = $(shell find $(SRCDIR) -type d | tr '\n' ':' | sed -E 's/(.*):/\1/')
 .SUFFIXES:
 SILECE_MAKE = | grep -v -E ".*Leaving directory|.*Entering directory"
 
-all: $(NAME)
+all: $(NAMES)
 
-$(NAME): $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
+$(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WILDCARD) $(LIBS) -o $(NAME) $(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ mains/$@.c $(LINK)
 
 # sources
 
@@ -43,13 +45,10 @@ ifneq ($(BUILDDIR),.)
 	/bin/rm -rf $(BUILDDIR)/
 endif
 
-fclean:
-	$(MAKE) clean $(SILECE_MAKE)
-	/bin/rm -f $(NAME)
+fclean: clean
+	/bin/rm -f $(NAMES)
 
-re:
-	$(MAKE) fclean $(SILECE_MAKE)
-	$(MAKE) all $(SILECE_MAKE)
+re: | fclean all
 
 $(BUILDDIR)/:
 	mkdir -p $(BUILDDIR)

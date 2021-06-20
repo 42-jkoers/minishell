@@ -4,3 +4,4 @@
 *.a
 *.o
 a.out
+/test_*
