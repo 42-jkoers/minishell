@@ -49,10 +49,11 @@ static t_list	split_command(const char *cmd)
 // TODO: actually make it do what it says
 static void	evaluate_environment_variables(void *command)
 {
+	(void)command;
 }
 
 // read command from user
-t_list	read_command(void)
+t_list	command_read(void)
 {
 	const char		*cmd = readline("minishell$ ");
 	const t_list	cmd_split = split_command(cmd);
