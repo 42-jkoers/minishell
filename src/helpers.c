@@ -1,6 +1,15 @@
-#include "libft/include/libft.h"
+#include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "minishell.h"
+
+// This file contains functions that have no logical place yet
+
+void	exit_with_error(const char *msg)
+{
+	printf("%s\n", msg);
+	exit(1);
+}
 
 void	*ft_malloc(size_t size)
 {
@@ -8,23 +17,8 @@ void	*ft_malloc(size_t size)
 
 	p = malloc(size);
 	if (p == NULL)
-	{
-		printf("Malloc failed\n");
-		exit(1);
-	}
+		exit_with_error("malloc");
 	return (p);
-}
-
-void	invalid_command(void)
-{
-	printf("Invalid command\n");
-	exit(1);
-}
-
-void	internal_error(void)
-{
-	printf("Internal error");
-	exit(1);
 }
 
 char	*ft_strndup_unsafe(const char *str, size_t len)

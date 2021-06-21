@@ -1,7 +1,7 @@
 #ifndef T_COMMAND_H
 # define T_COMMAND_H
 
-# include "./libft/include/ft_list.h"
+# include "ft_list.h"
 
 // A command is a the lowest building block of a line
 // Just contains [echo, hello, "], everything is escaped and elements are just
