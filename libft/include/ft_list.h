@@ -64,6 +64,7 @@ bool			list_remove(t_list *list, size_t index) \
 __attribute__((warn_unused_result));
 
 void			list_clear(t_list *list, const t_free_values free_values);
-void			list_foreach(const t_list *list, const t_foreach_value foreach_value);
+void			list_foreach(const t_list *list,
+		const t_foreach_value foreach_value);
 
 #endif

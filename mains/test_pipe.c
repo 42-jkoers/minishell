@@ -6,27 +6,24 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int main()
+// ls | grep test | wc -l
+
+int	main(void)
 {
-	// ls | grep test | wc -l
-	t_command commands[3];
+	t_command	commands[3];
+	pid_t		pids[3];
+	int			status;
 
 	command_init(&commands[0], "ls");
 	command_init(&commands[1], "grep");
 	command_init(&commands[2], "wc");
-
 	command_add_arg(&commands[1], "test");
 	command_add_arg(&commands[2], "-l");
-
 	command_add_pipe(&commands[0], &commands[1]);
 	command_add_pipe(&commands[1], &commands[2]);
-
-	pid_t pids[3];
 	pids[0] = command_run(&commands[0]);
 	pids[1] = command_run(&commands[1]);
 	pids[2] = command_run(&commands[2]);
-
-	int status;
 	waitpid(pids[0], &status, 0);
 	waitpid(pids[1], &status, 0);
 	waitpid(pids[2], &status, 0);

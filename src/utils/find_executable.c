@@ -3,32 +3,35 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-static char* find_executable(char* name, char* path)
+static char	*find_executable(char *name, char *path)
 {
-	DIR* dir = opendir(path);
-	if (!dir)
-		return NULL;
+	DIR				*dir;
+	char			*result;
+	struct dirent	*dirent;
 
-	char* result = NULL;
+	dir = opendir(path);
+	if (!dir)
+		return (NULL);
+	result = NULL;
 	while (true)
 	{
-		struct dirent* dirent = readdir(dir);
+		dirent = readdir(dir);
 		if (!dirent)
-			break;
+			break ;
 		if (dirent->d_type != DT_REG)
-			continue;
+			continue ;
 		if (ft_strncmp(name, dirent->d_name, ~0) == 0)
-			return ft_strjoin_va(3, path, "/", name);
+			return (ft_strjoin_va(3, path, "/", name));
 	}
-
 	closedir(dir);
-	return result;
+	return (result);
 }
 
-static void free_split(char** split)
+static void	free_split(char **split)
 {
-	size_t i = 0;
+	size_t	i;
 
+	i = 0;
 	while (split[i])
 	{
 		free(split[i]);
@@ -37,25 +40,28 @@ static void free_split(char** split)
 	free(split);
 }
 
-char* find_executable_path(char* name)
+char	*find_executable_path(char *name)
 {
-	char* path_env = getenv("PATH");
+	size_t	i;
+	char	*path_env;
+	char	**split;
+	char	*result;
+
+	path_env = getenv("PATH");
 	if (!path_env)
-		return NULL;
-
-	char** split = ft_split(path_env, ':');
+		return (NULL);
+	split = ft_split(path_env, ':');
 	if (!split)
-		return NULL;
-
-	size_t i = 0;
-	char* result = NULL;
+		return (NULL);
+	i = 0;
+	result = NULL;
 	while (split[i])
 	{
 		result = find_executable(name, split[i]);
 		if (result)
-			break;
+			break ;
 		i++;
 	}
 	free_split(split);
-	return result;
+	return (result);
 }

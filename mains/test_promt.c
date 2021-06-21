@@ -8,6 +8,8 @@
 
 int	main(int argc, char **argv)
 {
+	char	*read;
+
 	(void)argc;
 	(void)argv;
 	while (true)
