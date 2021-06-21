@@ -14,6 +14,6 @@ int	main(int argc, char **argv)
 	(void)argv;
 	while (true)
 	{
-		read_command();
+		command_read();
 	}
 }
