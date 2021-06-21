@@ -5,14 +5,15 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int	main(int argc, char** argv)
+int	main(int argc, char **argv)
 {
+	char	*read;
+
 	(void)argc;
 	(void)argv;
-
 	while (true)
 	{
-		char* read = readline("enter your command: ");
+		read = readline("enter your command: ");
 		printf("read line: %s\n", read);
 		add_history(read);
 		free(read);
