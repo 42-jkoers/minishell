@@ -2,21 +2,24 @@
 #include "libft.h"
 #include "minishell.h"
 
-char*** env_ptr()
+char	***env_ptr(void)
 {
-	static char** env = NULL;
+	static char	**env = NULL;
 
-	return &env;
+	return (&env);
 }
 
-void env_ptr_copy(char** envp)
+void	env_ptr_copy(char **envp)
 {
-	size_t size = 0;
+	size_t	size;
+	size_t	i;
+	char	**new_ptr;
+
+	size = 0;
 	while (envp[size])
 		size++;
-
-	char** new_ptr = ft_malloc((size + 1) * sizeof(char*));
-	size_t i = 0;
+	new_ptr = ft_malloc((size + 1) * sizeof(char *));
+	i = 0;
 	while (i <= size)
 	{
 		new_ptr[i] = ft_strdup(envp[i]);

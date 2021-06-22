@@ -1,13 +1,13 @@
 #ifndef ENV_H
 # define ENV_H
 
-char*** env_ptr();
+char	***env_ptr(void);
 
 // copies a env pointer and sets that as the new env_ptr
-void env_ptr_copy(char** envp);
+void	env_ptr_copy(char **envp);
 
-char* env_get(char* name);
-void env_set(char* name, char* new_value);
+char	*env_get(char *name);
+void	env_set(char *name, char *new_value);
 
 // Usefull env paths:
 // PWD		Current working directory

@@ -58,6 +58,7 @@ pid_t	command_run(const t_command *command)
 	}
 	apply_fd_overrides(&command->fd_overrides);
 	list_foreach(&command->child_close_fds, (const t_foreach_value)close_fd);
-	execve(command->executable_path, convert_args_list(&command->args), *env_ptr());
+	execve(command->executable_path, convert_args_list(&command->args),
+		*env_ptr());
 	exit(-1);
 }
