@@ -13,7 +13,7 @@ void	command_add_pipe(t_command *left, t_command *right);
 // Executable path can still be null when you have a bad exec, make sure to
 //check it!
 // And the args will only contain [exec], so add the rest too!
-void	command_init(t_command *command, char *exec, char *const *envp);
+void	command_init(t_command *command, char *exec);
 
 void	command_add_arg(t_command *command, const char *arg);
 

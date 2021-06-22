@@ -1,22 +1,30 @@
 #include "command.h"
+#include "working_directory.h"
+#include "env.h"
+#include "libft.h"
 
 #include <sys/wait.h>
 #include <sys/types.h>
-
 #include <unistd.h>
 #include <stdio.h>
 
 // ls | grep test | wc -l
 
-int	main(void)
+int	main(int argc, char** argv, char** envp)
 {
+	env_ptr_copy(envp);
+	(void)argc;
+	(void)argv;
+
+	//working_directory_set("/home");
+
 	t_command	commands[3];
 	pid_t		pids[3];
 	int			status;
 
-	command_init(&commands[0], "ls", NULL);
-	command_init(&commands[1], "grep", NULL);
-	command_init(&commands[2], "wc", NULL);
+	command_init(&commands[0], "ls");
+	command_init(&commands[1], "grep");
+	command_init(&commands[2], "wc");
 
 	command_add_arg(&commands[1], "test");
 	command_add_arg(&commands[2], "-l");
