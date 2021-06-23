@@ -21,7 +21,8 @@ static void	free_split(char **split)
 	free(split);
 }
 
-// looks through a folder (at path) for a file named "name", if found, returns [path]/[name]
+// looks through a folder (at path) for a file named "name", if found, returns 
+//[path]/[name]
 static char	*find_executable(char *name, char *path)
 {
 	DIR				*dir;
@@ -50,17 +51,20 @@ static char	*find_executable(char *name, char *path)
 // Looks in the current work director for name, going through directories
 // Im not too sure if open(path) is the best way to check if the file exists
 // The access() function is better, but is not allowed in the subject... :(
-static char* get_direct_path(char* name)
+static char	*get_direct_path(char *name)
 {
-	char* path = ft_strjoin_va(3, working_directory_get(), "/", name);
-	int fd = open(path, __O_PATH);
+	char	*path;
+	int		fd;
+
+	path = ft_strjoin_va(3, working_directory_get(), "/", name);
+	fd = open(path, __O_PATH);
 	if (fd != -1)
 	{
 		close(fd);
-		return path;
+		return (path);
 	}
 	free(path);
-	return NULL;
+	return (NULL);
 }
 
 char	*find_executable_path(char *name)
@@ -72,7 +76,7 @@ char	*find_executable_path(char *name)
 
 	result = get_direct_path(name);
 	if (result)
-		return result;
+		return (result);
 	path_env = getenv("PATH");
 	if (!path_env)
 		return (NULL);
