@@ -51,24 +51,34 @@ static char	*find_executable(char *name, char *path)
 // Looks in the current work director for name, going through directories
 // Im not too sure if open(path) is the best way to check if the file exists
 // The access() function is better, but is not allowed in the subject... :(
+
+// I hope i have the if statements correctly setup
+//		name[0] == '/' > absolute path check
+//		ft_strchr(name, '/') > relative path check
 static char	*get_direct_path(char *name)
 {
 	char	*path;
 	int		fd;
 
-	path = ft_strjoin_va(3, working_directory_get(), "/", name);
-	fd = open(path, __O_PATH);
-	if (fd != -1)
+	if (name[0] == '/')
 	{
-		close(fd);
-		return (path);
+		fd = open(name, __O_PATH);
+		if (fd != -1)
+		{
+			close(fd);
+			return (ft_strdup(name));
+		}
 	}
-	free(path);
-	fd = open(name, __O_PATH);
-	if (fd != -1)
+	else if (ft_strchr(name, '/'))
 	{
-		close(fd);
-		return (ft_strdup(name));
+		path = ft_strjoin_va(3, working_directory_get(), "/", name);
+		fd = open(path, __O_PATH);
+		if (fd != -1)
+		{
+			close(fd);
+			return (path);
+		}
+		free(path);
 	}
 	return (NULL);
 }

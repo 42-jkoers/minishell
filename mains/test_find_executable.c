@@ -12,7 +12,7 @@ int	main(int argc, char** argv, char** envp)
 
 	if (argc != 2)
 	{
-		write(STDOUT_FILENO, "Usage: [test_find_executable] {exec_name}\n", 31);
+		write(STDOUT_FILENO, "Usage: ./test_find_executable [exec_name]\n", 42);
 		return (1);
 	}
 	path = find_executable_path(argv[1]);
