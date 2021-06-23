@@ -39,4 +39,8 @@ int	main(int argc, char** argv, char** envp)
 	waitpid(pids[0], &status, 0);
 	waitpid(pids[1], &status, 0);
 	waitpid(pids[2], &status, 0);
+
+	command_un_init(&commands[0]);
+	command_un_init(&commands[1]);
+	command_un_init(&commands[2]);
 }

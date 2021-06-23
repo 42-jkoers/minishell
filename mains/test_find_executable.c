@@ -2,9 +2,12 @@
 #include <unistd.h>
 #include "find_executable.h"
 #include "libft.h"
+#include "env.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char** argv, char** envp)
 {
+	env_ptr_copy(envp);
+
 	char	*path;
 
 	if (argc != 2)
@@ -21,4 +24,5 @@ int	main(int argc, char **argv)
 	write(STDOUT_FILENO, "Found executable at: ", 21);
 	write(STDOUT_FILENO, path, ft_strlen(path));
 	write(STDOUT_FILENO, "\n", 1);
+	free(path);
 }

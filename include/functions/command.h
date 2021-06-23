@@ -14,6 +14,7 @@ void	command_add_pipe(t_command *left, t_command *right);
 //check it!
 // And the args will only contain [exec], so add the rest too!
 void	command_init(t_command *command, char *exec);
+void	command_un_init(t_command *command);
 
 void	command_add_arg(t_command *command, const char *arg);
 
