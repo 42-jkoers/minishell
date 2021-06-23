@@ -21,7 +21,7 @@ static void	free_split(char **split)
 	free(split);
 }
 
-// looks through a folder (at path) for a file named "name", if found, returns 
+// looks through a folder (at path) for a file named "name", if found, returns
 //[path]/[name]
 static char	*find_executable(char *name, char *path)
 {
@@ -64,6 +64,12 @@ static char	*get_direct_path(char *name)
 		return (path);
 	}
 	free(path);
+	fd = open(name, __O_PATH);
+	if (fd != -1)
+	{
+		close(fd);
+		return (ft_strdup(name));
+	}
 	return (NULL);
 }
 

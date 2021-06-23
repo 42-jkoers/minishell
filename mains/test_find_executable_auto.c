@@ -14,12 +14,16 @@ static void test_executable(char* executable_path)
 {
 	char* path = find_executable_path(executable_path);
 	if (path == NULL)
+	{
 		printf("Failed to find executable: %s\n", executable_path);
+		exit(1);
+	}
 	free(path);
 }
 
 int	main(int argc, char** argv, char** envp)
 {
+
 	env_ptr_copy(envp);
 	(void)argc;
 	(void)argv;
@@ -33,8 +37,8 @@ int	main(int argc, char** argv, char** envp)
 	free(new_path);
 
 	test_executable("../test_pipe");
-
 	test_executable("ls");
+	test_executable("/bin/ls");
 
 	printf("Success! finding paths is working!\n");
 
