@@ -1,10 +1,11 @@
+#include "malloc_wrappers.h"
 #include "libft.h"
 #include "ft_list.h"
 #include "minishell.h"
 
 void	list_push_safe(t_list *list, const void *value)
 {
-	if (list_push(list, value))
+	if (!list_push(list, value))
 		exit_with_error("malloc");
 }
 
