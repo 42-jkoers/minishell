@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char	*working_directory_get(void)
+const char	*working_directory_get(void)
 {
 	static char		*buff = NULL;
 	static size_t	buff_size = 16;
