@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include "libft.h"
 #include "minishell.h"
+#include "malloc_wrappers.h"
 
 char	***env_ptr(void)
 {
