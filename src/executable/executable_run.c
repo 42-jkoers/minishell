@@ -57,6 +57,8 @@ pid_t	executable_run(const t_executable *executable)
 	pid = fork();
 	if (pid != 0)
 	{
+		if (exec_data != NULL)
+			exec_data->main_cleanup_func(builtin_data);
 		list_foreach(&executable->main_close_fds, (const t_foreach_value)
 			close_fd);
 		return (pid);

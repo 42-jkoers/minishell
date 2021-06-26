@@ -66,4 +66,6 @@ int	main(int argc, char** argv, const char** envp)
 	waitpid(pid, &status, 0);
 	printf("	current work directory: %s\n", working_directory_get());
 	log_status(status);
+
+	executable_un_init(&executable);
 }

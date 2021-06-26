@@ -7,6 +7,7 @@
 
 void	*builtin_cd_main(const t_executable *command)
 {
+	char	*path;
 	bool	success;
 	char	*dir;
 
@@ -17,8 +18,9 @@ void	*builtin_cd_main(const t_executable *command)
 	else
 	{
 		dir = *(char **)list_index(&command->args, 1);
-		success = working_directory_set(path_join(working_directory_get(
-						), dir));
+		path = path_join(working_directory_get(), dir);
+		success = working_directory_set(path);
+		free(path);
 		if (!success)
 			return (ft_strjoin_va(3, "bash: cd: ", dir, ": No such file or dire"
 					"ctory\n"));
