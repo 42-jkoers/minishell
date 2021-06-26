@@ -3,6 +3,7 @@
 #include "env.h"
 #include "minishell.h"
 #include <stdlib.h>
+#include "malloc_wrappers.h"
 
 // add a new entry to the env path
 static void	env_new(char *data)

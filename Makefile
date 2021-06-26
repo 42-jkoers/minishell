@@ -1,14 +1,14 @@
-CC          	= gcc
+CC				= gcc
 
 #CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-CFLAGS      	= -Wall -Wextra -Werror -Wuninitialized -O3 -Wno-error=unused-result -Wno-unused-result -g
+CFLAGS			= -Wall -Wextra -Wuninitialized -Wno-error=unused-result -Wno-unused-result -g
 
 MAIN_DIR		= mains
-SRCEXT      	= c
-SRCDIR      	= src
+SRCEXT		 	= c
+SRCDIR			= src
 HEADERDIRS		= include/ include/types include/functions libft/include
-OBJEXT      	= o
-BUILDDIR    	= obj
+OBJEXT			= o
+BUILDDIR		= obj
 
 LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
@@ -28,13 +28,13 @@ SILECE_MAKE = | grep -v -E ".*Leaving directory|.*Entering directory"
 
 all: $(NAMES)
 
-$(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR) $(SETTINGS)
+$(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(BUILDDIR)/*.$(OBJEXT) $(LIBS) -o $@ mains/$@.c $(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WILDCARD) $(LIBS) -o $@ mains/$@.c $(LINK)
 
 # sources
 
-$(BUILDDIR)/%.$(OBJEXT): %.$(SRCEXT) $(HEADERDIR) $(SETTINGS)
+$(BUILDDIR)/%.$(OBJEXT): %.$(SRCEXT) $(HEADERDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(BUILDDIR)/$(notdir $@) $(LINK)
 
 install-dependicy:

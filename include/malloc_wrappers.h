@@ -5,5 +5,6 @@
 
 void	list_init_safe(t_list *list, size_t data_size);
 void	list_push_safe(t_list *list, const void *value);
+void	*ft_malloc(size_t size);
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include "malloc_wrappers.h"
 
 const char	*working_directory_get(void)
 {
