@@ -1,4 +1,5 @@
-#include "t_command.h"
+#include "executable.h"
+#include "builtin.h"
 #include "t_fd_override.h"
 #include "find_executable.h"
 #include "env.h"
@@ -44,21 +45,28 @@ static void	close_fd(int *fd)
 	close(*fd);
 }
 
-// TODO: buildins
-
-pid_t	command_run(const t_command *command)
+pid_t	executable_run(const t_executable *executable)
 {
-	pid_t	pid;
+	void					*builtin_data;
+	const t_builtin_exec	*exec_data;
+	pid_t					pid;
 
+	exec_data = executable_get_builtin_exec(executable);
+	if (exec_data != NULL)
+		builtin_data = exec_data->main_func(executable);
 	pid = fork();
 	if (pid != 0)
 	{
-		list_foreach(&command->main_close_fds, (const t_foreach_value)close_fd);
+		list_foreach(&executable->main_close_fds, (const t_foreach_value)
+			close_fd);
 		return (pid);
 	}
-	apply_fd_overrides(&command->fd_overrides);
-	list_foreach(&command->child_close_fds, (const t_foreach_value)close_fd);
-	execve(command->executable_path, convert_args_list(&command->args),
-		*env_ptr());
+	apply_fd_overrides(&executable->fd_overrides);
+	list_foreach(&executable->child_close_fds, (const t_foreach_value)close_fd);
+	if (exec_data != NULL)
+		exec_data->child_func(builtin_data);
+	else
+		execve(executable->executable_path,
+			convert_args_list(&executable->args), *env_ptr());
 	exit(-1);
 }

@@ -1,4 +1,4 @@
-#include "command.h"
+#include "executable.h"
 #include "working_directory.h"
 #include "env.h"
 #include "libft.h"
@@ -10,7 +10,7 @@
 
 // ls | grep test | wc -l
 
-int	main(int argc, char** argv, char** envp)
+int	main(int argc, char** argv, const char** envp)
 {
 	env_ptr_copy(envp);
 	(void)argc;
@@ -18,29 +18,30 @@ int	main(int argc, char** argv, char** envp)
 
 	//working_directory_set("/home");
 
-	t_command	commands[3];
-	pid_t		pids[3];
-	int			status;
+	t_executable	executables[3];
+	pid_t			pids[3];
+	int				status;
 
-	command_init(&commands[0], "ls");
-	command_init(&commands[1], "grep");
-	command_init(&commands[2], "wc");
+	executable_init(&executables[0], "ls");
+	executable_init(&executables[1], "grep");
+	executable_init(&executables[2], "wc");
 
-	command_add_arg(&commands[1], "test");
-	command_add_arg(&commands[2], "-l");
+	executable_add_arg(&executables[1], "test");
+	executable_add_arg(&executables[2], "-l");
 
-	command_add_pipe(&commands[0], &commands[1]);
-	command_add_pipe(&commands[1], &commands[2]);
+	executable_add_pipe(&executables[0], &executables[1]);
+	executable_add_pipe(&executables[1], &executables[2]);
 
-	pids[0] = command_run(&commands[0]);
-	pids[1] = command_run(&commands[1]);
-	pids[2] = command_run(&commands[2]);
+	write(STDOUT_FILENO, "Should output the number of files with the name \"test\" in the current directory\n", 80);
+	pids[0] = executable_run(&executables[0]);
+	pids[1] = executable_run(&executables[1]);
+	pids[2] = executable_run(&executables[2]);
 
 	waitpid(pids[0], &status, 0);
 	waitpid(pids[1], &status, 0);
 	waitpid(pids[2], &status, 0);
 
-	command_un_init(&commands[0]);
-	command_un_init(&commands[1]);
-	command_un_init(&commands[2]);
+	executable_un_init(&executables[0]);
+	executable_un_init(&executables[1]);
+	executable_un_init(&executables[2]);
 }

@@ -4,7 +4,7 @@
 #include "libft.h"
 #include "env.h"
 
-int	main(int argc, char** argv, char** envp)
+int	main(int argc, char** argv, const char** envp)
 {
 	env_ptr_copy(envp);
 

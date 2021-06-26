@@ -1,4 +1,4 @@
-#include "command.h"
+#include "executable.h"
 #include "working_directory.h"
 #include "env.h"
 #include "libft.h"
@@ -11,38 +11,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	main(int argc, char** argv, char** envp)
+int	main(int argc, char** argv, const char** envp)
 {
 	env_ptr_copy(envp);
 	(void)argc;
 	(void)argv;
 
-	t_command	command;
+	t_executable	executable;
 	pid_t		pid;
 	int			status;
 
 	// echo 'hello world!' > test_file
-	command_init(&command, "echo");
-	command_add_arg(&command, "hello world!");
-	if (!command_add_fd_file_redirect(&command, STDOUT_FILENO, "test_file", r_write))
+	executable_init(&executable, "echo");
+	executable_add_arg(&executable, "hello world!");
+	if (!executable_add_fd_file_redirect(&executable, STDOUT_FILENO, "test_file", r_write))
 	{
 		write(STDERR_FILENO, "Error!\ntest_file could not be opened for truncation!\n", 53);
 		exit(1);
 	}
-	pid = command_run(&command);
-	command_un_init(&command);
+	pid = executable_run(&executable);
+	executable_un_init(&executable);
 	waitpid(pid, &status, 0);
 
 	// echo 'hello world!' >> test_file
-	command_init(&command, "echo");
-	command_add_arg(&command, "append");
-	if (!command_add_fd_file_redirect(&command, STDOUT_FILENO, "test_file", r_write | r_append))
+	executable_init(&executable, "echo");
+	executable_add_arg(&executable, "append");
+	if (!executable_add_fd_file_redirect(&executable, STDOUT_FILENO, "test_file", r_write | r_append))
 	{
 		write(STDERR_FILENO,"Error!\ntest_file could not be opened for append!\n", 49);
 		exit(1);
 	}
-	pid = command_run(&command);
-	command_un_init(&command);
+	pid = executable_run(&executable);
+	executable_un_init(&executable);
 	waitpid(pid, &status, 0);
 
 	// Check test_file's contents
@@ -66,15 +66,15 @@ int	main(int argc, char** argv, char** envp)
 
 	// grep hello < test_file
 	write(STDOUT_FILENO, "Redirecting a file to input is working if it outputs: \"hello world!\"\n", 70);
-	command_init(&command, "grep");
-	command_add_arg(&command, "hello");
-	if (!command_add_fd_file_redirect(&command, STDIN_FILENO, "test_file", r_read))
+	executable_init(&executable, "grep");
+	executable_add_arg(&executable, "hello");
+	if (!executable_add_fd_file_redirect(&executable, STDIN_FILENO, "test_file", r_read))
 	{
 		write(STDERR_FILENO,"Error!\ntest_file could not be opened for reading!\n", 50);
 		exit(1);
 	}
-	pid = command_run(&command);
-	command_un_init(&command);
+	pid = executable_run(&executable);
+	executable_un_init(&executable);
 	waitpid(pid, &status, 0);
 
 	//remove("test_file");
