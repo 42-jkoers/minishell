@@ -12,7 +12,7 @@ typedef enum e_file_redirect_mode
 	r_read = 0,
 	r_write = 1,
 	r_append = 2,
-} t_file_redirect_mode;
+}	t_file_redirect_mode;
 
 // Handles things like: left | right
 void	executable_add_pipe(t_executable *left, t_executable *right);

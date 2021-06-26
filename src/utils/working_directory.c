@@ -24,9 +24,11 @@ const char	*working_directory_get(void)
 
 bool	working_directory_set(char *path)
 {
-	int result = chdir(path);
+	int	result;
+
+	result = chdir(path);
 	if (result == -1)
-		return false;
+		return (false);
 	env_set("PWD", working_directory_get());
-	return true;
+	return (true);
 }

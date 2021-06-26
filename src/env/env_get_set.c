@@ -7,7 +7,7 @@
 // add a new entry to the env path
 static void	env_new(char *data)
 {
-	size_t		prev_size;
+	size_t	prev_size;
 	char	**ptr;
 	char	**new_ptr;
 
