@@ -6,14 +6,18 @@
 #include <readline/history.h>
 #include "minishell.h"
 
-int	main(int argc, char **argv)
+void	print(void *s)
 {
-	char	*read;
+	printf("> %s\n", (char *)s);
+}
 
-	(void)argc;
-	(void)argv;
+int	main(void)
+{
+	t_list	cmd;
+
 	while (true)
 	{
-		command_read();
+		cmd	= command_read();
+		list_foreach(&cmd, print);
 	}
 }
