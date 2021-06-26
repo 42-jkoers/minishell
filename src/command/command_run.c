@@ -1,6 +1,7 @@
 #include "t_command.h"
 #include "t_fd_override.h"
 #include "find_executable.h"
+#include "env.h"
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -43,7 +44,7 @@ static void	close_fd(int *fd)
 	close(*fd);
 }
 
-// TODO: buildins and use modified env
+// TODO: buildins
 
 pid_t	command_run(const t_command *command)
 {
@@ -57,6 +58,7 @@ pid_t	command_run(const t_command *command)
 	}
 	apply_fd_overrides(&command->fd_overrides);
 	list_foreach(&command->child_close_fds, (const t_foreach_value)close_fd);
-	execve(command->executable_path, convert_args_list(&command->args), NULL);
+	execve(command->executable_path, convert_args_list(&command->args),
+		*env_ptr());
 	exit(-1);
 }

@@ -11,11 +11,12 @@
 
 typedef struct s_command
 {
-	char	*executable_path;
-	t_list	args;
-	t_list	fd_overrides;
-	t_list	child_close_fds;
-	t_list	main_close_fds;
+	char		*executable_path;
+	char *const	*envp;
+	t_list		args;
+	t_list		fd_overrides;
+	t_list		child_close_fds;
+	t_list		main_close_fds;
 }	t_command;
 
 #endif
