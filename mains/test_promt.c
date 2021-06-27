@@ -6,9 +6,9 @@
 #include <readline/history.h>
 #include "minishell.h"
 
-void	print(void *s)
+void	print(char **s)
 {
-	printf("> %s\n", (char *)s);
+	printf("> %s\n", *s);
 }
 
 int	main(void)
@@ -17,7 +17,7 @@ int	main(void)
 
 	while (true)
 	{
-		cmd	= command_read();
-		list_foreach(&cmd, print);
+		cmd = command_read();
+		list_foreach(&cmd, (t_foreach_value)print);
 	}
 }
