@@ -28,7 +28,7 @@ bool	executable_add_fd_file_redirect(t_executable *executable, int base_fd,
 // Executable path can still be null when you have a bad exec, make sure to
 //check it!
 // And the args will only contain [exec], so add the rest too!
-void	executable_init(t_executable *executable, char *exec);
+void	executable_init(t_executable *executable, const char *exec);
 void	executable_un_init(t_executable *executable);
 
 void	executable_add_arg(t_executable *executable, const char *arg);

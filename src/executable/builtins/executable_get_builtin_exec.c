@@ -2,6 +2,17 @@
 #include "t_executable.h"
 #include "builtin.h"
 
+static void	*builtin_null_main(const t_executable *command)
+{
+	(void)command;
+	return (NULL);
+}
+
+static void	builtin_null_main_cleanup(void *data)
+{
+	(void)data;
+}
+
 static const t_builtin_data	*get_builtin_data(void)
 {
 	static const t_builtin_data	builtin_data[] = {
@@ -11,6 +22,12 @@ static const t_builtin_data	*get_builtin_data(void)
 			.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)
 				builtin_cd_main_cleanup,
 			.exec_func.child_func = (t_builtin_child_func)builtin_cd_child
+		},
+		(t_builtin_data){
+			.name = "pwd",
+			.exec_func.main_func = builtin_null_main,
+			.exec_func.main_cleanup_func = builtin_null_main_cleanup,
+			.exec_func.child_func = (t_builtin_child_func)builtin_pwd_child
 		},
 		(t_builtin_data){.name = NULL }
 	};

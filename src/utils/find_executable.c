@@ -23,7 +23,7 @@ static void	free_split(char **split)
 
 // looks through a folder (at path) for a file named "name", if found, returns
 //[path]/[name]
-static char	*find_executable(char *name, char *path)
+static char	*find_executable(const char *name, const char *path)
 {
 	DIR				*dir;
 	struct dirent	*dirent;
@@ -55,7 +55,7 @@ static char	*find_executable(char *name, char *path)
 // I hope i have the if statements correctly setup
 //		name[0] == '/' > absolute path check
 //		ft_strchr(name, '/') > relative path check
-static char	*get_direct_path(char *name)
+static char	*get_direct_path(const char *name)
 {
 	char	*path;
 	int		fd;
@@ -83,7 +83,7 @@ static char	*get_direct_path(char *name)
 	return (NULL);
 }
 
-char	*find_executable_path(char *name)
+char	*find_executable_path(const char *name)
 {
 	size_t	i;
 	char	*path_env;

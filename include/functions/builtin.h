@@ -12,4 +12,6 @@ void					*builtin_cd_main(const t_executable *command);
 void					builtin_cd_main_cleanup(char *str);
 void					builtin_cd_child(char *str);
 
+void					builtin_pwd_child(void *data);
+
 #endif
