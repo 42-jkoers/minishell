@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 17:21:09 by jsimonis      #+#    #+#                 */
-/*   Updated: 2020/12/30 16:18:58 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/06/27 10:07:29 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	return the write works, since ~0 == -1
 */
 
-int	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(const char *s, int fd)
 {
 	if (s == NULL)
 		return (write(fd, "{NULL}", 6));

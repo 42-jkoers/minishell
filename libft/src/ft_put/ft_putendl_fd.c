@@ -6,14 +6,14 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 17:22:15 by jsimonis      #+#    #+#                 */
-/*   Updated: 2020/12/30 16:18:16 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/06/27 10:07:25 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
-int	ft_putendl_fd(char *s, int fd)
+int	ft_putendl_fd(const char *s, int fd)
 {
 	int	out;
 

@@ -1,4 +1,4 @@
-#include "command.h"
+#include "executable.h"
 #include "working_directory.h"
 #include "env.h"
 #include "libft.h"
@@ -21,10 +21,14 @@ static void test_executable(char* executable_path, bool should_succeed)
 			printf("Found executable while it shouldn't: %s\n", executable_path);
 		exit(1);
 	}
+	if (should_succeed)
+		printf("As expected, Found executable: %s\n", executable_path);
+	else
+		printf("As expected, Did not find executable: %s\n", executable_path);
 	free(path);
 }
 
-int	main(int argc, char** argv, char** envp)
+int	main(int argc, char** argv, const char** envp)
 {
 
 	env_ptr_copy(envp);
@@ -37,6 +41,7 @@ int	main(int argc, char** argv, char** envp)
 	test_executable("mains/../test_pipe", true);
 
 	// Change the work directory to the mains folder
+	printf("cd mains\n");
 	char* new_path = ft_strjoin(working_directory_get(), "/mains");
 	working_directory_set(new_path);
 	free(new_path);

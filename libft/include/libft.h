@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 12:59:45 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/04/05 14:17:35 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/06/27 10:07:51 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ char			*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 
 int				ft_putchar_fd(char c, int fd);
 int				ft_putchard_fd(char c, int fd);
-int				ft_putstr_fd(char *s, int fd);
+int				ft_putstr_fd(const char *s, int fd);
 int				ft_putstrd_fd(const char *str, int fd);
-int				ft_putendl_fd(char *s, int fd);
+int				ft_putendl_fd(const char *s, int fd);
 int				ft_putnbr_fd(int n, int fd);
 int				ft_putarr_fd(const void *arr, int len, int fd);
 int				ft_putu_point_fd(unsigned int u_point, int fd);

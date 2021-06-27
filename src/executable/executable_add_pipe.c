@@ -1,14 +1,14 @@
-#include "t_command.h"
+#include "t_executable.h"
 #include "t_fd_override.h"
 
 #include <stdlib.h>
 #include <unistd.h>
 
-// list_push can fail, but ill assume you have changed it so that it just 
+// list_push can fail, but ill assume you have changed it so that it just
 //exit(1)'s
 
 // thats alot of closing the same fd's :P
-void	command_add_pipe(t_command *left, t_command *right)
+void	executable_add_pipe(t_executable *left, t_executable *right)
 {
 	int	fd[2];
 

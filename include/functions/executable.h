@@ -1,11 +1,11 @@
-#ifndef COMMAND_H
-# define COMMAND_H
+#ifndef EXECUTABLE_H
+# define EXECUTABLE_H
 
-# include "t_command.h"
+# include "t_executable.h"
 # include <sys/types.h>
 
 // Returns the procid of the new process, -1 on error
-pid_t	command_run(const t_command *command);
+pid_t	executable_run(const t_executable *executable);
 
 typedef enum e_file_redirect_mode
 {
@@ -15,20 +15,22 @@ typedef enum e_file_redirect_mode
 }	t_file_redirect_mode;
 
 // Handles things like: left | right
-void	command_add_pipe(t_command *left, t_command *right);
+void	executable_add_pipe(t_executable *left, t_executable *right);
 // Handles things like: [n]>&[n]
-void	command_add_fd_redirect(t_command *command, int base_fd, int new_fd);
+void	executable_add_fd_redirect(t_executable *executable, int base_fd,
+			int new_fd);
 // Handles things like [n]>test_file, [n]>>test_file and [n]<test_file
 // returns false when the file could not be opened (eg: read non-existent file)
-bool	command_add_fd_file_redirect(t_command *command, int base_fd, char
+bool	executable_add_fd_file_redirect(t_executable *executable, int base_fd,
+			char
 			*file_path, t_file_redirect_mode redirect_mode);
 
 // Executable path can still be null when you have a bad exec, make sure to
 //check it!
 // And the args will only contain [exec], so add the rest too!
-void	command_init(t_command *command, char *exec);
-void	command_un_init(t_command *command);
+void	executable_init(t_executable *executable, const char *exec);
+void	executable_un_init(t_executable *executable);
 
-void	command_add_arg(t_command *command, const char *arg);
+void	executable_add_arg(t_executable *executable, const char *arg);
 
 #endif

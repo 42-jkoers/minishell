@@ -25,7 +25,7 @@ static void	env_new(char *data)
 }
 
 // Returns a reference to where this variable is stored
-static char	**env_ref(char *name)
+static char	**env_ref(const char *name)
 {
 	size_t	strlen;
 	char	**ptr;
@@ -41,7 +41,7 @@ static char	**env_ref(char *name)
 	return (NULL);
 }
 
-char	*env_get(char *name)
+const char	*env_get(const char *name)
 {
 	char	**ref;
 
@@ -51,7 +51,7 @@ char	*env_get(char *name)
 	return (ft_strchr(*ref, '=') + 1);
 }
 
-void	env_set(char *name, char *new_value)
+void	env_set(const char *name, const char *new_value)
 {
 	char	**ref;
 
