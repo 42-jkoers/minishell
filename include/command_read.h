@@ -4,6 +4,6 @@
 # include "ft_list.h"
 
 t_list	command_read(void);
-t_list	get_cmd_split(const char *cmd);
+bool	goto_next_split(char **start, char **end);
 
 #endif

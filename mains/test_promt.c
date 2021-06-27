@@ -8,7 +8,7 @@
 
 void	print(char **s)
 {
-	printf("> %s\n", *s);
+	printf(">%s<\n", *s);
 }
 
 int	main(void)
