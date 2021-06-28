@@ -62,7 +62,7 @@ static void	push_block(char *start, size_t len, t_list *blocks)
 		block = ft_strndup_unsafe(start, len);
 	if (!block)
 		return ;
-	// remove_escape_characters(block);
+	remove_escape_characters(block);
 	list_push_safe(blocks, &block);
 }
 
