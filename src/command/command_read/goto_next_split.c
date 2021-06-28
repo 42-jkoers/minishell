@@ -85,7 +85,7 @@ static bool	set_end_and_current(char **current, char **start, char **end)
 	escaped = **start == '\\';
 	while (**end)
 	{
-		if (is_grammar_rule(*end))
+		if (!escaped && is_grammar_rule(*end))
 			break ;
 		if (!escaped && **end == ' ')
 		{
