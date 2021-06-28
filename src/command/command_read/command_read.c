@@ -80,7 +80,6 @@ static t_list	get_cmd_split(const char *cmd)
 	while (goto_next_split(&current, &start, &end))
 	{
 		push_block(start, end - start, &blocks);
-		start = end;
 	}
 	return (blocks);
 }
