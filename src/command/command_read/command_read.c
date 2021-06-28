@@ -62,7 +62,7 @@ static void	push_block(char *start, size_t len, t_list *blocks)
 		block = ft_strndup_unsafe(start, len);
 	if (!block)
 		return ;
-	remove_escape_characters(block);
+	// remove_escape_characters(block);
 	list_push_safe(blocks, &block);
 }
 
@@ -72,11 +72,12 @@ static t_list	get_cmd_split(const char *cmd)
 {
 	char	*start;
 	char	*end;
+	char	*current;
 	t_list	blocks;
 
 	list_init_safe(&blocks, sizeof(char *));
-	start = (char *)cmd;
-	while (goto_next_split(&start, &end))
+	current = (char *)cmd;
+	while (goto_next_split(&current, &start, &end))
 	{
 		push_block(start, end - start, &blocks);
 		start = end;

@@ -4,6 +4,6 @@
 # include "ft_list.h"
 
 t_list	command_read(void);
-bool	goto_next_split(char **start, char **end);
+bool	goto_next_split(char **current, char **start, char **end);
 
 #endif

@@ -22,7 +22,14 @@ static char	*find_closing_quote(const char *start)
 	return (NULL);
 }
 
-static bool	find_start(char **start, char **end, bool *is_quoted)
+typedef enum e_startstatus
+{
+	NOTFOUND,
+	FOUND_START,
+	FOUND_QUOTED_TEXT,
+}			t_startstatus;
+
+static t_startstatus	set_start(char **start)
 {
 	bool	escaped;
 
@@ -31,22 +38,44 @@ static bool	find_start(char **start, char **end, bool *is_quoted)
 	{
 		if (!escaped && **start == '"')
 		{
-			*is_quoted = true;
-			*end = find_closing_quote(*start);
 			(*start)++;
-			return (true);
+			return (FOUND_QUOTED_TEXT);
 		}
 		if (**start != ' ')
 		{
-			return (true);
+			return (FOUND_START);
 		}
 		escaped = !escaped && **start == '\\';
 		(*start)++;
 	}
-	return (false);
+	return (NOTFOUND);
 }
 
-static bool	find_end(char **start, char **end)
+// @return	length of the matched grammer rule, 0 if not a grammer rule
+// match >, >>, | etc
+// WARNING: when updating grammar_rules, also update grammer_rule_len
+// WARNINC: It is important that the longest grammar rule comes first in the
+//          array. Eg: "echo "a" >> x" matches ">" as seperator, when it should
+//          match ">>"
+static size_t	is_grammar_rule(const char *str)
+{
+	const char		*grammar_rules[] =
+	{">>", ">>", ">", "<", "|"};
+	const size_t	grammer_rule_len[] =
+	{2, 2, 1, 1, 1};
+	size_t			i;
+
+	i = 0;
+	while (i < sizeof(grammar_rules) / sizeof(grammar_rules[0]))
+	{
+		if (!ft_strncmp(str, grammar_rules[i], grammer_rule_len[i]))
+			return (grammer_rule_len[i]);
+		i++;
+	}
+	return (0);
+}
+
+static bool	set_end_and_current(char **current, char **start, char **end)
 {
 	bool	escaped;
 
@@ -56,28 +85,47 @@ static bool	find_end(char **start, char **end)
 	escaped = **start == '\\';
 	while (**end)
 	{
+		if (is_grammar_rule(*end))
+			break ;
 		if (!escaped && **end == ' ')
+		{
+			*current = *end + 1;
 			return (true);
+		}
 		escaped = !escaped && **end == '\\';
 		(*end)++;
 	}
+	*current = *end;
 	return (true);
 }
 
-bool	goto_next_split(char **start, char **end)
+// @param **current		start reading from
+// @param **start		start of found block
+// @param **end			last char of block (exclusive)
+bool	goto_next_split(char **current, char **start, char **end)
 {
-	static bool	is_quoted = false;
+	t_startstatus	startstatus;
+	size_t			grammar_rule_len;
 
-	if (!**start)
+	if (!**current)
 		return (false);
-	if (is_quoted)
+	*start = *current;
+	grammar_rule_len = is_grammar_rule(*current);
+	if (grammar_rule_len > 0)
 	{
-		(*start)++;
-		is_quoted = false;
-	}
-	if (!find_start(start, end, &is_quoted))
-		return (false);
-	if (is_quoted)
+		*end = *current + grammar_rule_len;
+		*current = *current + grammar_rule_len;
 		return (true);
-	return (find_end(start, end));
+	}
+	startstatus = set_start(start);
+	if (startstatus == NOTFOUND)
+		return (false);
+	if (startstatus == FOUND_QUOTED_TEXT)
+	{
+		*end = find_closing_quote(*start - 1);
+		*current = *end + 1;
+		return (true);
+	}
+	else
+		return (set_end_and_current(current, start, end));
 }
