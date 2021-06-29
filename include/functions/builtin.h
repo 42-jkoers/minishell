@@ -14,4 +14,6 @@ void					builtin_cd_child(char *str);
 
 void					builtin_pwd_child(void *data);
 
+void					builtin_echo_child(const t_executable *data);
+
 #endif

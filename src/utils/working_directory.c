@@ -23,7 +23,7 @@ const char	*working_directory_get(void)
 
 // Not sure if i should also set the env, but hey, why not? :P
 
-bool	working_directory_set(char *path)
+bool	working_directory_set(const char *path)
 {
 	int	result;
 

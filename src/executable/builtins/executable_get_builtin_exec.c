@@ -2,10 +2,9 @@
 #include "t_executable.h"
 #include "builtin.h"
 
-static void	*builtin_null_main(const t_executable *command)
+static void	*builtin_null_main(const t_executable *executable)
 {
-	(void)command;
-	return (NULL);
+	return ((void *)executable);
 }
 
 static void	builtin_null_main_cleanup(void *data)
@@ -28,6 +27,12 @@ static const t_builtin_data	*get_builtin_data(void)
 			.exec_func.main_func = builtin_null_main,
 			.exec_func.main_cleanup_func = builtin_null_main_cleanup,
 			.exec_func.child_func = (t_builtin_child_func)builtin_pwd_child
+		},
+		(t_builtin_data){
+			.name = "echo",
+			.exec_func.main_func = builtin_null_main,
+			.exec_func.main_cleanup_func = builtin_null_main_cleanup,
+			.exec_func.child_func = (t_builtin_child_func)builtin_echo_child
 		},
 		(t_builtin_data){.name = NULL }
 	};

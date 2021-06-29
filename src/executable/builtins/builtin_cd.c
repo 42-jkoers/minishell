@@ -1,30 +1,42 @@
 #include "t_executable.h"
 #include "working_directory.h"
 #include "path_utils.h"
+#include "env.h"
+#include "ft_ternary.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 
+static bool	is_absolute_path(const char *path)
+{
+	return (path[0] == '/');
+}
+
+// Handle absolute and relative paths
+// Get target directory
+
 void	*builtin_cd_main(const t_executable *command)
 {
-	char	*path;
-	bool	success;
-	char	*dir;
+	char		*path;
+	bool		success;
+	char		*dir;
+	char		*ret;
 
 	if (!(command->args.count >= 1 && command->args.count <= 2))
-		return (ft_strdup("bash: cd: too many arguments\n"));
+		return (ft_strdup("minishell: cd: too many arguments\n"));
 	if (command->args.count == 1)
-		working_directory_set("~");
+		dir = env_get("HOME");
 	else
-	{
 		dir = *(char **)list_index(&command->args, 1);
+	if (is_absolute_path(dir))
+		path = ft_strdup(dir);
+	else
 		path = path_join(working_directory_get(), dir);
-		success = working_directory_set(path);
-		free(path);
-		if (!success)
-			return (ft_strjoin_va(3, "bash: cd: ", dir, ": No such file or dire"
-					"ctory\n"));
-	}
+	success = working_directory_set(path);
+	free(path);
+	if (!success)
+		return (ft_strjoin_va(3, "minishell: cd: ", dir, ": No such file or dir"
+				"ectory\n"));
 	return (NULL);
 }
 

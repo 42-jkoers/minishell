@@ -3,12 +3,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void	*malloc_check(void *ptr)
+{
+	if (ptr == NULL)
+		exit_with_error("malloc");
+	return (ptr);
+}
+
+void	*mc(void *ptr)
+{
+	return (malloc_check(ptr));
+}
+
 void	*ft_malloc(size_t size)
 {
-	void	*p;
-
-	p = malloc(size);
-	if (p == NULL)
-		exit_with_error("malloc");
-	return (p);
+	return (malloc_check(malloc(size)));
 }

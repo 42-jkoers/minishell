@@ -84,5 +84,24 @@ int	main(int argc, char** argv, const char** envp)
 	run(&executable);
 	run(&pwd_executable);
 
+	reset_executable(&executable, "cd");
+	run(&executable);
+	run(&pwd_executable);
+
+	executable_add_arg(&executable, "~/Desktop");
+	run(&executable);
+	run(&pwd_executable);
+
+	reset_executable(&executable, "cd");
+	executable_add_arg(&executable, "/dev");
+	run(&executable);
+	run(&pwd_executable);
+
+	reset_executable(&executable, "cd");
+	executable_add_arg(&executable, "~");
+	run(&executable);
+	run(&pwd_executable);
+
 	executable_un_init(&executable);
+	executable_un_init(&pwd_executable);
 }
