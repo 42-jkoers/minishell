@@ -6,7 +6,7 @@
 /*   By: jsimonis <jsimonis@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/06/16 17:49:35 by jsimonis      #+#    #+#                 */
-/*   Updated: 2021/06/29 16:00:06 by jsimonis      ########   odam.nl         */
+/*   Updated: 2021/06/30 14:53:51 by jsimonis      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ __attribute__((warn_unused_result));
 void			list_clear(t_list *list, const t_free_values free_values);
 void			list_foreach(const t_list *list,
 					const t_foreach_value foreach_value);
-void			list_foreach_data(const t_list *list, const void *data,
+void			list_foreach_data(const t_list *list, void *data,
 					const t_foreach_data_value foreach_data_value);
 
 #endif

@@ -12,7 +12,7 @@ void	list_foreach(const t_list *list, const t_foreach_value foreach_value)
 	}
 }
 
-void	list_foreach_data(const t_list *list, const void *data,
+void	list_foreach_data(const t_list *list, void *data,
 	const t_foreach_data_value foreach_data_value)
 {
 	size_t	i;
