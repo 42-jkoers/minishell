@@ -52,17 +52,18 @@ static void	remove_escape_characters(char *cmd)
 	}
 }
 
-static void	push_block(char *start, size_t len, t_list *blocks)
+static void
+	push_block(char *start, size_t len, t_list *blocks, t_blocktype blocktype)
 {
 	char	*block;
 
-	if (start[0] == '$')
-		block = getenv(start + 1);
-	else
-		block = ft_strndup_unsafe(start, len);
-	if (!block)
+	block = ft_strndup_unsafe(start, len);
+	if (blocktype == NORMAL)
+		remove_escape_characters(block);
+	if (blocktype != SINGLE_QUOTE)
+		expand_environment_variables(&block);
+	if (!block || !block[0])
 		return ;
-	remove_escape_characters(block);
 	list_push_safe(blocks, &block);
 }
 
@@ -70,16 +71,20 @@ static void	push_block(char *start, size_t len, t_list *blocks)
 // so ignore spaces between "" etc.
 static t_list	get_cmd_split(const char *cmd)
 {
-	char	*start;
-	char	*end;
-	char	*current;
-	t_list	blocks;
+	char		*start;
+	char		*end;
+	char		*current;
+	t_list		blocks;
+	t_blocktype	blocktype;
 
 	list_init_safe(&blocks, sizeof(char *));
 	current = (char *)cmd;
-	while (goto_next_split(&current, &start, &end))
+	while (true)
 	{
-		push_block(start, end - start, &blocks);
+		blocktype = goto_next_split(&current, &start, &end);
+		if (blocktype == NOTFOUND)
+			break ;
+		push_block(start, end - start, &blocks, blocktype);
 	}
 	return (blocks);
 }
@@ -91,6 +96,8 @@ t_list	command_read(void)
 	const char		*cmd = readline("minishell$ ");
 	t_list			cmd_split;
 
+	add_history(cmd);
 	cmd_split = get_cmd_split(cmd);
+	free(cmd);
 	return (cmd_split);
 }

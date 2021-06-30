@@ -3,8 +3,9 @@
 #include "malloc_wrappers.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "ft_ternary.h"
 
-static char	*find_closing_quote(const char *start)
+static char	*find_closing_quote(const char *start, char closing_quote)
 {
 	char	*current;
 	bool	escaped;
@@ -13,7 +14,7 @@ static char	*find_closing_quote(const char *start)
 	current = (char *)start + 1;
 	while (*current)
 	{
-		if (!escaped && *current == '"')
+		if (!escaped && *current == closing_quote)
 			return (current);
 		escaped = !escaped && *current == '\\';
 		current++;
@@ -22,14 +23,7 @@ static char	*find_closing_quote(const char *start)
 	return (NULL);
 }
 
-typedef enum e_startstatus
-{
-	NOTFOUND,
-	FOUND_START,
-	FOUND_QUOTED_TEXT,
-}			t_startstatus;
-
-static t_startstatus	set_start(char **start)
+static t_blocktype	set_start(char **start)
 {
 	bool	escaped;
 
@@ -39,12 +33,15 @@ static t_startstatus	set_start(char **start)
 		if (!escaped && **start == '"')
 		{
 			(*start)++;
-			return (FOUND_QUOTED_TEXT);
+			return (DOUBLE_QUOTE);
 		}
-		if (**start != ' ')
+		if (!escaped && **start == '\'')
 		{
-			return (FOUND_START);
+			(*start)++;
+			return (SINGLE_QUOTE);
 		}
+		if (!escaped && **start != ' ')
+			return (NORMAL);
 		escaped = !escaped && **start == '\\';
 		(*start)++;
 	}
@@ -60,7 +57,7 @@ static t_startstatus	set_start(char **start)
 static size_t	is_grammar_rule(const char *str)
 {
 	const char		*grammar_rules[] =
-	{">>", ">>", ">", "<", "|"};
+	{">>", "<<", ">", "<", "|"};
 	const size_t	grammer_rule_len[] =
 	{2, 2, 1, 1, 1};
 	size_t			i;
@@ -75,57 +72,60 @@ static size_t	is_grammar_rule(const char *str)
 	return (0);
 }
 
-static bool	set_end_and_current(char **current, char **start, char **end)
+static t_blocktype	set_end(char **current, char **start, char **end)
 {
 	bool	escaped;
 
 	if (!**start)
-		return (false);
+		return (NOTFOUND);
 	*end = *start + 1;
 	escaped = **start == '\\';
 	while (**end)
 	{
 		if (!escaped && is_grammar_rule(*end))
-			break ;
+		{
+			*current = *end;
+			return (GRAMMAR_RULE);
+		}
 		if (!escaped && **end == ' ')
 		{
 			*current = *end + 1;
-			return (true);
+			return (NORMAL);
 		}
-		escaped = !escaped && **end == '\\';
 		(*end)++;
 	}
 	*current = *end;
-	return (true);
+	return (NORMAL);
 }
 
 // @param **current		start reading from
 // @param **start		start of found block
 // @param **end			last char of block (exclusive)
-bool	goto_next_split(char **current, char **start, char **end)
+t_blocktype	goto_next_split(char **current, char **start, char **end)
 {
-	t_startstatus	startstatus;
+	t_blocktype		blocktype;
 	size_t			grammar_rule_len;
 
 	if (!**current)
-		return (false);
+		return (NOTFOUND);
 	*start = *current;
 	grammar_rule_len = is_grammar_rule(*current);
 	if (grammar_rule_len > 0)
 	{
 		*end = *current + grammar_rule_len;
 		*current = *current + grammar_rule_len;
-		return (true);
+		return (GRAMMAR_RULE);
 	}
-	startstatus = set_start(start);
-	if (startstatus == NOTFOUND)
-		return (false);
-	if (startstatus == FOUND_QUOTED_TEXT)
+	blocktype = set_start(start);
+	if (blocktype == NOTFOUND)
+		return (NOTFOUND);
+	if (blocktype == DOUBLE_QUOTE || blocktype == SINGLE_QUOTE)
 	{
-		*end = find_closing_quote(*start - 1);
+		*end = find_closing_quote(*start - 1,
+				ter_char(blocktype == DOUBLE_QUOTE, '"', '\''));
 		*current = *end + 1;
-		return (true);
+		return (blocktype);
 	}
-	else
-		return (set_end_and_current(current, start, end));
+	blocktype = set_end(current, start, end);
+	return (blocktype);
 }

@@ -3,7 +3,17 @@
 
 # include "ft_list.h"
 
-t_list	command_read(void);
-bool	goto_next_split(char **current, char **start, char **end);
+typedef enum e_blocktype
+{
+	NOTFOUND,
+	NORMAL,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	GRAMMAR_RULE,
+}			t_blocktype;
+
+t_list		command_read(void);
+t_blocktype	goto_next_split(char **current, char **start, char **end);
+void		expand_environment_variables(char **str);
 
 #endif

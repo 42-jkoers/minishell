@@ -5,6 +5,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "minishell.h"
+#include "env.h"
 
 void	print(const t_list *cmd)
 {
@@ -24,10 +25,13 @@ void	print(const t_list *cmd)
 	printf("}\n");
 }
 
-int	main(void)
+int	main(int argc, char** argv, const char** envp)
 {
 	t_list	cmd;
 
+	(void)argc;
+	(void)argv;
+	env_ptr_copy(envp);
 	while (true)
 	{
 		cmd = command_read();
