@@ -88,9 +88,11 @@ static t_list	get_cmd_split(const char *cmd)
 // returns malloced char* array with command split in spaces according to bash
 t_list	command_read(void)
 {
-	const char		*cmd = readline("minishell$ ");
-	t_list			cmd_split;
+	char	*cmd;
+	t_list	cmd_split;
 
+	cmd = readline("minishell$ ");
 	cmd_split = get_cmd_split(cmd);
+	free(cmd);
 	return (cmd_split);
 }
