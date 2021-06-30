@@ -3,8 +3,8 @@
 
 # include "ft_list.h"
 
-void	*malloc_check(void *ptr);
-// malloc_check shorthand
+void	*protect_malloc(void *ptr);
+// protect_malloc shorthand
 void	*mc(void *ptr);
 
 void	list_init_safe(t_list *list, size_t data_size);

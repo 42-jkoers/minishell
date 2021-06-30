@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	*malloc_check(void *ptr)
+void	*protect_malloc(void *ptr)
 {
 	if (ptr == NULL)
 		exit_with_error("malloc");
@@ -12,10 +12,10 @@ void	*malloc_check(void *ptr)
 
 void	*mc(void *ptr)
 {
-	return (malloc_check(ptr));
+	return (protect_malloc(ptr));
 }
 
 void	*ft_malloc(size_t size)
 {
-	return (malloc_check(malloc(size)));
+	return (protect_malloc(malloc(size)));
 }
