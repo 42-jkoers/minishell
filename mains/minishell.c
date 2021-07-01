@@ -19,7 +19,7 @@ static void executable_from_command(const t_list* cmd, t_executable* o_executabl
 
 int	main(int argc, char** argv, const char** envp)
 {
-	env_ptr_copy(envp);
+	env_copy_ptr(envp);
 	(void)argc;
 	(void)argv;
 

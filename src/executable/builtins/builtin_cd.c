@@ -1,11 +1,12 @@
 #include "t_executable.h"
 #include "working_directory.h"
-#include "path_utils.h"
+#include "utils.h"
 #include "env.h"
 #include "ft_ternary.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 static bool	is_absolute_path(const char *path)
 {
@@ -19,15 +20,14 @@ void	*builtin_cd_main(const t_executable *command)
 {
 	char		*path;
 	bool		success;
-	char		*dir;
-	char		*ret;
+	const char	*dir;
 
 	if (!(command->args.count >= 1 && command->args.count <= 2))
 		return (ft_strdup("minishell: cd: too many arguments\n"));
 	if (command->args.count == 1)
 		dir = env_get("HOME");
 	else
-		dir = *(char **)list_index(&command->args, 1);
+		dir = *(const char **)list_index(&command->args, 1);
 	if (is_absolute_path(dir))
 		path = ft_strdup(dir);
 	else
@@ -40,8 +40,9 @@ void	*builtin_cd_main(const t_executable *command)
 	return (NULL);
 }
 
-void	builtin_cd_main_cleanup(char *str)
+void	builtin_cd_main_cleanup(char *str, pid_t child_pid)
 {
+	(void)child_pid;
 	if (str != NULL)
 		free(str);
 }

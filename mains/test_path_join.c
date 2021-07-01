@@ -3,12 +3,12 @@
 #include "find_executable.h"
 #include "libft.h"
 #include "env.h"
-#include "path_utils.h"
+#include "utils.h"
 #include <stdio.h>
 
 int	main(int argc, char** argv, const char** envp)
 {
-	env_ptr_copy(envp);
+	env_copy_ptr(envp);
 
 	if (argc != 3)
 	{

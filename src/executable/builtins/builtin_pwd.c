@@ -1,6 +1,6 @@
 #include "t_executable.h"
 #include "working_directory.h"
-#include "path_utils.h"
+#include "utils.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>

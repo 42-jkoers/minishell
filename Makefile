@@ -1,7 +1,7 @@
 CC				= gcc
 
 #CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-CFLAGS			= -Wall -Wextra -Wuninitialized -Wno-error=unused-result -Wno-unused-result -g
+CFLAGS			= -Wall -Wextra -Wuninitialized -Werror -Wno-error=unused-result -Wno-unused-result -g
 
 MAIN_DIR		= mains
 SRCEXT		 	= c
@@ -12,7 +12,7 @@ BUILDDIR		= obj
 
 LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
-LINK			= -lreadline
+LINK			= -lreadline -lm
 
 MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
 NAMES = $(MAINS:$(MAIN_DIR)/%.c=%)

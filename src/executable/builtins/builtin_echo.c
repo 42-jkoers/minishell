@@ -1,6 +1,6 @@
 #include "t_executable.h"
 #include "working_directory.h"
-#include "path_utils.h"
+#include "utils.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -12,7 +12,7 @@ void	builtin_echo_child(const t_executable *data)
 
 	print_index = 1;
 	print_newline = true;
-	if (!ft_strncmp("-n", *(char **)list_index(&data->args, print_index), ~0))
+	if (print_index < data->args.count && !ft_strncmp("-n", *(char **)list_index(&data->args, print_index), ~0))
 	{
 		print_index++;
 		print_newline = false;

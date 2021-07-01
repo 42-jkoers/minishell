@@ -1,30 +1,33 @@
-#include <stddef.h>
 #include "libft.h"
+#include "ft_list.h"
 #include "minishell.h"
 #include "malloc_wrappers.h"
 
-char	***env_ptr(void)
+#include <stddef.h>
+#include <stdlib.h>
+
+t_list* env_ptr(void)
 {
-	static char	**env = NULL;
+	static t_list	env;
+	static bool		initialized = false;
+	if (!initialized)
+	{
+		initialized = true;
+		list_init(&env, sizeof(char*));
+	}
 
 	return (&env);
 }
 
-void	env_ptr_copy(char **envp)
+void	env_copy_ptr(const char **envp)
 {
-	size_t	size;
-	size_t	i;
-	char	**new_ptr;
+	t_list* env = env_ptr();
 
-	size = 0;
-	while (envp[size])
-		size++;
-	new_ptr = ft_malloc((size + 1) * sizeof(char *));
-	i = 0;
-	while (i <= size)
+	list_clear(env, free);
+	while (envp[0])
 	{
-		new_ptr[i] = ft_strdup(envp[i]);
-		i++;
+		list_push(env, &(char*){ft_strdup(envp[0])});
+		envp++;
 	}
-	*env_ptr() = new_ptr;
+	list_push(env, &(void*){ NULL });
 }
