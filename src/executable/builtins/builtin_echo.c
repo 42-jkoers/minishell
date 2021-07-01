@@ -12,7 +12,8 @@ void	builtin_echo_child(const t_executable *data)
 
 	print_index = 1;
 	print_newline = true;
-	if (print_index < data->args.count && !ft_strncmp("-n", *(char **)list_index(&data->args, print_index), ~0))
+	if (print_index < data->args.count && !ft_strncmp("-n", *(char **)
+			list_index(&data->args, print_index), ~0))
 	{
 		print_index++;
 		print_newline = false;

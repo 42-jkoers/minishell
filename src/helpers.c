@@ -6,7 +6,9 @@
 
 // This file contains functions that have no logical place yet
 
-__attribute__((noreturn))
+void	exit_with_error(const char *msg) \
+	__attribute__((noreturn));
+
 void	exit_with_error(const char *msg)
 {
 	printf("%s\n", msg);

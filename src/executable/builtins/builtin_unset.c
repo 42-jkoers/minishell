@@ -8,14 +8,17 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-static void parse_unset(char** ret, char** current)
+static void	parse_unset(char **ret, char **current)
 {
+	char	*prev;
+
 	if (is_valid_env_string(*current))
 		env_set(*current, NULL);
 	else
 	{
-		char* prev = *ret;
-		*ret = ft_strjoin_va(4, *ret, "minishell: unset: '", *current, "': not a valid identifier\n");
+		prev = *ret;
+		*ret = ft_strjoin_va(4, *ret, "minishell: unset: '", *current, "': not "
+				"a valid identifier\n");
 		if (prev)
 			free(prev);
 	}
@@ -23,10 +26,11 @@ static void parse_unset(char** ret, char** current)
 
 void	*builtin_unset_main(const t_executable *command)
 {
-	char* ret;
+	char	*ret;
 
 	ret = NULL;
-	list_foreach_range_data(&command->args, &ret, (t_range){.start = 1, .end = command->args.count}, (t_foreach_data_value)parse_unset);
+	list_foreach_range_data(&command->args, &ret, (t_range){.start = 1,
+		.end = command->args.count}, (t_foreach_data_value)parse_unset);
 	return (ret);
 }
 

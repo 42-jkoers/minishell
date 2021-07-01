@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static void log_env_data(char** variable)
+static void	log_env_data(char **variable)
 {
 	ft_putstr_fd(*variable, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
@@ -15,7 +15,7 @@ static void log_env_data(char** variable)
 void	builtin_env_child(void *data)
 {
 	(void)data;
-
-	list_foreach_range(env_ptr(), (t_range){.start = 0, .end = env_ptr()->count - 1}, (t_foreach_value)log_env_data);
+	list_foreach_range(env_ptr(), (t_range){.start = 0, .end = env_ptr()
+		->count - 1}, (t_foreach_value)log_env_data);
 	exit(0);
 }

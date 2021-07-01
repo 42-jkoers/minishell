@@ -45,19 +45,22 @@ static const t_builtin_data	g_builtin_data[] = {
 	(t_builtin_data){
 		.name = "unset",
 		.exec_func.main_func = builtin_unset_main,
-		.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)builtin_unset_main_cleanup,
+		.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)
+			builtin_unset_main_cleanup,
 		.exec_func.child_func = (t_builtin_child_func)builtin_unset_child
 	},
 	(t_builtin_data){
 		.name = "exit",
 		.exec_func.main_func = builtin_exit_main,
-		.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)builtin_exit_main_cleanup,
+		.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)
+			builtin_exit_main_cleanup,
 		.exec_func.child_func = (t_builtin_child_func)builtin_exit_child
 	},
 	(t_builtin_data){
 		.name = "export",
 		.exec_func.main_func = builtin_export_main,
-		.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)builtin_export_main_cleanup,
+		.exec_func.main_cleanup_func = (t_builtin_main_cleanup_func)
+			builtin_export_main_cleanup,
 		.exec_func.child_func = (t_builtin_child_func)builtin_export_child
 	},
 	(t_builtin_data){.name = NULL }

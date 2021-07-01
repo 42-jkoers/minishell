@@ -3,8 +3,8 @@
 
 typedef struct s_exit_data
 {
-	int exit_code;
-	char* print;
+	int		exit_code;
+	char	*print;
 }	t_exit_data;
 
 #endif

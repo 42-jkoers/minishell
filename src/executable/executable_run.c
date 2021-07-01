@@ -46,10 +46,12 @@ static void	close_fd(int *fd)
 	close(*fd);
 }
 
-__attribute__((noreturn))
-static void unknown_command_exit(const t_executable *executable)
+static void	unknown_command_exit(const t_executable *executable) \
+	__attribute__((noreturn));
+
+static void	unknown_command_exit(const t_executable *executable)
 {
-	ft_putstr_fd(*(char**)list_index(&executable->args, 0), STDERR_FILENO);
+	ft_putstr_fd(*(char **)list_index(&executable->args, 0), STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	exit(127);
 }
@@ -77,6 +79,7 @@ pid_t	executable_run(const t_executable *executable)
 	if (exec_data != NULL)
 		exec_data->child_func(builtin_data);
 	else
-		execve(executable->executable_path, convert_args_list(&executable->args), env_ptr()->data);
+		execve(executable->executable_path,
+			convert_args_list(&executable->args), env_ptr()->data);
 	unknown_command_exit(executable);
 }
