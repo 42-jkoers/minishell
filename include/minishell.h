@@ -4,6 +4,8 @@
 # include <stddef.h>
 # include "libft.h"
 # include "ft_list.h"
+# define DO_ESCAPE 0
+# define EVALUATE_ESCAPED_CHARS 0
 
 // See https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
 

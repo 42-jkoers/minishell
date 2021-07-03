@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#define EVALUATE_ESCAPED_CHARS 0
 
 static void	escaped_to_ascii(char *c)
 {
@@ -47,7 +46,7 @@ void	remove_escape_characters(char *cmd)
 			ft_memmove(cmd + i, cmd + i + 1, len - i);
 			len -= 1;
 		}
-		escaped = !escaped && cmd[i] == '\\';
+		escaped = DO_ESCAPE && !escaped && cmd[i] == '\\';
 		i++;
 	}
 }

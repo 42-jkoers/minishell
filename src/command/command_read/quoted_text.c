@@ -15,7 +15,7 @@ static char	*find_closing_quote(const char *start, char closing_quote)
 	{
 		if (!escaped && *current == closing_quote)
 			return (current);
-		escaped = !escaped && *current == '\\';
+		escaped = DO_ESCAPE && !escaped && *current == '\\';
 		current++;
 	}
 	return (NULL);

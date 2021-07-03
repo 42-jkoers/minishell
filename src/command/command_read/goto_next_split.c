@@ -24,7 +24,7 @@ static t_blocktype	set_start(char **start)
 		}
 		if (!escaped && **start != ' ')
 			return (NORMAL);
-		escaped = !escaped && **start == '\\';
+		escaped = DO_ESCAPE && !escaped && **start == '\\';
 		(*start)++;
 	}
 	return (NOTFOUND);
@@ -61,7 +61,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 	if (!**start)
 		return (NOTFOUND);
 	*end = *start + 1;
-	escaped = **start == '\\';
+	escaped = DO_ESCAPE && **start == '\\';
 	while (**end)
 	{
 		if (!escaped && is_grammar_rule(*end))
@@ -74,6 +74,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 			*current = *end + 1;
 			return (NORMAL);
 		}
+		escaped = DO_ESCAPE && !escaped && **start == '\\';
 		(*end)++;
 	}
 	*current = *end;

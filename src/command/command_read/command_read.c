@@ -12,7 +12,7 @@ static void
 	char	*block;
 
 	block = ft_strndup_unsafe(start, len);
-	if (blocktype == NORMAL)
+	if (DO_ESCAPE && blocktype == NORMAL)
 		remove_escape_characters(block);
 	if (blocktype != SINGLE_QUOTE)
 		expand_environment_variables(&block);

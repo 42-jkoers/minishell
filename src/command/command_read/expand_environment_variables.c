@@ -62,7 +62,7 @@ void	expand_environment_variables(char **str)
 			continue ;
 		}
 		list_push_safe(&expanded, *str + i);
-		escaped = !escaped && (*str)[i] == '\\';
+		escaped = DO_ESCAPE && !escaped && (*str)[i] == '\\';
 		i++;
 	}
 	free(*str);
