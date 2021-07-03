@@ -5,52 +5,6 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#define EVALUATE_ESCAPED_CHARS 0
-
-static void	escaped_to_ascii(char *c)
-{
-	const char	typed[] =
-	{'a', 'b', 'e', 'f', 'n', 'r', 't', 'v', '?', };
-	const char	escaped[] =
-	{'\a', '\b', '\e', '\f', '\n', '\r', '\t', '\v', '\?', };
-	size_t		i;
-
-	i = 0;
-	while (i < sizeof(typed) / sizeof(typed[0]))
-	{
-		if (*c == typed[i])
-		{
-			*c = escaped[i];
-			return ;
-		}
-		i++;
-	}
-}
-
-// eg. "a\ aa" --> "a aa"
-//     "\\a" --> "\a"
-static void	remove_escape_characters(char *cmd)
-{
-	size_t	i;
-	bool	escaped;
-	size_t	len;
-
-	len = ft_strlen(cmd);
-	escaped = false;
-	i = 0;
-	while (i < len)
-	{
-		if (!escaped && cmd[i] == '\\')
-		{
-			if (EVALUATE_ESCAPED_CHARS)
-				escaped_to_ascii(cmd + i + 1);
-			ft_memmove(cmd + i, cmd + i + 1, len - i);
-			len -= 1;
-		}
-		escaped = !escaped && cmd[i] == '\\';
-		i++;
-	}
-}
 
 static void
 	push_block(char *start, size_t len, t_list *blocks, t_blocktype blocktype)
@@ -84,7 +38,7 @@ static t_list	get_cmd_split(const char *cmd)
 		blocktype = goto_next_split(&current, &start, &end);
 		if (blocktype == NO_CLOSING_QUOTE)
 		{
-			list_un_init(&blocks, free);
+			list_un_init_charp(&blocks);
 			blocks.count = 0;
 			return (blocks);
 		}

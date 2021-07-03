@@ -12,5 +12,6 @@ void exit_with_error(const char *msg);
 char	*ft_strndup_unsafe(const char *str, size_t len);
 t_list	command_read(void);
 void	list_push_safe(t_list *list, const void *value);
+void	list_un_init_charp(t_list *list);
 
 #endif

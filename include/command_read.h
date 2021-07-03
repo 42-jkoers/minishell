@@ -19,5 +19,6 @@ void		expand_environment_variables(char **str);
 
 t_blocktype	handle_quoted_block(char **current, char **start, char **end,
 				t_blocktype blocktype);
+void		remove_escape_characters(char *cmd);
 
 #endif

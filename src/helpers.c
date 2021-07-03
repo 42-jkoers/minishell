@@ -24,3 +24,16 @@ char	*ft_strndup_unsafe(const char *str, size_t len)
 	dup[len] = '\0';
 	return (dup);
 }
+
+void	list_un_init_charp(t_list *list)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < list->count)
+	{
+		free(((char **)list->data)[i]);
+		i++;
+	}
+	free(list->data);
+}
