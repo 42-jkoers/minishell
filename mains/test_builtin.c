@@ -53,19 +53,46 @@ static void reset_executable(t_executable* executable, const char* new_command)
 
 int	main(int argc, char** argv, const char** envp)
 {
-	env_ptr_copy(envp);
+	env_copy_ptr(envp);
 	(void)argc;
 	(void)argv;
 
 	t_executable	pwd_executable;
 	t_executable	executable;
 
+
 	executable_init(&pwd_executable, "pwd");
+
+
+	// env
+	executable_init(&executable, "env");
+	run(&executable);
+
+	// ls
+	reset_executable(&executable, "ls");
+	run(&executable);
+
+	// unset PATH
+	reset_executable(&executable, "unset");
+	executable_add_arg(&executable, "PATH");
+	run(&executable);
+
+	// unset PATH "Bad name"
+	executable_add_arg(&executable, "Bad name");
+	run(&executable);
+
+	// ls
+	reset_executable(&executable, "ls");
+	run(&executable);
+
+	// env
+	reset_executable(&executable, "env");
+	run(&executable);
 
 	run(&pwd_executable);
 
 	// cd mains
-	executable_init(&executable, "cd");
+	reset_executable(&executable, "cd");
 	executable_add_arg(&executable, "mains");
 	run(&executable);
 	run(&pwd_executable);
@@ -88,17 +115,8 @@ int	main(int argc, char** argv, const char** envp)
 	run(&executable);
 	run(&pwd_executable);
 
-	executable_add_arg(&executable, "~/Desktop");
-	run(&executable);
-	run(&pwd_executable);
-
 	reset_executable(&executable, "cd");
 	executable_add_arg(&executable, "/dev");
-	run(&executable);
-	run(&pwd_executable);
-
-	reset_executable(&executable, "cd");
-	executable_add_arg(&executable, "~");
 	run(&executable);
 	run(&pwd_executable);
 

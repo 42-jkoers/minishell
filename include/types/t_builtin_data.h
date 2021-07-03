@@ -3,8 +3,10 @@
 
 # include "t_executable.h"
 
+# include <sys/types.h>
+
 typedef void*	(*t_builtin_main_func)(const t_executable* command);
-typedef void	(*t_builtin_main_cleanup_func)(void* data);
+typedef void	(*t_builtin_main_cleanup_func)(void* data, pid_t child_pid);
 typedef void	(*t_builtin_child_func)(void* data);
 
 typedef struct s_builtin_exec

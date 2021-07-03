@@ -12,7 +12,7 @@
 
 int	main(int argc, char** argv, const char** envp)
 {
-	env_ptr_copy(envp);
+	env_copy_ptr(envp);
 	(void)argc;
 	(void)argv;
 

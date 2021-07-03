@@ -31,7 +31,7 @@ int	main(int argc, char** argv, const char** envp)
 
 	(void)argc;
 	(void)argv;
-	env_ptr_copy(envp);
+	env_copy_ptr(envp);
 	while (true)
 	{
 		cmd = command_read();

@@ -1,5 +1,6 @@
 #include "libft.h"
 #include "working_directory.h"
+#include "env.h"
 
 #include <stdlib.h>
 #include <sys/types.h>
@@ -85,15 +86,15 @@ static char	*get_direct_path(const char *name)
 
 char	*find_executable_path(const char *name)
 {
-	size_t	i;
-	char	*path_env;
-	char	**split;
-	char	*result;
+	size_t		i;
+	const char	*path_env;
+	char		**split;
+	char		*result;
 
 	result = get_direct_path(name);
 	if (result)
 		return (result);
-	path_env = getenv("PATH");
+	path_env = env_get("PATH");
 	if (!path_env)
 		return (NULL);
 	split = ft_split(path_env, ':');

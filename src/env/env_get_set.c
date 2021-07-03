@@ -6,37 +6,34 @@
 #include "malloc_wrappers.h"
 
 // add a new entry to the env path
-static void	env_new(char *data)
-{
-	size_t	prev_size;
-	char	**ptr;
-	char	**new_ptr;
+// We must keep a null pointer at the end, so insert it at the null pointer
 
-	ptr = *env_ptr();
-	prev_size = 0;
-	while (ptr[prev_size])
-		prev_size++;
-	new_ptr = ft_malloc((prev_size + 2) * sizeof(char *));
-	ft_memcpy(new_ptr, ptr, prev_size * sizeof(char *));
-	new_ptr[prev_size] = data;
-	new_ptr[prev_size + 1] = NULL;
-	free(ptr);
-	*env_ptr() = new_ptr;
+static void	env_add(char *data)
+{
+	t_list	*env;
+
+	env = env_ptr();
+	list_insert(env, env->count - 1, &data);
 }
 
 // Returns a reference to where this variable is stored
 static char	**env_ref(const char *name)
 {
+	t_list	*env;
+	char	*current;
 	size_t	strlen;
-	char	**ptr;
+	size_t	i;
 
-	ptr = *env_ptr();
+	env = env_ptr();
 	strlen = ft_strlen(name);
-	while (*ptr)
+	i = 0;
+	while (i < env->count)
 	{
-		if (ft_strncmp(*ptr, name, strlen) == 0 && (*ptr)[strlen] == '=')
-			return (ptr);
-		ptr++;
+		current = *(char **)list_index(env, i);
+		if (current && ft_strncmp(current, name, strlen) == 0
+			 && current[strlen] == '=')
+			return (list_index(env, i));
+		i++;
 	}
 	return (NULL);
 }
@@ -59,8 +56,12 @@ void	env_set(const char *name, const char *new_value)
 	if (ref)
 	{
 		free(*ref);
-		*ref = ft_strjoin_va(3, name, "=", new_value);
+		if (new_value == NULL)
+			list_remove(env_ptr(), list_reverse_index_unchecked(env_ptr(), ref))
+			;
+		else
+			*ref = ft_strjoin_va(3, name, "=", new_value);
 	}
-	else
-		env_new(ft_strjoin_va(3, name, "=", new_value));
+	else if (new_value)
+		env_add(ft_strjoin_va(3, name, "=", new_value));
 }
