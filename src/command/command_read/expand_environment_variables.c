@@ -5,31 +5,30 @@
 #include <stdlib.h>
 #include "env.h"
 
-// expect str starting with '$'
+// expect env starting with first char after '$'
 static size_t	env_command_length(const char *str)
 {
 	size_t	i;
 
-	i = 1;
-	while (str[i])
-	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_'))
-			return (i);
+	i = 0;
+	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
-	}
 	return (i);
 }
 
-// expect env starting with '$'
+// expect env starting with first char after '$'
 static size_t	expand_and_push(char *env, t_list *expanded)
 {
 	const size_t	env_len = env_command_length(env);
-	const char		last_char = env[env_len];
+	char			last_char;
 	char			*to_push;
 	size_t			i;
 
+	if (env_len == 0)
+		return (0);
+	last_char = env[env_len];
 	env[env_len] = '\0';
-	to_push = (char *)env_get(env + 1);
+	to_push = (char *)env_get(env);
 	env[env_len] = last_char;
 	if (!to_push)
 		return (env_len);
@@ -54,17 +53,17 @@ void	expand_environment_variables(char **str)
 	list_init_safe(&expanded, sizeof(char));
 	escaped = false;
 	i = 0;
-	while (*str[i])
+	while ((*str)[i])
 	{
-		if (!escaped && *str[i] == '$')
+		if (!escaped && (*str)[i] == '$')
 		{
-			i += expand_and_push(*str + i, &expanded);
-			escaped = *str[i - 1] == '\\';
+			i += 1 + expand_and_push(*str + i + 1, &expanded);
+			escaped = false;
 			continue ;
 		}
-		list_push_safe(&expanded, *str + 1);
+		list_push_safe(&expanded, *str + i);
+		escaped = !escaped && (*str)[i] == '\\';
 		i++;
-		escaped = !escaped && *str[i] == '\\';
 	}
 	free(*str);
 	list_push(&expanded, "");
