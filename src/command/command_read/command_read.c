@@ -82,6 +82,12 @@ static t_list	get_cmd_split(const char *cmd)
 	while (true)
 	{
 		blocktype = goto_next_split(&current, &start, &end);
+		if (blocktype == NO_CLOSING_QUOTE)
+		{
+			list_un_init(&blocks, free);
+			blocks.count = 0;
+			return (blocks);
+		}
 		if (blocktype == NOTFOUND)
 			break ;
 		push_block(start, end - start, &blocks, blocktype);
@@ -96,9 +102,16 @@ t_list	command_read(void)
 	char	*cmd;
 	t_list	cmd_split;
 
-	cmd = readline("minishell$ ");
-	add_history(cmd);
-	cmd_split = get_cmd_split(cmd);
-	free(cmd);
+	while (true)
+	{
+		cmd = readline("minishell$ ");
+		if (!cmd)
+			exit(0);
+		add_history(cmd);
+		cmd_split = get_cmd_split(cmd);
+		free(cmd);
+		if (cmd_split.count > 0)
+			break ;
+	}
 	return (cmd_split);
 }

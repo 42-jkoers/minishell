@@ -5,24 +5,6 @@
 #include <stdlib.h>
 #include "ft_ternary.h"
 
-static char	*find_closing_quote(const char *start, char closing_quote)
-{
-	char	*current;
-	bool	escaped;
-
-	escaped = *start == '\\';
-	current = (char *)start + 1;
-	while (*current)
-	{
-		if (!escaped && *current == closing_quote)
-			return (current);
-		escaped = !escaped && *current == '\\';
-		current++;
-	}
-	exit_with_error("Invalid command: missing closing quote");
-	return (NULL);
-}
-
 static t_blocktype	set_start(char **start)
 {
 	bool	escaped;
@@ -120,12 +102,7 @@ t_blocktype	goto_next_split(char **current, char **start, char **end)
 	if (blocktype == NOTFOUND)
 		return (NOTFOUND);
 	if (blocktype == DOUBLE_QUOTE || blocktype == SINGLE_QUOTE)
-	{
-		*end = find_closing_quote(*start - 1,
-				ter_char(blocktype == DOUBLE_QUOTE, '"', '\''));
-		*current = *end + 1;
-		return (blocktype);
-	}
+		return (handle_quoted_block(current, start, end, blocktype));
 	blocktype = set_end(current, start, end);
 	return (blocktype);
 }
