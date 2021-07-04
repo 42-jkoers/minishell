@@ -78,7 +78,7 @@ pid_t	executable_run(const t_executable *executable)
 	list_foreach(&executable->child_close_fds, (const t_foreach_value)close_fd);
 	if (exec_data != NULL)
 		exec_data->child_func(builtin_data);
-	else
+	else if (executable->executable_path)
 		execve(executable->executable_path,
 			convert_args_list(&executable->args), env_ptr()->data);
 	unknown_command_exit(executable);

@@ -41,7 +41,7 @@ int	main(int argc, char **argv, const char **envp)
 	{
 		cmd = command_read();
 		executable_from_command(&cmd, &executable);
-		list_un_init_ptr(&cmd);
+		//list_un_init_ptr(&cmd);
 		pid = executable_run(&executable);
 		waitpid(pid, &status, 0);
 		executable_un_init(&executable);
