@@ -25,15 +25,12 @@ char	*ft_strndup_unsafe(const char *str, size_t len)
 	return (dup);
 }
 
+static void	free_charptr(char **ptr)
+{
+	free(*ptr);
+}
+
 void	list_un_init_charp(t_list *list)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < list->count)
-	{
-		free(((char **)list->data)[i]);
-		i++;
-	}
-	free(list->data);
+	list_un_init(list, (t_free_values)free_charptr);
 }
