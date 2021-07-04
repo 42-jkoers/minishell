@@ -38,7 +38,7 @@ static t_list	get_cmd_split(const char *cmd)
 		blocktype = goto_next_split(&current, &start, &end);
 		if (blocktype == NO_CLOSING_QUOTE)
 		{
-			list_un_init_charp(&blocks);
+			list_un_init_ptr(&blocks);
 			blocks.count = 0;
 			return (blocks);
 		}
