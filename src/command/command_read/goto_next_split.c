@@ -22,7 +22,7 @@ static t_blocktype	set_start(char **start)
 			(*start)++;
 			return (SINGLE_QUOTE);
 		}
-		if (!escaped && **start != ' ')
+		if (!escaped && !ft_isspace(**start))
 			return (NORMAL);
 		escaped = DO_ESCAPE && !escaped && **start == '\\';
 		(*start)++;
@@ -69,7 +69,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 			*current = *end;
 			return (GRAMMAR_RULE);
 		}
-		if (!escaped && **end == ' ')
+		if (!escaped && ft_isspace(**end))
 		{
 			*current = *end + 1;
 			return (NORMAL);

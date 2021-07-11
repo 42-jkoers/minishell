@@ -49,7 +49,7 @@ static t_list	get_cmd_split(const char *cmd)
 	return (blocks);
 }
 
-// read command from user
+// read non-empty command from user
 // returns malloced char* array with command split in spaces according to bash
 t_list	command_read(void)
 {
