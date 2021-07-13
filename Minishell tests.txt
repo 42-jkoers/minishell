@@ -13,30 +13,31 @@ minishell tests:
 		odd file descriptor
 		[n0]<&[n1] and [n0]<&[n1]
 			when having a - at the end [n1] is closed after being duplicated to [n0]
-		
+
 		order of redirections is significant:
 		ls > test_file 2>&1	// both standard input and standard error are put into test_file
 		ls 2>&1 > test_file	// standard output is put into test_file, standard error is put into standard_output
-		
+
 		>/dev/stderr and >/dev/stdout
 		&>word and >&word = stdout and stderr go into word
 		&>>word = stdout and stderr go into word, but >>&word does not work? (double check it)
 	control D, C, and \
-	
+
 	escape command separators:
 		echo test \| grep te	// no pipe
 		echo test | grep te		// yes pipe
 		also with > >> < and <<
-	
+
 	Incomplete quotes
-	
-	PATH=$PATH:test
+
+	export PATH=$PATH:test
 	cd $HOME
-	~:
-		~ = $HOME
-		~/test = $HOME/test
-		~test = ~test
-	
+
 	things that are technically in the subject but shouln't be:
 		echo "!."
 		echo hey > /dev/tcp/host/port
+
+	Maybe ~:
+		~ = $HOME
+		~/test = $HOME/test
+		~test = ~test

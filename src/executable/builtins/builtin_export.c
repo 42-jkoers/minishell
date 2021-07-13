@@ -28,7 +28,7 @@ static void	log_env_data(char **variable)
 		i = 1;
 		while (eq[i])
 		{
-			if (eq[i] == '\'')
+			if (eq[i] == '\'' || eq[i] == '\\')
 				ft_putchar_fd('\\', STDOUT_FILENO);
 			ft_putchar_fd(eq[i], STDOUT_FILENO);
 			i++;
