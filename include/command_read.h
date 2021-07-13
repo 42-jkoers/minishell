@@ -50,7 +50,6 @@ t_blocktype		goto_next_split(char **current, char **start, char **end);
 void			expand_environment_variables(char **str);
 t_blocktype		handle_quoted_block(char **current, char **start, char **end,
 					t_blocktype blocktype);
-void			remove_escape_characters(char *cmd);
 t_grammarinfo	get_block_info(const char *str);
 bool			command_contains_invalid_grammar_rule(const t_list *cmd);
 void			push_execs(t_list *execs, const t_list *cmd);
