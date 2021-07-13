@@ -4,34 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static char	*find_closing_quote(const char *start, char closing_quote)
-{
-	char	*current;
-	bool	escaped;
-
-	escaped = false;
-	current = (char *)start;
-	while (*current)
-	{
-		if (!escaped && *current == closing_quote)
-			return (current);
-		escaped = DO_ESCAPE && !escaped && *current == '\\';
-		current++;
-	}
-	return (NULL);
-}
-
 // assuming that **start is first char after the starting quote
 t_blocktype	handle_quoted_block(char **current, char **start, char **end,
 				t_blocktype blocktype)
 {
 	const char	quote = *(*start - 1);
 
-	*end = find_closing_quote(*start, quote);
-	if (!*end)
+	*end = ft_strchr(*start, quote);
+	if (!end)
 	{
 		printf("WARNING: no closing %c found\n", quote);
-		return (NO_CLOSING_QUOTE);
+		return (B_NO_CLOSING_QUOTE);
 	}
 	*current = *end + 1;
 	return (blocktype);
