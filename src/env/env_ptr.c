@@ -14,7 +14,7 @@ t_list	*env_ptr(void)
 	if (!initialized)
 	{
 		initialized = true;
-		list_init(&env, sizeof(char *));
+		list_init_safe(&env, sizeof(char *));
 	}
 	return (&env);
 }
@@ -27,8 +27,8 @@ void	env_copy_ptr(const char **envp)
 	list_clear(env, free);
 	while (envp[0])
 	{
-		list_push(env, &(char *){ft_strdup(envp[0])});
+		list_push_safe(env, &(char *){ft_strdup(envp[0])});
 		envp++;
 	}
-	list_push(env, &(void *){NULL });
+	list_push_safe(env, &(void *){NULL });
 }

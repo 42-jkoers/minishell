@@ -66,6 +66,6 @@ void	expand_environment_variables(char **str)
 		i++;
 	}
 	free(*str);
-	list_push(&expanded, "");
+	list_push_safe(&expanded, "");
 	*str = ((char *)expanded.data);
 }
