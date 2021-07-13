@@ -33,7 +33,7 @@ static void	push_redirect(
 		r = (t_redirect){STDOUT_FILENO, r_write};
 	else if (type == B_DOUBLE_LESSER)
 		r = (t_redirect){STDIN_FILENO, r_read};
-	else if (type == B_GREATER)
+	else if (type == B_LESSER)
 		r = (t_redirect){STDIN_FILENO, r_read};
 	if (!executable_add_fd_file_redirect(left, r.base_fd, path, r.mode))
 		exit_with_error("File could not be opened");
@@ -65,8 +65,8 @@ static void	push_pipe_block(t_list *execs, const t_list *cmd, size_t *offset)
 	t_executable	*right;
 
 	(*offset)++;
-	left = list_index_unchecked(execs, execs->count - 1);
 	push_exec(execs, cmd, offset);
+	left = list_index_unchecked(execs, execs->count - 2);
 	right = list_index_unchecked(execs, execs->count - 1);
 	executable_add_pipe(left, right);
 }
