@@ -9,30 +9,15 @@
 #include "env.h"
 #include "minishell.h"
 #include "executable.h"
+#include "find_executable.h"
+#include "command_read.h"
+#include "malloc_wrappers.h"
 
-static void	executable_from_command(const t_list *cmd, t_executable *
-	o_executable)
-{
-	size_t	i;
-
-	executable_init(o_executable, *(char **)list_index(cmd, 0));
-	i = 1;
-	while (i < cmd->count)
-	{
-		executable_add_arg(o_executable, *(char **)list_index(cmd, i));
-		i++;
-	}
-}
-
-//list_un_init(&cmd, free);
-//list_un_init(&cmd, free);
-
+// TODO: exit code??
 int	main(int argc, char **argv, const char **envp)
 {
-	t_executable	executable;
-	pid_t			pid;
 	t_list			cmd;
-	int				status;
+	t_command_type	type;
 
 	env_copy_ptr(envp);
 	(void)argc;
@@ -40,10 +25,9 @@ int	main(int argc, char **argv, const char **envp)
 	while (true)
 	{
 		cmd = command_read();
-		executable_from_command(&cmd, &executable);
-		pid = executable_run(&executable);
-		waitpid(pid, &status, 0);
-		executable_un_init(&executable);
-		list_un_init_ptr(&cmd);
+		type = identify_command(&cmd);
+		if (type == C_EXECTUTABLE)
+			run_command_as_executable(&cmd);
+		command_read_destroy(&cmd);
 	}
 }

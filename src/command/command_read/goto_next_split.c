@@ -7,78 +7,65 @@
 
 static t_blocktype	set_start(char **start)
 {
-	bool	escaped;
-
-	escaped = false;
 	while (**start)
 	{
-		if (!escaped && **start == '"')
+		if (**start == '"')
 		{
 			(*start)++;
-			return (DOUBLE_QUOTE);
+			return (B_DOUBLE_QUOTE);
 		}
-		if (!escaped && **start == '\'')
+		if (**start == '\'')
 		{
 			(*start)++;
-			return (SINGLE_QUOTE);
+			return (B_SINGLE_QUOTE);
 		}
-		if (!escaped && **start != ' ')
-			return (NORMAL);
-		escaped = DO_ESCAPE && !escaped && **start == '\\';
+		if (!ft_isspace(**start))
+			return (B_NORMAL);
 		(*start)++;
 	}
-	return (NOTFOUND);
+	return (B_END);
 }
 
-// @return	length of the matched grammer rule, 0 if not a grammer rule
-// match >, >>, | etc
-// WARNING: when updating grammar_rules, also update grammer_rule_len
-// WARNINC: It is important that the longest grammar rule comes first in the
+// WARNING: It is important that the longest grammar rule comes first in the
 //          array. Eg: "echo "a" >> x" matches ">" as seperator, when it should
 //          match ">>"
-static size_t	is_grammar_rule(const char *str)
-{
-	const char		*grammar_rules[] =
-	{">>", "<<", ">", "<", "|"};
-	const size_t	grammer_rule_len[] =
-	{2, 2, 1, 1, 1};
-	size_t			i;
 
-	i = 0;
-	while (i < sizeof(grammar_rules) / sizeof(grammar_rules[0]))
-	{
-		if (!ft_strncmp(str, grammar_rules[i], grammer_rule_len[i]))
-			return (grammer_rule_len[i]);
-		i++;
-	}
-	return (0);
+t_grammarinfo	get_block_info(const char *str)
+{
+	if (!ft_strncmp(str, ">>", 2))
+		return ((t_grammarinfo){B_DOUBLE_GREATER, 2});
+	if (!ft_strncmp(str, "<<", 2))
+		return ((t_grammarinfo){B_DOUBLE_LESSER, 2});
+	if (!ft_strncmp(str, ">", 1))
+		return ((t_grammarinfo){B_GREATER, 1});
+	if (!ft_strncmp(str, "<", 1))
+		return ((t_grammarinfo){B_LESSER, 1});
+	if (!ft_strncmp(str, "|", 1))
+		return ((t_grammarinfo){B_PIPE, 1});
+	return ((t_grammarinfo){B_TEXT, 0});
 }
 
 static t_blocktype	set_end(char **current, char **start, char **end)
 {
-	bool	escaped;
-
 	if (!**start)
-		return (NOTFOUND);
+		return (B_END);
 	*end = *start + 1;
-	escaped = DO_ESCAPE && **start == '\\';
 	while (**end)
 	{
-		if (!escaped && is_grammar_rule(*end))
+		if ((get_block_info(*end)).type & B_GRAMMAR_RULE)
 		{
 			*current = *end;
-			return (GRAMMAR_RULE);
+			return ((get_block_info(*end)).type);
 		}
-		if (!escaped && **end == ' ')
+		if (ft_isspace(**end))
 		{
 			*current = *end + 1;
-			return (NORMAL);
+			return (B_NORMAL);
 		}
-		escaped = DO_ESCAPE && !escaped && **start == '\\';
 		(*end)++;
 	}
 	*current = *end;
-	return (NORMAL);
+	return (B_NORMAL);
 }
 
 // @param **current		start reading from
@@ -87,22 +74,22 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 t_blocktype	goto_next_split(char **current, char **start, char **end)
 {
 	t_blocktype		blocktype;
-	size_t			grammar_rule_len;
+	t_grammarinfo	properies;
 
 	if (!**current)
-		return (NOTFOUND);
+		return (B_END);
 	*start = *current;
-	grammar_rule_len = is_grammar_rule(*current);
-	if (grammar_rule_len > 0)
+	properies = get_block_info(*start);
+	if (properies.type & B_GRAMMAR_RULE)
 	{
-		*end = *current + grammar_rule_len;
-		*current = *current + grammar_rule_len;
-		return (GRAMMAR_RULE);
+		*end = *current + properies.len;
+		*current = *current + properies.len;
+		return (properies.type);
 	}
 	blocktype = set_start(start);
-	if (blocktype == NOTFOUND)
-		return (NOTFOUND);
-	if (blocktype == DOUBLE_QUOTE || blocktype == SINGLE_QUOTE)
+	if (blocktype & (B_ERROR | B_END))
+		return (blocktype);
+	if (blocktype == B_SINGLE_QUOTE || blocktype == B_DOUBLE_QUOTE)
 		return (handle_quoted_block(current, start, end, blocktype));
 	blocktype = set_end(current, start, end);
 	return (blocktype);

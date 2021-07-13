@@ -9,14 +9,15 @@
 static void
 	push_block(char *start, size_t len, t_list *blocks, t_blocktype blocktype)
 {
-	char	*block;
+	t_block	block;
 
-	block = ft_strndup_unsafe(start, len);
-	if (DO_ESCAPE && blocktype == NORMAL)
-		remove_escape_characters(block);
-	if (blocktype != SINGLE_QUOTE)
-		expand_environment_variables(&block);
-	if (!block || !block[0])
+	block.text = ft_strndup_unsafe(start, len);
+	block.type = blocktype;
+	if (DO_ESCAPE && blocktype == B_NORMAL)
+		remove_escape_characters(block.text);
+	if (blocktype != B_SINGLE_QUOTE)
+		expand_environment_variables(&block.text);
+	if (!block.text || !block.text[0])
 		return ;
 	list_push_safe(blocks, &block);
 }
@@ -31,25 +32,35 @@ static t_list	get_cmd_split(const char *cmd)
 	t_list		blocks;
 	t_blocktype	blocktype;
 
-	list_init_safe(&blocks, sizeof(char *));
+	list_init_safe(&blocks, sizeof(t_block));
 	current = (char *)cmd;
 	while (true)
 	{
 		blocktype = goto_next_split(&current, &start, &end);
-		if (blocktype == NO_CLOSING_QUOTE)
+		if (blocktype & B_ERROR)
 		{
-			list_un_init_ptr(&blocks);
+			command_read_destroy(&blocks);
 			blocks.count = 0;
 			return (blocks);
 		}
-		if (blocktype == NOTFOUND)
+		if (blocktype == B_END)
 			break ;
 		push_block(start, end - start, &blocks, blocktype);
 	}
 	return (blocks);
 }
 
-// read command from user
+static void	del(t_block *block)
+{
+	free(block->text);
+}
+
+void	command_read_destroy(t_list *cmd)
+{
+	list_foreach(cmd, (t_foreach_value)del);
+}
+
+// read non-empty command from user
 // returns malloced char* array with command split in spaces according to bash
 t_list	command_read(void)
 {
