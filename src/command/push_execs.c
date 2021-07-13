@@ -48,10 +48,11 @@ static void	push_exec(t_list *execs, const t_list *cmd, size_t *offset)
 	block = list_index_unchecked(cmd, *offset);
 	executable_init(&exec, block->text);
 	(*offset)++;
-	block = list_index_unchecked(cmd, *offset);
-	while (*offset < cmd->count && !(block->type & B_GRAMMAR_RULE))
+	while (*offset < cmd->count)
 	{
 		block = list_index_unchecked(cmd, *offset);
+		if (block->type & B_GRAMMAR_RULE)
+			break ;
 		executable_add_arg(&exec, block->text);
 		(*offset)++;
 	}
