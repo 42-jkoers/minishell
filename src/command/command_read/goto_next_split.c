@@ -55,7 +55,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 		if ((get_block_info(*end)).type & B_GRAMMAR_RULE)
 		{
 			*current = *end;
-			return ((get_block_info(*end)).type);
+			return (B_NORMAL);
 		}
 		if (ft_isspace(**end))
 		{
