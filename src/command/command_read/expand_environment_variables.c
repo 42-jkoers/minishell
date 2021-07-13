@@ -48,23 +48,19 @@ void	expand_environment_variables(char **str)
 {
 	size_t	i;
 	t_list	expanded;
-	bool	escaped;
 
 	if (!ft_strchr(*str, '$'))
 		return ;
 	list_init_safe(&expanded, sizeof(char));
-	escaped = false;
 	i = 0;
 	while ((*str)[i])
 	{
-		if (!escaped && (*str)[i] == '$')
+		if ((*str)[i] == '$')
 		{
 			i += 1 + expand_and_push(*str + i + 1, &expanded);
-			escaped = false;
 			continue ;
 		}
 		list_push_safe(&expanded, *str + i);
-		escaped = DO_ESCAPE && !escaped && (*str)[i] == '\\';
 		i++;
 	}
 	free(*str);

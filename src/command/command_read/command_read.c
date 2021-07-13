@@ -13,8 +13,6 @@ static void
 
 	block.text = ft_strndup_unsafe(start, len);
 	block.type = blocktype;
-	if (DO_ESCAPE && blocktype == B_NORMAL)
-		remove_escape_characters(block.text);
 	if (blocktype != B_SINGLE_QUOTE)
 		expand_environment_variables(&block.text);
 	if (!block.text || !block.text[0])
