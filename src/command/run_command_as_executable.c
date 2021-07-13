@@ -75,6 +75,7 @@ int	run_command_as_executable(const t_list *cmd)
 	pids = ft_malloc(executables.count * sizeof(pid_t));
 	statuses = ft_malloc(executables.count * sizeof(int));
 	run_all(pids, statuses, &executables);
+	list_un_init(&executables, NULL);
 	free(pids);
 	free(statuses);
 	return (0);

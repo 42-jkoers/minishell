@@ -74,7 +74,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 t_blocktype	goto_next_split(char **current, char **start, char **end)
 {
 	t_blocktype		blocktype;
-	t_grammarinfo		properies;
+	t_grammarinfo	properies;
 
 	if (!**current)
 		return (B_END);
