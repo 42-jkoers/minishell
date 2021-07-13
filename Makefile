@@ -30,7 +30,7 @@ all: $(NAMES)
 
 $(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR)
 	$(MAKE) -C libft $(SILECE_MAKE)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WILDCARD) $(LIBS) -o $@ mains/$@.c $(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WILDCARD) -o $@ mains/$@.c $(LIBS) $(LINK)
 
 # sources
 
