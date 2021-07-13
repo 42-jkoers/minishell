@@ -1,5 +1,6 @@
 #include "t_executable.h"
 #include "t_fd_override.h"
+#include "minishell.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -13,7 +14,7 @@ void	executable_add_pipe(t_executable *left, t_executable *right)
 	int	fd[2];
 
 	if (pipe(fd))
-		exit(1);
+		exit_with_error("Pipe failed");
 	list_push(&left->child_close_fds, &fd[0]);
 	list_push(&left->child_close_fds, &fd[1]);
 	list_push(&right->child_close_fds, &fd[0]);

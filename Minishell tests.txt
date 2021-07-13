@@ -1,0 +1,43 @@
+minishell tests:
+	invalid command
+	long command
+	"test file", "test 'file'" "'\\'" '"\\"'
+	redirect from/to:
+		[n]<<[end_word] // If the redirection operator is ‘<<-’, then all leading tab characters are stripped from input lines and the line containing delimiter. This allows here-documents within shell scripts to be indented in a natural fashion.
+		non-existent file
+		already existing file
+			only read perms
+			only write perms
+			no perms
+		bad file location
+		odd file descriptor
+		[n0]<&[n1] and [n0]<&[n1]
+			when having a - at the end [n1] is closed after being duplicated to [n0]
+
+		order of redirections is significant:
+		ls > test_file 2>&1	// both standard input and standard error are put into test_file
+		ls 2>&1 > test_file	// standard output is put into test_file, standard error is put into standard_output
+
+		>/dev/stderr and >/dev/stdout
+		&>word and >&word = stdout and stderr go into word
+		&>>word = stdout and stderr go into word, but >>&word does not work? (double check it)
+	control D, C, and \
+
+	escape command separators:
+		echo test \| grep te	// no pipe
+		echo test | grep te		// yes pipe
+		also with > >> < and <<
+
+	Incomplete quotes
+
+	export PATH=$PATH:test
+	cd $HOME
+
+	things that are technically in the subject but shouln't be:
+		echo "!."
+		echo hey > /dev/tcp/host/port
+
+	Maybe ~:
+		~ = $HOME
+		~/test = $HOME/test
+		~test = ~test
