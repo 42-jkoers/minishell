@@ -12,6 +12,7 @@
 #include "find_executable.h"
 #include "command_read.h"
 #include "malloc_wrappers.h"
+#include "libft.h"
 
 // TODO: exit code??
 int	main(int argc, char **argv, const char **envp)
@@ -27,7 +28,7 @@ int	main(int argc, char **argv, const char **envp)
 		cmd = command_read();
 		type = identify_command(&cmd);
 		if (type == C_EXECTUTABLE)
-			run_command_as_executable(&cmd);
+			env_set("?", mc(ft_itoa(run_command_as_executable(&cmd))));
 		command_read_destroy(&cmd);
 	}
 }

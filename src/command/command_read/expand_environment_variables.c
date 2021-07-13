@@ -10,6 +10,8 @@ static size_t	env_command_length(const char *str)
 {
 	size_t	i;
 
+	if (*str == '?')
+		return (1);
 	i = 0;
 	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
