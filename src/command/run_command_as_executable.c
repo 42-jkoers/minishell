@@ -32,6 +32,7 @@ static int	run_all(t_list *execs)
 }
 
 // TODO: better error when invalid grammar rule
+// returns exit status of command
 int	run_command_as_executable(const t_list *cmd)
 {
 	int				exit_status;

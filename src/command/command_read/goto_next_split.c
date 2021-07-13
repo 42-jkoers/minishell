@@ -27,9 +27,8 @@ static t_blocktype	set_start(char **start)
 }
 
 // WARNING: It is important that the longest grammar rule comes first in the
-//          array. Eg: "echo "a" >> x" matches ">" as seperator, when it should
-//          match ">>"
-
+// array. Eg: "echo "a" >> x" matches ">" as seperator, when it should
+// match ">>"
 t_grammarinfo	get_block_info(const char *str)
 {
 	if (!ft_strncmp(str, ">>", 2))

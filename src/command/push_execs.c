@@ -71,6 +71,10 @@ static void	push_pipe_block(t_list *execs, const t_list *cmd, size_t *offset)
 	executable_add_pipe(left, right);
 }
 
+// examples of commands with invalid grammar rules:
+// >> foo
+// foo >>
+// foo >> >> bar
 bool	command_contains_invalid_grammar_rule(const t_list *cmd)
 {
 	size_t	i;
@@ -93,6 +97,7 @@ bool	command_contains_invalid_grammar_rule(const t_list *cmd)
 	return (current->type & B_GRAMMAR_RULE);
 }
 
+// parse cmd into execs
 void	push_execs(t_list *execs, const t_list *cmd)
 {
 	t_block			*block;

@@ -58,8 +58,9 @@ void	command_read_destroy(t_list *cmd)
 	list_foreach(cmd, (t_foreach_value)del);
 }
 
-// read non-empty command from user
-// returns malloced char* array with command split in spaces according to bash
+// @description	read non-empty command from user
+// @return		malloced char* array with command split in spaces according to
+// 				bash
 t_list	command_read(void)
 {
 	char	*cmd;
