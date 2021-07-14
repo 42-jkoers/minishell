@@ -55,7 +55,7 @@ static void	del(t_block *block)
 
 void	command_read_destroy(t_list *cmd)
 {
-	list_foreach(cmd, (t_foreach_value)del);
+	list_un_init(cmd, (t_foreach_value)del);
 }
 
 // @description	read non-empty command from user
@@ -77,7 +77,7 @@ t_list	command_read(void)
 		free(cmd);
 		if (cmd_split.count > 0)
 			break ;
-		command_read_destroy(&cmd);
+		command_read_destroy(&cmd_split);
 	}
 	return (cmd_split);
 }
