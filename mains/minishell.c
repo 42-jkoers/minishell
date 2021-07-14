@@ -17,7 +17,8 @@
 // TODO: exit code??
 int	main(int argc, char **argv, const char **envp)
 {
-	t_list			cmd;
+	t_list	cmd;
+	char	*exitcode_str;
 
 	env_copy_ptr(envp);
 	(void)argc;
@@ -25,7 +26,9 @@ int	main(int argc, char **argv, const char **envp)
 	while (true)
 	{
 		cmd = command_read();
-		env_set("?", protect_malloc(ft_itoa(run_command_as_executable(&cmd))));
+		exitcode_str = protect_malloc(ft_itoa(run_command_as_executable(&cmd)));
+		env_set("?", exitcode_str);
+		free(exitcode_str);
 		command_read_destroy(&cmd);
 	}
 }

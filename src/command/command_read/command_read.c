@@ -77,6 +77,7 @@ t_list	command_read(void)
 		free(cmd);
 		if (cmd_split.count > 0)
 			break ;
+		command_read_destroy(&cmd);
 	}
 	return (cmd_split);
 }
