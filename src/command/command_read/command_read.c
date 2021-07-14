@@ -71,8 +71,9 @@ t_list	command_read(void)
 		cmd = readline("minishell$ ");
 		if (!cmd)
 			exit(0);
-		add_history(cmd);
 		cmd_split = get_cmd_split(cmd);
+		if (cmd_split.count > 0)
+			add_history(cmd);
 		free(cmd);
 		if (cmd_split.count > 0)
 			break ;
