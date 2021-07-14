@@ -18,7 +18,6 @@
 int	main(int argc, char **argv, const char **envp)
 {
 	t_list			cmd;
-	t_command_type	type;
 
 	env_copy_ptr(envp);
 	(void)argc;
@@ -26,9 +25,7 @@ int	main(int argc, char **argv, const char **envp)
 	while (true)
 	{
 		cmd = command_read();
-		type = identify_command(&cmd);
-		if (type == C_EXECTUTABLE)
-			env_set("?", mc(ft_itoa(run_command_as_executable(&cmd))));
+		env_set("?", protect_malloc(ft_itoa(run_command_as_executable(&cmd))));
 		command_read_destroy(&cmd);
 	}
 }

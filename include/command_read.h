@@ -28,16 +28,9 @@ typedef struct s_block
 	t_blocktype	type;
 }		t_block;
 
-typedef enum e_command_type
-{
-	C_EXECTUTABLE,
-	C_ENV,
-}			t_command_type;
-
 t_list			command_read(void);
 void			command_read_destroy(t_list *cmd);
 int				run_command_as_executable(const t_list *cmd);
-t_command_type	identify_command(const t_list *cmd);
 
 // PRIVATE =====================================================================
 typedef struct s_grammarinfo
