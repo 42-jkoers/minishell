@@ -18,7 +18,7 @@ static void	read_here_doc(int fd, const char *end_string)
 		if (!here_doc)
 		{
 			printf("minishell: warning: here-document delimited by eof-of-file "
-				"(wanted %s)\n", end_string);
+				"(wanted `%s')\n", end_string);
 			break ;
 		}
 		if (ft_strncmp(here_doc, end_string, ~0) == 0)
