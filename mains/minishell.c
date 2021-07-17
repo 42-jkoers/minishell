@@ -13,6 +13,7 @@
 #include "command_read.h"
 #include "malloc_wrappers.h"
 #include "libft.h"
+#include "signal_handler.h"
 
 // TODO: exit code??
 int	main(int argc, char **argv, const char **envp)
@@ -21,6 +22,7 @@ int	main(int argc, char **argv, const char **envp)
 	char	*exitcode_str;
 
 	env_copy_ptr(envp);
+	setup_signals();
 	(void)argc;
 	(void)argv;
 	while (true)
