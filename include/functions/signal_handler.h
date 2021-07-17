@@ -1,6 +1,6 @@
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#ifndef SIGNAL_HANDLER_H
+# define SIGNAL_HANDLER_H
 
-void setup_signals();
+void	setup_signals(void);
 
 #endif
