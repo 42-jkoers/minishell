@@ -12,18 +12,27 @@
 #include "malloc_wrappers.h"
 #include "ft_list.h"
 
+pid_t	*get_running_executable(void)
+{
+	static pid_t	pid = -1;
+
+	return (&pid);
+}
+
 static int	run_all(t_list *execs)
 {
+	pid_t	*pid;
 	size_t	i;
 	int		wstatus;
-	pid_t	pid;
 
+	pid = get_running_executable();
 	i = 0;
 	while (i < execs->count)
 	{
-		pid = executable_run(list_index_unchecked(execs, i));
-		if (waitpid(pid, &wstatus, 0) == -1)
+		*pid = executable_run(list_index_unchecked(execs, i));
+		if (waitpid(*pid, &wstatus, 0) == -1)
 			exit_with_error("waitpid failed");
+		*pid = -1;
 		if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus))
 			return (WEXITSTATUS(wstatus));
 		i++;

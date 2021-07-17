@@ -31,6 +31,7 @@ typedef struct s_block
 t_list			command_read(void);
 void			command_read_destroy(t_list *cmd);
 int				run_command_as_executable(const t_list *cmd);
+pid_t*			get_running_executable();
 
 // PRIVATE =====================================================================
 typedef struct s_grammarinfo

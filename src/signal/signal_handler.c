@@ -5,13 +5,17 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <unistd.h>
+#include <sys/types.h>
+
+#include "command_read.h"
 
 static void	int_handler(int sig)
 {
 	(void)sig;
 	rl_replace_line("", 1);
 	printf("\n");
-	rl_on_new_line();
+	if (*get_running_executable() < 0)
+		rl_on_new_line();
 	rl_redisplay();
 	return ;
 }
