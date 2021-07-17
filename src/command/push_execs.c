@@ -27,17 +27,20 @@ static void	push_redirect(
 
 	path = ((t_block *)list_index_unchecked(cmd, *offset + 1))->text;
 	left = list_index_unchecked(execs, execs->count - 1);
+	*offset += 2;
+	if (type == B_DOUBLE_LESSER)
+	{
+		executable_add_here_doc(left, path);
+		return ;
+	}
 	if (type == B_DOUBLE_GREATER)
 		r = (t_redirect){STDOUT_FILENO, r_write | r_append};
 	else if (type == B_GREATER)
 		r = (t_redirect){STDOUT_FILENO, r_write};
-	else if (type == B_DOUBLE_LESSER)
-		r = (t_redirect){STDIN_FILENO, r_read};
 	else if (type == B_LESSER)
 		r = (t_redirect){STDIN_FILENO, r_read};
 	if (!executable_add_fd_file_redirect(left, r.base_fd, path, r.mode))
 		exit_with_error("File could not be opened");
-	*offset += 2;
 }
 
 static void	push_exec(t_list *execs, const t_list *cmd, size_t *offset)
