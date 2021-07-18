@@ -11,6 +11,7 @@
 #include "command_read.h"
 #include "malloc_wrappers.h"
 #include "ft_list.h"
+#include "builtin.h"
 
 pid_t	*get_running_executable(void)
 {
@@ -40,15 +41,16 @@ static int	run_all(t_list *execs)
 	return (0);
 }
 
-// TODO: better error when invalid grammar rule
 // returns exit status of command
 int	run_command_as_executable(const t_list *cmd)
 {
 	int				exit_status;
 	t_list			execs;
 
-	if (command_contains_invalid_grammar_rule(cmd))
-		exit_with_error("Invalid redirect or pipe\n");
+	if (cmd->count == 0)
+		return (0);
+	if (handle_invalid_grammar_rule(cmd))
+		return (2);
 	list_init_safe(&execs, sizeof(t_executable));
 	push_execs(&execs, cmd);
 	exit_status = run_all(&execs);

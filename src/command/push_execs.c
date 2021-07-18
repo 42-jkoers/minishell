@@ -74,32 +74,6 @@ static void	push_pipe_block(t_list *execs, const t_list *cmd, size_t *offset)
 	executable_add_pipe(left, right);
 }
 
-// examples of commands with invalid grammar rules:
-// >> foo
-// foo >>
-// foo >> >> bar
-bool	command_contains_invalid_grammar_rule(const t_list *cmd)
-{
-	size_t	i;
-	t_block	*current;
-	bool	prev_was_grammer_rule;
-
-	if (cmd->count == 0)
-		return (false);
-	prev_was_grammer_rule = true;
-	i = 0;
-	while (i + 1 < cmd->count)
-	{
-		current = list_index_unchecked(cmd, i);
-		if ((current->type & B_GRAMMAR_RULE) && prev_was_grammer_rule)
-			return (true);
-		prev_was_grammer_rule = current->type & B_GRAMMAR_RULE;
-		i++;
-	}
-	current = list_index_unchecked(cmd, i);
-	return (current->type & B_GRAMMAR_RULE);
-}
-
 // parse cmd into execs
 void	push_execs(t_list *execs, const t_list *cmd)
 {

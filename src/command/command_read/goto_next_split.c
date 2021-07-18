@@ -46,15 +46,17 @@ t_grammarinfo	get_block_info(const char *str)
 
 static t_blocktype	set_end(char **current, char **start, char **end)
 {
-	if (!**start)
-		return (B_END);
-	*end = *start + 1;
+	t_grammarinfo	info;
+
+	*end = *start;
 	while (**end)
 	{
-		if ((get_block_info(*end)).type & B_GRAMMAR_RULE)
+		info = get_block_info(*end);
+		if (info.type & B_GRAMMAR_RULE)
 		{
+			*end += info.len;
 			*current = *end;
-			return (B_NORMAL);
+			return (info.type);
 		}
 		if (ft_isspace(**end))
 		{
@@ -73,18 +75,8 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 t_blocktype	goto_next_split(char **current, char **start, char **end)
 {
 	t_blocktype		blocktype;
-	t_grammarinfo	properies;
 
-	if (!**current)
-		return (B_END);
 	*start = *current;
-	properies = get_block_info(*start);
-	if (properies.type & B_GRAMMAR_RULE)
-	{
-		*end = *current + properies.len;
-		*current = *current + properies.len;
-		return (properies.type);
-	}
 	blocktype = set_start(start);
 	if (blocktype & (B_ERROR | B_END))
 		return (blocktype);

@@ -2,6 +2,7 @@
 # define COMMAND_READ_H
 
 # include "ft_list.h"
+# include <sys/types.h>
 
 // enum as a bit mask
 typedef enum e_blocktype
@@ -46,7 +47,7 @@ void			expand_environment_variables(char **str);
 t_blocktype		handle_quoted_block(char **current, char **start, char **end,
 					t_blocktype blocktype);
 t_grammarinfo	get_block_info(const char *str);
-bool			command_contains_invalid_grammar_rule(const t_list *cmd);
+bool			handle_invalid_grammar_rule(const t_list *cmd);
 void			push_execs(t_list *execs, const t_list *cmd);
 // END PRIVATE =================================================================
 
