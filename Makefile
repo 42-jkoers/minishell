@@ -13,11 +13,9 @@ BUILDDIR		= obj
 
 LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
-LINK			= -lm
+LINK			= -lreadline -lm
 
-ifeq ($(shell uname),Linux)
-LINK 			+= -lreadline
-else
+ifneq ($(shell uname),Linux)
 LINK			+= -L$(HOME)/.brew/opt/readline/lib
 INCLUDES		+= -I$(HOME)/.brew/opt/readline/include
 endif
