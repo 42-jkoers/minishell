@@ -1,17 +1,9 @@
-#include <stdbool.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <fcntl.h>
-#include <unistd.h>
 
 #include "minishell.h"
 #include "executable.h"
 #include "command_read.h"
 #include "malloc_wrappers.h"
-#include "ft_list.h"
-#include "builtin.h"
 
 pid_t	*get_running_executable(void)
 {

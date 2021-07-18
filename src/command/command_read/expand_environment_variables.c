@@ -1,7 +1,5 @@
-#include "command_read.h"
 #include "minishell.h"
 #include "malloc_wrappers.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include "env.h"
 

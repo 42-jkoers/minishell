@@ -1,12 +1,8 @@
 #include "executable.h"
-#include "working_directory.h"
 #include "env.h"
-#include "libft.h"
 
 #include <sys/wait.h>
-#include <sys/types.h>
 #include <unistd.h>
-#include <stdio.h>
 
 // ls | grep test | wc -l
 

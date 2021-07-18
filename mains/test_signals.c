@@ -1,10 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdbool.h>
-#include <signal.h>
-#include <unistd.h>
 #include "signal_handler.h"
 
 int main()

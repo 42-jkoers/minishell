@@ -1,13 +1,7 @@
 #include "executable.h"
-#include "working_directory.h"
 #include "env.h"
-#include "libft.h"
 
 #include <sys/wait.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 

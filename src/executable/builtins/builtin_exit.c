@@ -1,19 +1,16 @@
 #include "t_executable.h"
-#include "working_directory.h"
-#include "utils.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include "t_exit_data.h"
 #include "ft_parse_utils.h"
-#include <sys/types.h>
 #include <sys/wait.h>
 
 // So exit does this:
 // 	prints out "exit\n" into stderr
-// 	if non-numeric first arg: print out "minishell: exit: [ARG]: numeric 
+// 	if non-numeric first arg: print out "minishell: exit: [ARG]: numeric
 //argument required\n" into stderr, exit 2
-//	if too manny args: print out "minishell: exit: too many arguments\n" into 
+//	if too manny args: print out "minishell: exit: too many arguments\n" into
 //stderr, exit 1
 //	exit [n] (default 0)
 

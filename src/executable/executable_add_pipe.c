@@ -1,9 +1,7 @@
 #include "t_executable.h"
 #include "t_fd_override.h"
 #include "minishell.h"
-#include "malloc_wrappers.h"
 
-#include <stdlib.h>
 #include <unistd.h>
 
 // list_push can fail, but ill assume you have changed it so that it just

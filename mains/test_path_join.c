@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include <unistd.h>
-#include "find_executable.h"
-#include "libft.h"
 #include "env.h"
 #include "utils.h"
 #include <stdio.h>

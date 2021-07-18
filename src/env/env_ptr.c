@@ -1,9 +1,6 @@
-#include "libft.h"
-#include "ft_list.h"
 #include "minishell.h"
 #include "malloc_wrappers.h"
 
-#include <stddef.h>
 #include <stdlib.h>
 
 t_list	*env_ptr(void)

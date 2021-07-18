@@ -2,11 +2,9 @@
 #include "working_directory.h"
 #include "utils.h"
 #include "env.h"
-#include "ft_ternary.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
 
 static bool	is_absolute_path(const char *path)
 {

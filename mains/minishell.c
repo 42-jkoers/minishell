@@ -1,15 +1,6 @@
-#include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
 #include "env.h"
-#include "minishell.h"
-#include "executable.h"
-#include "find_executable.h"
 #include "command_read.h"
 #include "malloc_wrappers.h"
 #include "libft.h"

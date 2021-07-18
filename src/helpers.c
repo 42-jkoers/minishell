@@ -1,7 +1,6 @@
 #include "libft.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "minishell.h"
 #include "malloc_wrappers.h"
 
 // This file contains functions that have no logical place yet

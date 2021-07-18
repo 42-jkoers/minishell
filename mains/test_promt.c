@@ -1,10 +1,4 @@
-#include <stdbool.h>
-
-#include <stdlib.h>
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "minishell.h"
 #include "env.h"
 #include "command_read.h"
 

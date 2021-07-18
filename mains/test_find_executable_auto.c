@@ -4,9 +4,6 @@
 #include "libft.h"
 #include "find_executable.h"
 
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
