@@ -9,8 +9,9 @@ static bool	handle_unexpected_token(
 		const t_list *cmd,
 		bool prev_was_grammer_rule)
 {
-	if (i + 1 != cmd->count
-		&& !(prev_was_grammer_rule && current->type & B_GRAMMAR_RULE))
+	if (!(current->type & B_GRAMMAR_RULE))
+		return (false);
+	if (i + 1 != cmd->count && !prev_was_grammer_rule)
 		return (false);
 	printf("minishell: syntax error near unexpected token ");
 	if (i + 1 == cmd->count && !prev_was_grammer_rule)
