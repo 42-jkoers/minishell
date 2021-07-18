@@ -19,7 +19,7 @@ ifeq ($(shell uname),Linux)
 LINK 			+= -lreadline
 else
 LINK			+= -L$(HOME)/.brew/opt/readline/lib
-INCLUDES		+= $(HOME)/brew/opt/readline/include
+INCLUDES		+= $(HOME)/.brew/opt/readline/include
 endif
 
 #MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
