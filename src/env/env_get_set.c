@@ -55,7 +55,8 @@ void	env_set(const char *name, const char *new_value)
 	{
 		free(*ref);
 		if (new_value == NULL)
-			list_remove_safe(env_ptr(), list_reverse_index_unchecked(env_ptr(), ref))
+			list_remove_safe(env_ptr(), list_reverse_index_unchecked(env_ptr(),
+					ref))
 			;
 		else
 			*ref = ft_strjoin_va(3, name, "=", new_value);

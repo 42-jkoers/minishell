@@ -22,8 +22,8 @@ static void	read_here_doc(int fd, const char *end_string)
 		if (ft_strncmp(here_doc, end_string, ~0) == 0)
 			break ;
 		if (write(fd, here_doc, ft_strlen(here_doc)) == -1
-		|| write(fd, "\n", 1) == -1)
-			break;
+			|| write(fd, "\n", 1) == -1)
+			break ;
 	}
 }
 
