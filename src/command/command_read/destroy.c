@@ -1,5 +1,4 @@
 #include "command_read.h"
-#include "minishell.h"
 #include <stdlib.h>
 
 static void	del(t_block *block)

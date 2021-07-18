@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "t_executable.h"
 #include "t_fd_override.h"
 #include "minishell.h"

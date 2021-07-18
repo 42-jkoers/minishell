@@ -2,6 +2,7 @@
 #include "minishell.h"
 #include "malloc_wrappers.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
