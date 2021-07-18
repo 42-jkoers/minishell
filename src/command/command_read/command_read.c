@@ -51,14 +51,36 @@ static t_list	get_cmd_split(const char *cmd)
 	return (blocks);
 }
 
-static void	del(t_block *block)
+static bool	ends_with_pipe(const char *cmd)
 {
-	free(block->text);
+	size_t	i;
+
+	i = ft_strlen(cmd);
+	while (i)
+	{
+		i--;
+		if (!ft_isspace(cmd[i]))
+			return (cmd[i] == '|');
+	}
+	return (false);
 }
 
-void	command_read_destroy(t_list *cmd)
+static void	handle_trailing_pipe(char **cmd)
 {
-	list_un_init(cmd, (t_foreach_value)del);
+	char	*pipe_read;
+	char	*old;
+
+	if (!ends_with_pipe(*cmd))
+		return ;
+	while (true)
+	{
+		pipe_read = readline("> ");
+		old = *cmd;
+		*cmd = ft_strjoin(*cmd, pipe_read);
+		free(old);
+		if (!ends_with_pipe(pipe_read))
+			break ;
+	}
 }
 
 // @description	read non-empty command from user
@@ -74,6 +96,7 @@ t_list	command_read(void)
 		cmd = readline("minishell$ ");
 		if (!cmd)
 			exit(0);
+		handle_trailing_pipe(&cmd);
 		cmd_split = get_cmd_split(cmd);
 		if (cmd_split.count > 0)
 			add_history(cmd);
