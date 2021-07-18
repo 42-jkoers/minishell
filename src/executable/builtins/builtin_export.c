@@ -18,8 +18,9 @@ static void	log_env_data(char **variable)
 		ft_putstr_fd(*variable, STDOUT_FILENO);
 	else
 	{
-		write(STDOUT_FILENO, *variable, (eq - *variable) / sizeof(char)
-			 + sizeof(char));
+		if (write(STDOUT_FILENO, *variable, (eq - *variable) / sizeof(char)
+			 + sizeof(char)) == -1)
+			 return;
 		ft_putchar_fd('\'', STDOUT_FILENO);
 		i = 1;
 		while (eq[i])

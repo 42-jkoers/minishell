@@ -7,6 +7,12 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#ifdef __linux__
+# define O_PATH __O_PATH
+#else
+# define O_PATH 0
+#endif
+
 static void	free_split(char **split)
 {
 	size_t	i;
@@ -61,7 +67,7 @@ static char	*get_direct_path(const char *name)
 
 	if (name[0] == '/')
 	{
-		fd = open(name, __O_PATH);
+		fd = open(name, O_PATH);
 		if (fd != -1)
 		{
 			close(fd);
@@ -71,7 +77,7 @@ static char	*get_direct_path(const char *name)
 	else if (ft_strchr(name, '/'))
 	{
 		path = ft_strjoin_va(3, working_directory_get(), "/", name);
-		fd = open(path, __O_PATH);
+		fd = open(path, O_PATH);
 		if (fd != -1)
 		{
 			close(fd);
