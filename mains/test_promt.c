@@ -6,18 +6,19 @@
 #include <readline/history.h>
 #include "minishell.h"
 #include "env.h"
+#include "command_read.h"
 
 void	print(const t_list *cmd)
 {
 	size_t	i;
-	char	**blocks;
+	t_block	*block;
 
-	blocks = cmd->data;
 	i = 0;
 	printf("%lu {", cmd->count);
 	while (i < cmd->count)
 	{
-		printf("\"%s\"", blocks[i]);
+		block = list_index_unchecked(cmd, i);
+		printf("\"%s\"", block->text);
 		if (i + 1 != cmd->count)
 			printf(", ");
 		i++;
@@ -36,6 +37,6 @@ int	main(int argc, char** argv, const char** envp)
 	{
 		cmd = command_read();
 		print(&cmd);
-		// list_un_init(&cmd, free);
+		command_read_destroy(&cmd);
 	}
 }
