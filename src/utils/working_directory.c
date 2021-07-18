@@ -1,4 +1,3 @@
-#include "minishell.h"
 #include "env.h"
 
 #include <unistd.h>

@@ -2,11 +2,7 @@
 #include "t_fd_override.h"
 #include "ft_ternary.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "malloc_wrappers.h"
 
 // Handles things like [n]>&[n]

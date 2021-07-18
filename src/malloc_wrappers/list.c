@@ -1,6 +1,3 @@
-#include "malloc_wrappers.h"
-#include "libft.h"
-#include "ft_list.h"
 #include "minishell.h"
 
 void	list_push_safe(t_list *list, const void *value)

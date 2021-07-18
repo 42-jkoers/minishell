@@ -1,17 +1,6 @@
-#include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <unistd.h>
 
-#include "minishell.h"
-#include "executable.h"
 #include "command_read.h"
-#include "malloc_wrappers.h"
-#include "ft_list.h"
-#include "builtin.h"
 
 // Sorry I don't care enough to make this better
 static bool	handle_unexpected_token(
