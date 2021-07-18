@@ -14,8 +14,9 @@ LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
 LINK			= -lreadline -lm
 
-MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
-NAMES = $(MAINS:$(MAIN_DIR)/%.c=%)
+#MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
+MAINS = $(MAIN_DIR)/minishell.c
+NAME = $(MAINS:$(MAIN_DIR)/%.c=%)
 
 include sources.mk
 
@@ -26,9 +27,9 @@ VPATH = $(shell find $(SRCDIR) -type d | tr '\n' ':' | sed -E 's/(.*):/\1/')
 .SUFFIXES:
 SILECE_MAKE = | grep -v -E ".*Leaving directory|.*Entering directory"
 
-all: $(NAMES)
+all: $(NAME)
 
-$(NAMES): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR)
+$(NAME): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR)
 	$(MAKE) -C libft $(SILECE_MAKE)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WILDCARD) -o $@ mains/$@.c $(LIBS) $(LINK)
 
@@ -46,7 +47,7 @@ ifneq ($(BUILDDIR),.)
 endif
 
 fclean: | clean
-	/bin/rm -f $(NAMES)
+	/bin/rm -f $(NAME)
 
 re: | fclean all
 
