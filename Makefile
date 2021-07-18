@@ -14,11 +14,9 @@ BUILDDIR		= obj
 LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
 
-ifeq ($(shell uname),Linux)
+#ifeq ($(shell uname),Linux)
 LINK			= -lreadline -lm
-else
-LINK			=
-endif
+#endif
 
 #MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
 MAINS = $(MAIN_DIR)/minishell.c
@@ -42,7 +40,7 @@ $(NAME): %: $(MAIN_DIR)/%.c $(BUILDDIR)/ $(OBJ) $(HEADERDIR)
 # sources
 
 $(BUILDDIR)/%.$(OBJEXT): %.$(SRCEXT) $(HEADERDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(BUILDDIR)/$(notdir $@) $(LINK)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $(BUILDDIR)/$(notdir $@)
 
 install-dependicy:
 	sudo apt-get install libreadline-dev
