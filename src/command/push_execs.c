@@ -31,6 +31,8 @@ static void	push_redirect(
 		r = (t_redirect){STDOUT_FILENO, r_write};
 	else if (type == B_LESSER)
 		r = (t_redirect){STDIN_FILENO, r_read};
+	else
+		exit_with_error("Bad type");
 	if (!executable_add_fd_file_redirect(left, r.base_fd, path, r.mode))
 		exit_with_error("File could not be opened");
 }

@@ -15,7 +15,7 @@ LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
 
 ifeq ($(shell uname),Linux)
-LINK			= -lreadline
+LINK			= -lreadline -lm
 else
 LINK			=
 endif
