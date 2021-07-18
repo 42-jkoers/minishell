@@ -13,7 +13,12 @@ BUILDDIR		= obj
 
 LIBS			= libft/libft.a
 INCLUDES		= $(HEADERDIRS:%=-I%)
-LINK			= -lreadline -lm
+
+ifeq ($(shell uname),Linux)
+LINK			= -lreadline
+else
+LINK			=
+endif
 
 #MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
 MAINS = $(MAIN_DIR)/minishell.c
