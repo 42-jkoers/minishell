@@ -1,7 +1,8 @@
 CC				= gcc
 
-#CFLAGS      	= -Wall -Wextra -Wuninitialized -O3
-CFLAGS			= -Wall -Wextra -Wuninitialized -Werror -Wno-error=unused-result -Wno-unused-result -g
+CFLAGS      	= -Wall -Wextra -Werror -O3
+# CFLAGS			= -Wall -Wextra -Werror
+# -Wno-error=unused-result -Wno-unused-result -g
 
 MAIN_DIR		= mains
 SRCEXT		 	= c

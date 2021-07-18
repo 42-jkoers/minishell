@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 // the simpelest escape, just put it in '' and escape ' with \'
 
 static void	log_env_data(char **variable)
