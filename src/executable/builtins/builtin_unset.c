@@ -1,12 +1,9 @@
 #include "t_executable.h"
-#include "working_directory.h"
 #include "utils.h"
 #include "env.h"
-#include "ft_list.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
 
 static void	parse_unset(char **ret, char **current)
 {

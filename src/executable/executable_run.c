@@ -1,12 +1,9 @@
-#include "executable.h"
 #include "builtin.h"
 #include "t_fd_override.h"
-#include "find_executable.h"
 #include "env.h"
 #include "libft.h"
 
 #include <unistd.h>
-#include <sys/types.h>
 #include <stdlib.h>
 
 static char	**convert_args_list(const t_list *args)

@@ -1,6 +1,3 @@
-#include "t_executable.h"
-#include "working_directory.h"
-#include "utils.h"
 #include "libft.h"
 #include "env.h"
 #include <unistd.h>

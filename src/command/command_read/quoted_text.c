@@ -1,8 +1,6 @@
 #include "command_read.h"
 #include "minishell.h"
-#include "malloc_wrappers.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 // assuming that **start is first char after the starting quote
 t_blocktype	handle_quoted_block(char **current, char **start, char **end,

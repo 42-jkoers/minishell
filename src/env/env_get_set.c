@@ -1,9 +1,6 @@
-#include <stddef.h>
 #include "libft.h"
 #include "env.h"
-#include "minishell.h"
 #include <stdlib.h>
-#include "malloc_wrappers.h"
 
 // add a new entry to the env path
 // We must keep a null pointer at the end, so insert it at the null pointer
