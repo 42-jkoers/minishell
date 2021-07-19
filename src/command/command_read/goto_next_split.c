@@ -50,7 +50,8 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 		info = get_block_info(*end);
 		if (info.type & B_GRAMMAR_RULE)
 		{
-			*end += info.len;
+			if (*end == *start)
+				*end += info.len;
 			*current = *end;
 			return (info.type);
 		}
