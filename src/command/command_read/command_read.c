@@ -49,6 +49,8 @@ static t_list	get_cmd_split(const char *cmd)
 			break ;
 		push_block(start, end - start, &blocks, blocktype);
 	}
+	if (blocks.count == 0)
+		command_read_destroy(&blocks);
 	return (blocks);
 }
 
@@ -79,6 +81,7 @@ static void	handle_trailing_pipe(char **cmd)
 		old = *cmd;
 		*cmd = ft_strjoin(*cmd, pipe_read);
 		free(old);
+		free(pipe_read);
 		if (!ends_with_pipe(pipe_read))
 			break ;
 	}
@@ -104,7 +107,6 @@ t_list	command_read(void)
 		free(cmd);
 		if (cmd_split.count > 0)
 			break ;
-		command_read_destroy(&cmd_split);
 	}
 	return (cmd_split);
 }
