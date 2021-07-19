@@ -9,7 +9,7 @@ t_blocktype	handle_quoted_block(char **current, char **start, char **end,
 	const char	quote = *(*start - 1);
 
 	*end = ft_strchr(*start, quote);
-	if (!end)
+	if (!(*end))
 	{
 		printf("WARNING: no closing %c found\n", quote);
 		return (B_NO_CLOSING_QUOTE);
