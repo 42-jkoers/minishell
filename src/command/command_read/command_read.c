@@ -11,7 +11,7 @@ static void
 {
 	t_block	block;
 
-	if (blocks->count == 0 && blocktype & B_GRAMMAR_RULE)
+	if (blocks->count == 0 && blocktype & B_REDIRECT)
 		list_push_safe(blocks, &(t_block){
 			.text = protect_malloc(ft_strdup("echo")),
 			.type = B_NORMAL});
@@ -20,6 +20,7 @@ static void
 		list_push_safe(blocks, &(t_block){
 			.text = protect_malloc(ft_strdup("'''")),
 			.type = B_NORMAL});
+		return ;
 	}
 	block.text = ft_strndup_unsafe(start, len);
 	block.type = blocktype;
