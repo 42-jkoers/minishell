@@ -55,9 +55,9 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 			*current = *end;
 			return (info.type);
 		}
-		if (ft_isspace(**end))
+		if (ft_isspace(**end) || **end == '\'' || **end == '"')
 		{
-			*current = *end + 1;
+			*current = *end;
 			return (B_NORMAL);
 		}
 		(*end)++;

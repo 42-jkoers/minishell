@@ -15,43 +15,37 @@ static void
 		list_push_safe(blocks, &(t_block){
 			.text = protect_malloc(ft_strdup("echo")),
 			.type = B_NORMAL});
+	if (blocks->count == 0 && blocktype == B_SINGLE_QUOTE && len == 0)
+	{
+		list_push_safe(blocks, &(t_block){
+			.text = protect_malloc(ft_strdup("'''")),
+			.type = B_NORMAL});
+	}
 	block.text = ft_strndup_unsafe(start, len);
 	block.type = blocktype;
 	if (blocktype != B_SINGLE_QUOTE)
 		expand_environment_variables(&block.text);
-	if (!block.text || !block.text[0])
-		return ;
 	list_push_safe(blocks, &block);
 }
 
 // cmd is the command typed in by the user, split it in spaces according to bash
 // so ignore spaces between "" etc.
-static t_list	get_cmd_split(const char *cmd)
+static t_blocktype	get_cmd_split(t_list *blocks, const char *cmd)
 {
 	char		*start;
 	char		*end;
 	char		*current;
-	t_list		blocks;
 	t_blocktype	blocktype;
 
-	list_init_safe(&blocks, sizeof(t_block));
+	list_init_safe(blocks, sizeof(t_block));
 	current = (char *)cmd;
 	while (true)
 	{
 		blocktype = goto_next_split(&current, &start, &end);
-		if (blocktype & B_ERROR)
-		{
-			command_read_destroy(&blocks);
-			blocks.count = 0;
-			return (blocks);
-		}
-		if (blocktype == B_END)
-			break ;
-		push_block(start, end - start, &blocks, blocktype);
+		if (blocktype & (B_ERROR | B_END))
+			return (blocktype);
+		push_block(start, end - start, blocks, blocktype);
 	}
-	if (blocks.count == 0)
-		command_read_destroy(&blocks);
-	return (blocks);
 }
 
 static bool	ends_with_pipe(const char *cmd)
@@ -92,8 +86,9 @@ static void	handle_trailing_pipe(char **cmd)
 // 				bash
 t_list	command_read(void)
 {
-	char	*cmd;
-	t_list	cmd_split;
+	char		*cmd;
+	t_list		cmd_split;
+	t_blocktype	type;
 
 	while (true)
 	{
@@ -101,12 +96,13 @@ t_list	command_read(void)
 		if (!cmd)
 			exit(0);
 		handle_trailing_pipe(&cmd);
-		cmd_split = get_cmd_split(cmd);
-		if (cmd_split.count > 0)
+		type = get_cmd_split(&cmd_split, cmd);
+		if (type & B_ERROR || cmd_split.count > 0)
 			add_history(cmd);
 		free(cmd);
-		if (cmd_split.count > 0)
+		if (!(type & B_ERROR) && cmd_split.count > 0)
 			break ;
+		command_read_destroy(&cmd_split);
 	}
 	return (cmd_split);
 }
