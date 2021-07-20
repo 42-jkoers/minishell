@@ -7,6 +7,8 @@ bool	is_valid_env_char(char c)
 
 bool	is_valid_env_string(char *str)
 {
+	if (ft_isdigit(*str))
+		return (false);
 	while (*str)
 	{
 		if (!is_valid_env_char(*str))

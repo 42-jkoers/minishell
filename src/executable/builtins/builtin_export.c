@@ -35,6 +35,10 @@ static void	log_env_data(char **variable)
 	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
+// Technically when you do export and have a bad arg it prints to STDERR...
+// but if you redirect STDERR to something else it wont actually do that...
+// Heh...
+
 static void	add_arg(char **variable)
 {
 	char	*eq;
@@ -50,7 +54,7 @@ static void	add_arg(char **variable)
 	{
 		ft_putstr_fd("minishell: export: '", STDERR_FILENO);
 		ft_putstr_fd(name, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier", STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	}
 	free(name);
 }

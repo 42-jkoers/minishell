@@ -4,13 +4,15 @@
 
 #include "command_read.h"
 
+//if (*get_running_executable() < 0)
+// TODO: use rl_done global variable
+
 static void	int_handler(int sig)
 {
 	(void)sig;
 	rl_replace_line("", 1);
 	printf("\n");
-	if (*get_running_executable() < 0)
-		rl_on_new_line();
+	rl_on_new_line();
 	rl_redisplay();
 	return ;
 }
