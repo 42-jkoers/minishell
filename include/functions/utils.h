@@ -6,8 +6,8 @@
 // path_join("~[/]","[/]Desktop") = ~/Desktop
 char	*path_join(const char *start, const char *end);
 
+bool	is_valid_env_char(char c);
 bool	is_valid_env_string(const char *str);
-size_t	env_string_length(const char *str);
 
 // This is very stupid.
 int		stupid_write(int fd, char *str, int len);

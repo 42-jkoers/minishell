@@ -4,10 +4,24 @@
 #include "env.h"
 #include "utils.h"
 
+static size_t	get_env_len(const char *env)
+{
+	size_t	i;
+
+	if (*env == '?')
+		return (1);
+	if (ft_isdigit(*env))
+		return (1);
+	i = 0;
+	while (is_valid_env_char(env[i]))
+		i++;
+	return (i);
+}
+
 // expect env starting with first char after '$'
 static size_t	expand_and_push(char *env, t_list *expanded)
 {
-	const size_t	env_len = env_string_length(env);
+	const size_t	env_len = get_env_len(env);
 	char			last_char;
 	char			*to_push;
 	size_t			i;
