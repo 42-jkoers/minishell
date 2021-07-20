@@ -23,7 +23,8 @@ static void
 	}
 	block.text = ft_strndup_unsafe(start, len);
 	block.type = blocktype;
-	if (blocktype != B_SINGLE_QUOTE)
+	if (blocktype != B_SINGLE_QUOTE
+		&& blocktype != (B_SINGLE_QUOTE | B_DOLLAR_PREFIX))
 		expand_environment_variables(&block.text);
 	list_push_safe(blocks, &block);
 }

@@ -1,19 +1,28 @@
 #include "command_read.h"
 #include "minishell.h"
 
+static t_blocktype	type_quote(char c)
+{
+	if (c == '\'')
+		return (B_SINGLE_QUOTE);
+	if (c == '"')
+		return (B_DOUBLE_QUOTE);
+	return (B_ERROR);
+}
+
 static t_blocktype	set_start(char **start)
 {
 	while (**start)
 	{
-		if (**start == '"')
+		if (type_quote(**start) & B_QUOTED)
 		{
 			(*start)++;
-			return (B_DOUBLE_QUOTE);
+			return (type_quote((*start)[-1]));
 		}
-		if (**start == '\'')
+		if (**start == '$' && type_quote((*start)[1]))
 		{
-			(*start)++;
-			return (B_SINGLE_QUOTE);
+			(*start) += 2;
+			return (type_quote((*start)[-1]) | B_DOLLAR_PREFIX);
 		}
 		if (!ft_isspace(**start))
 			return (B_NORMAL);
@@ -55,7 +64,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 			*current = *end;
 			return (info.type);
 		}
-		if (ft_isspace(**end) || **end == '\'' || **end == '"')
+		if (ft_isspace(**end) || type_quote(**end) & B_QUOTED)
 		{
 			*current = *end;
 			return (B_NORMAL);
@@ -77,7 +86,7 @@ t_blocktype	goto_next_split(char **current, char **start, char **end)
 	blocktype = set_start(start);
 	if (blocktype & (B_ERROR | B_END))
 		return (blocktype);
-	if (blocktype == B_SINGLE_QUOTE || blocktype == B_DOUBLE_QUOTE)
+	if (blocktype & B_QUOTED)
 		return (handle_quoted_block(current, start, end, blocktype));
 	blocktype = set_end(current, start, end);
 	return (blocktype);
