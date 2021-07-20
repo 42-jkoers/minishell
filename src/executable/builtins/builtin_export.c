@@ -4,6 +4,7 @@
 #include "env.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 // the simpelest escape, just put it in '' and escape ' with \'
 
