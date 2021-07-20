@@ -38,6 +38,19 @@ static int	executable_raw_run_all(t_list *executables)
 	return (get_exit_code(wstatus));
 }
 
+// Make sure to close all the fd's that would have been closed when executed
+static void	close_main_fds(t_executable *executable)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < executable->main_close_fds.count)
+	{
+		close(*(int *)list_index(&executable->main_close_fds, i));
+		i++;
+	}
+}
+
 int	executable_run_all(t_list *executables)
 {
 	pid_t	pid;
@@ -48,6 +61,7 @@ int	executable_run_all(t_list *executables)
 	pid = fork();
 	if (pid == 0)
 		exit(executable_raw_run_all(executables));
+	list_foreach(executables, (t_foreach_value)close_main_fds);
 	waitpid(pid, &wstatus, 0);
 	return (get_exit_code(wstatus));
 }

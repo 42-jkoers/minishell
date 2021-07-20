@@ -29,6 +29,10 @@ int	main(int argc, char** argv, const char** envp)
 	executable_add_pipe(&executables[0], &executables[1]);
 	executable_add_pipe(&executables[1], &executables[2]);
 
+	//executable_log(&executables[0]);
+	//executable_log(&executables[1]);
+	//executable_log(&executables[2]);
+
 	stupid_write(STDOUT_FILENO, "Should output the number of files with the name \"test\" in the current directory\n", 80);
 	pids[0] = executable_run(&executables[0]);
 	pids[1] = executable_run(&executables[1]);
