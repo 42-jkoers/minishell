@@ -34,6 +34,7 @@ static char	*handle_trailing_pipe(char *cmd)
 	if (ret == CONTROL_C)
 	{
 		free(cmd);
+		free(pipe_read);
 		return (read_next_command());
 	}
 	else if (ret == CONTROL_D)
@@ -54,7 +55,10 @@ char	*read_next_command(void)
 
 	ret = readline_ext("minishell$ ", &cmd);
 	if (ret == CONTROL_C)
+	{
+		free(cmd);
 		return (read_next_command());
+	}
 	else if (ret == CONTROL_D)
 	{
 		printf("exit\n");
