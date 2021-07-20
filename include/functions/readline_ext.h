@@ -8,6 +8,6 @@ typedef enum e_readline_ret_type
 	CONTROL_C
 }	t_readline_ret_type;
 
-t_readline_ret_type readline_ext(const char* promt, char** o_read);
+t_readline_ret_type	readline_ext(const char *promt, char **o_read);
 
 #endif

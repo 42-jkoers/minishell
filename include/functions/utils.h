@@ -10,6 +10,6 @@ bool	is_valid_env_char(char c);
 bool	is_valid_env_string(char *str);
 
 // This is very stupid.
-int stupid_write(int fd, char* str, int len);
+int		stupid_write(int fd, char *str, int len);
 
 #endif
