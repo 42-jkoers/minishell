@@ -1,8 +1,6 @@
 #include <stdio.h>
-
 #include "command_read.h"
 
-// Sorry I don't care enough to make this better
 static bool	handle_unexpected_token(
 		size_t i,
 		const t_block *current,
@@ -22,11 +20,15 @@ static bool	handle_unexpected_token(
 }
 
 // return true if there was a invalid grammar rule in the cmd
-// eg.
-// >> foo
+
+// returns true:
 // foo >>
 // foo >> >> bar
 // | foo
+
+// returns false (but you expect it to return true)
+// >> foo
+
 bool	handle_invalid_grammar_rule(const t_list *cmd)
 {
 	size_t	i;
