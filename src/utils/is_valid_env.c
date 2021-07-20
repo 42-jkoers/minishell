@@ -27,7 +27,7 @@ bool	is_valid_env_string(const char *str)
 	if (ft_isdigit(*str))
 		return (false);
 	i = 0;
-	while (is_valid_env_char(s[i]))
+	while (is_valid_env_char(str[i]))
 		i++;
-	return (s[i] == '\0');
+	return (str[i] == '\0');
 }
