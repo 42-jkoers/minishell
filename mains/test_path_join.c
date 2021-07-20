@@ -3,6 +3,7 @@
 #include "env.h"
 #include "utils.h"
 #include <stdio.h>
+#include "utils.h"
 
 int	main(int argc, char** argv, const char** envp)
 {
@@ -10,7 +11,7 @@ int	main(int argc, char** argv, const char** envp)
 
 	if (argc != 3)
 	{
-		write(STDOUT_FILENO, "Usage: ./test_path_join path1 path2\n", 39);
+		stupid_write(STDOUT_FILENO, "Usage: ./test_path_join path1 path2\n", 39);
 		return (1);
 	}
 

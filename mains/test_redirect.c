@@ -1,6 +1,7 @@
 #include "executable.h"
 #include "env.h"
 #include "libft.h"
+#include "utils.h"
 
 #include <sys/wait.h>
 #include <fcntl.h>
@@ -22,7 +23,7 @@ int	main(int argc, char** argv, const char** envp)
 	executable_add_arg(&executable, "hello world!");
 	if (!executable_add_fd_file_redirect(&executable, STDOUT_FILENO, "test_file", r_write))
 	{
-		write(STDERR_FILENO, "Error!\ntest_file could not be opened for truncation!\n", 53);
+		stupid_write(STDERR_FILENO, "Error!\ntest_file could not be opened for truncation!\n", 53);
 		exit(1);
 	}
 	pid = executable_run(&executable);
@@ -34,7 +35,7 @@ int	main(int argc, char** argv, const char** envp)
 	executable_add_arg(&executable, "append");
 	if (!executable_add_fd_file_redirect(&executable, STDOUT_FILENO, "test_file", r_write | r_append))
 	{
-		write(STDERR_FILENO,"Error!\ntest_file could not be opened for append!\n", 49);
+		stupid_write(STDERR_FILENO,"Error!\ntest_file could not be opened for append!\n", 49);
 		exit(1);
 	}
 	pid = executable_run(&executable);
@@ -45,28 +46,29 @@ int	main(int argc, char** argv, const char** envp)
 	int written_fd = open("test_file", O_RDONLY);
 	if (written_fd == -1)
 	{
-		write(STDOUT_FILENO, "Error!\ncould not read file output!", 75);
+		stupid_write(STDOUT_FILENO, "Error!\ncould not read file output!", 75);
 		exit(1);
 	}
 	char buff[128];
-	read(written_fd, buff, 128);
+	int actually_read = read(written_fd, buff, 128);
+	(void)actually_read;
 	close(written_fd);
 
 	if (ft_strncmp(buff, "hello world!\nappend\n", 128) != 0)
 	{
-		write(STDOUT_FILENO, "Error!\nFile contents where different than expected, expected:\nhello world!\nappend\n", 83);
+		stupid_write(STDOUT_FILENO, "Error!\nFile contents where different than expected, expected:\nhello world!\nappend\n", 83);
 		exit(1);
 	}
-	write(STDOUT_FILENO, "Redirecting output to a file is working!\n", 41);
+	stupid_write(STDOUT_FILENO, "Redirecting output to a file is working!\n", 41);
 
 
 	// grep hello < test_file
-	write(STDOUT_FILENO, "Redirecting a file to input is working if it outputs: \"hello world!\"\n", 70);
+	stupid_write(STDOUT_FILENO, "Redirecting a file to input is working if it outputs: \"hello world!\"\n", 70);
 	executable_init(&executable, "grep");
 	executable_add_arg(&executable, "hello");
 	if (!executable_add_fd_file_redirect(&executable, STDIN_FILENO, "test_file", r_read))
 	{
-		write(STDERR_FILENO,"Error!\ntest_file could not be opened for reading!\n", 50);
+		stupid_write(STDERR_FILENO,"Error!\ntest_file could not be opened for reading!\n", 50);
 		exit(1);
 	}
 	pid = executable_run(&executable);

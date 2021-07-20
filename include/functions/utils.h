@@ -9,4 +9,7 @@ char	*path_join(const char *start, const char *end);
 bool	is_valid_env_char(char c);
 bool	is_valid_env_string(char *str);
 
+// This is very stupid.
+int stupid_write(int fd, char* str, int len);
+
 #endif
