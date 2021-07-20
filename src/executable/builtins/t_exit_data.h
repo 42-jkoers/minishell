@@ -5,6 +5,7 @@ typedef struct s_exit_data
 {
 	int		exit_code;
 	char	*print;
+	bool	actually_exit;
 }	t_exit_data;
 
 #endif

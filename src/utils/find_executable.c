@@ -6,12 +6,14 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
-#ifdef __linux__
-# define O_PATH __O_PATH
-#else
-# define O_PATH 0
-#endif
+static bool	file_exists(const char *path)
+{
+	struct stat	statbuf;
+
+	return (stat(path, &statbuf) == 0);
+}
 
 static void	free_split(char **split)
 {
@@ -63,26 +65,17 @@ static char	*find_executable(const char *name, const char *path)
 static char	*get_direct_path(const char *name)
 {
 	char	*path;
-	int		fd;
 
 	if (name[0] == '/')
 	{
-		fd = open(name, O_PATH);
-		if (fd != -1)
-		{
-			close(fd);
+		if (file_exists(name))
 			return (ft_strdup(name));
-		}
 	}
 	else if (ft_strchr(name, '/'))
 	{
 		path = ft_strjoin_va(3, working_directory_get(), "/", name);
-		fd = open(path, O_PATH);
-		if (fd != -1)
-		{
-			close(fd);
+		if (file_exists(path))
 			return (path);
-		}
 		free(path);
 	}
 	return (NULL);

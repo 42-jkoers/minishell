@@ -21,7 +21,8 @@ void	*builtin_exit_main(const t_executable *command)
 	int			current;
 
 	exit_data = malloc(sizeof(t_exit_data));
-	*exit_data = (t_exit_data){.print = NULL, .exit_code = 0};
+	*exit_data = (t_exit_data){.print = NULL, .exit_code = 0,
+		.actually_exit = true};
 	if (command->args.count > 1)
 	{
 		first_arg = *(char **)list_index(&command->args, 1);
@@ -34,11 +35,9 @@ void	*builtin_exit_main(const t_executable *command)
 					": numeric argument required\n");
 		}
 		else if (command->args.count > 2)
-		{
-			exit_data->exit_code = 1;
-			exit_data->print = ft_strdup("minishell: exit: too many arguments"
-					"\n");
-		}
+			*exit_data = (t_exit_data){.print = ft_strdup("minishell: exit: too"
+					" many arguments\n"), .exit_code = 1, .actually_exit = false}
+				;
 	}
 	return (exit_data);
 }
@@ -47,8 +46,11 @@ void	builtin_exit_main_cleanup(t_exit_data *exit_data, pid_t child_pid)
 {
 	int	wstatus;
 
-	waitpid(child_pid, &wstatus, 0);
-	exit(exit_data->exit_code);
+	if (exit_data->actually_exit)
+	{
+		waitpid(child_pid, &wstatus, 0);
+		exit(exit_data->exit_code);
+	}
 }
 
 void	builtin_exit_child(t_exit_data *exit_data)
