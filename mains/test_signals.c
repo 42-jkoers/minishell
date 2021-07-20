@@ -4,6 +4,7 @@
 #include <readline/history.h>
 #include <stdbool.h>
 #include "signal_handler.h"
+#include "readline_ext.h"
 
 int main()
 {
@@ -11,10 +12,11 @@ int main()
 
 	while (true)
 	{
-		char* cmd = readline("minishell$ ");
+		char* cmd;
+		t_readline_ret_type ret = readline_ext("minishell$ ", &cmd);
+		printf("Got code: %i and string: '%s'\n", ret, cmd);
 		if (cmd == NULL)
 			break;
-		printf("Got string: '%s'\n", cmd);
 		add_history(cmd);
 		free(cmd);
 	}

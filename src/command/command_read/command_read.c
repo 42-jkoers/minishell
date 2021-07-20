@@ -49,39 +49,6 @@ static t_blocktype	get_cmd_split(t_list *blocks, const char *cmd)
 	}
 }
 
-static bool	ends_with_pipe(const char *cmd)
-{
-	size_t	i;
-
-	i = ft_strlen(cmd);
-	while (i)
-	{
-		i--;
-		if (!ft_isspace(cmd[i]))
-			return (cmd[i] == '|');
-	}
-	return (false);
-}
-
-static void	handle_trailing_pipe(char **cmd)
-{
-	char	*pipe_read;
-	char	*old;
-
-	if (!ends_with_pipe(*cmd))
-		return ;
-	while (true)
-	{
-		pipe_read = readline("> ");
-		old = *cmd;
-		*cmd = ft_strjoin(*cmd, pipe_read);
-		free(old);
-		free(pipe_read);
-		if (!ends_with_pipe(pipe_read))
-			break ;
-	}
-}
-
 // @description	read non-empty command from user
 // @return		malloced char* array with command split in spaces according to
 // 				bash
@@ -93,10 +60,7 @@ t_list	command_read(void)
 
 	while (true)
 	{
-		cmd = readline("minishell$ ");
-		if (!cmd)
-			exit(0);
-		handle_trailing_pipe(&cmd);
+		cmd = read_next_command();
 		type = get_cmd_split(&cmd_split, cmd);
 		if (type & B_ERROR || cmd_split.count > 0)
 			add_history(cmd);

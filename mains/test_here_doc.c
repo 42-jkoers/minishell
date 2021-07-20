@@ -1,5 +1,6 @@
 #include "executable.h"
 #include "env.h"
+#include "utils.h"
 
 #include <sys/wait.h>
 #include <unistd.h>
@@ -20,7 +21,7 @@ int	main(int argc, char** argv, const char** envp)
 
 	executable_init(&executable, "cat");
 
-	write(STDOUT_FILENO, "Should echo back what you write after you submit the delimiter: 'eof'\n", 70);
+	stupid_write(STDOUT_FILENO, "Should echo back what you write after you submit the delimiter: 'eof'\n", 70);
 	executable_add_here_doc(&executable, "eof");
 
 	pid = executable_run(&executable);

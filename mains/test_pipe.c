@@ -3,6 +3,7 @@
 
 #include <sys/wait.h>
 #include <unistd.h>
+#include "utils.h"
 
 // ls | grep test | wc -l
 
@@ -28,7 +29,7 @@ int	main(int argc, char** argv, const char** envp)
 	executable_add_pipe(&executables[0], &executables[1]);
 	executable_add_pipe(&executables[1], &executables[2]);
 
-	write(STDOUT_FILENO, "Should output the number of files with the name \"test\" in the current directory\n", 80);
+	stupid_write(STDOUT_FILENO, "Should output the number of files with the name \"test\" in the current directory\n", 80);
 	pids[0] = executable_run(&executables[0]);
 	pids[1] = executable_run(&executables[1]);
 	pids[2] = executable_run(&executables[2]);

@@ -20,8 +20,8 @@ LINK			+= -L$(HOME)/.brew/opt/readline/lib
 INCLUDES		+= -I$(HOME)/.brew/opt/readline/include
 endif
 
-#MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
-MAINS = $(MAIN_DIR)/minishell.c
+MAINS = $(shell find $(MAIN_DIR) -type f -name *.c)
+#MAINS = $(MAIN_DIR)/minishell.c
 NAME = $(MAINS:$(MAIN_DIR)/%.c=%)
 
 include sources.mk

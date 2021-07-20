@@ -31,6 +31,7 @@ typedef struct s_block
 	t_blocktype	type;
 }		t_block;
 
+char			*read_next_command(void);
 t_list			command_read(void);
 void			command_read_destroy(t_list *cmd);
 int				run_command_as_executable(const t_list *cmd);
