@@ -34,7 +34,7 @@ static t_blocktype	set_start(char **start)
 // WARNING: It is important that the longest grammar rule comes first in the
 // array. Eg: "echo "a" >> x" matches ">" as seperator, when it should
 // match ">>"
-t_grammarinfo	get_block_info(const char *str)
+t_grammarinfo	get_grammar_rule_info(const char *str)
 {
 	if (!ft_strncmp(str, ">>", 2))
 		return ((t_grammarinfo){B_DOUBLE_GREATER, 2});
@@ -46,7 +46,7 @@ t_grammarinfo	get_block_info(const char *str)
 		return ((t_grammarinfo){B_LESSER, 1});
 	if (!ft_strncmp(str, "|", 1))
 		return ((t_grammarinfo){B_PIPE, 1});
-	return ((t_grammarinfo){B_TEXT, 0});
+	return ((t_grammarinfo){B_ERROR, 0});
 }
 
 static t_blocktype	set_end(char **current, char **start, char **end)
@@ -56,7 +56,7 @@ static t_blocktype	set_end(char **current, char **start, char **end)
 	*end = *start;
 	while (**end)
 	{
-		info = get_block_info(*end);
+		info = get_grammar_rule_info(*end);
 		if (info.type & B_GRAMMAR_RULE)
 		{
 			if (*end == *start)

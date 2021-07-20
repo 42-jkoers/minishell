@@ -38,7 +38,6 @@ int				run_command_as_executable(const t_list *cmd);
 // Negative if nothing is running
 pid_t			*get_running_executable(void);
 
-// PRIVATE =====================================================================
 typedef struct s_grammarinfo
 {
 	t_blocktype	type;
@@ -49,9 +48,8 @@ t_blocktype		goto_next_split(char **current, char **start, char **end);
 void			expand_environment_variables(char **str);
 t_blocktype		handle_quoted_block(char **current, char **start, char **end,
 					t_blocktype blocktype);
-t_grammarinfo	get_block_info(const char *str);
+t_grammarinfo	get_grammar_rule_info(const char *str);
 bool			handle_invalid_grammar_rule(const t_list *cmd);
 void			push_execs(t_list *execs, const t_list *cmd);
-// END PRIVATE =================================================================
 
 #endif

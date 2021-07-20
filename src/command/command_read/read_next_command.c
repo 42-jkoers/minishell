@@ -5,6 +5,23 @@
 #include <stdio.h>
 #include "readline_ext.h"
 
+// when cmd is "echo > |" this is to handle that error case
+static bool	is_valid_redirect(const char *cmd, const char *start_from)
+{
+	char	*s;
+
+	s = (char *)start_from - 1;
+	while (s >= cmd)
+	{
+		if (get_grammar_rule_info(s).type & B_GRAMMAR_RULE)
+			return (false);
+		if (!ft_isspace(*s))
+			return (true);
+		s--;
+	}
+	return (true);
+}
+
 static bool	ends_with_pipe(const char *cmd)
 {
 	size_t	i;
@@ -14,7 +31,7 @@ static bool	ends_with_pipe(const char *cmd)
 	{
 		i--;
 		if (!ft_isspace(cmd[i]))
-			return (cmd[i] == '|');
+			return (cmd[i] == '|' && is_valid_redirect(cmd, cmd + i));
 	}
 	return (false);
 }
