@@ -22,5 +22,12 @@ size_t	env_string_length(const char *str)
 
 bool	is_valid_env_string(const char *str)
 {
-	return (env_string_length(str));
+	size_t	i;
+
+	if (ft_isdigit(*str))
+		return (false);
+	i = 0;
+	while (is_valid_env_char(s[i]))
+		i++;
+	return (s[i] == '\0');
 }
