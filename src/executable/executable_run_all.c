@@ -1,3 +1,6 @@
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include <sys/wait.h>
 
 #include "minishell.h"
@@ -17,7 +20,7 @@ static int	get_exit_code(int wstatus)
 	return (-1);
 }
 
-int	executable_run_all(t_list *executables)
+static int	executable_raw_run_all(t_list *executables)
 {
 	t_executable	*executable;
 	pid_t			*pid;
@@ -32,5 +35,19 @@ int	executable_run_all(t_list *executables)
 	while (loop_l(&pids, (void **)&pid))
 		waitpid(*pid, &wstatus, 0);
 	list_un_init(&pids, NULL);
+	return (get_exit_code(wstatus));
+}
+
+int	executable_run_all(t_list *executables)
+{
+	pid_t	pid;
+	int		wstatus;
+
+	if (executables->count <= 1)
+		return (executable_raw_run_all(executables));
+	pid = fork();
+	if (pid == 0)
+		exit(executable_raw_run_all(executables));
+	waitpid(pid, &wstatus, 0);
 	return (get_exit_code(wstatus));
 }
