@@ -2,24 +2,12 @@
 #include "malloc_wrappers.h"
 #include <stdlib.h>
 #include "env.h"
-
-// expect env starting with first char after '$'
-static size_t	env_command_length(const char *str)
-{
-	size_t	i;
-
-	if (*str == '?')
-		return (1);
-	i = 0;
-	while (ft_isalnum(str[i]) || str[i] == '_')
-		i++;
-	return (i);
-}
+#include "utils.h"
 
 // expect env starting with first char after '$'
 static size_t	expand_and_push(char *env, t_list *expanded)
 {
-	const size_t	env_len = env_command_length(env);
+	const size_t	env_len = env_string_length(env);
 	char			last_char;
 	char			*to_push;
 	size_t			i;
