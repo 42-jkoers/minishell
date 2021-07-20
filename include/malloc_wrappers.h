@@ -8,6 +8,7 @@ void	*protect_malloc(void *ptr);
 void	*mc(void *ptr);
 
 void	list_init_safe(t_list *list, size_t data_size);
+void	list_init_cap_safe(t_list *list, size_t data_size, size_t cap);
 void	list_push_safe(t_list *list, const void *value);
 void	list_insert_safe(t_list *list, size_t index, const void *value);
 void	list_remove_safe(t_list *list, size_t index);
