@@ -8,9 +8,9 @@
 // when cmd is "echo > |" this is to handle that error case
 static bool	is_valid_redirect(const char *cmd, const char *start_from)
 {
-	char	*s;
+	const char	*s;
 
-	s = (char *)start_from - 1;
+	s = start_from - 1;
 	while (s >= cmd)
 	{
 		if (get_grammar_rule_info(s).type & B_GRAMMAR_RULE)
