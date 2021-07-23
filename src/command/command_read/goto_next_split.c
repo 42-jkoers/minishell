@@ -19,7 +19,7 @@ static t_blocktype	set_start(char **start)
 			(*start)++;
 			return (type_quote((*start)[-1]));
 		}
-		if (**start == '$' && type_quote((*start)[1]))
+		if (**start == '$' && type_quote((*start)[1]) & B_QUOTED)
 		{
 			(*start) += 2;
 			return (type_quote((*start)[-1]) | B_DOLLAR_PREFIX);
