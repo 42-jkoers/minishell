@@ -8,16 +8,14 @@
 // when cmd is "echo > |" this is to handle that error case
 static bool	is_valid_redirect(const char *cmd, const char *start_from)
 {
-	const char	*s;
-
-	s = start_from - 1;
-	while (s >= cmd)
+	start_from--;
+	while (start_from >= cmd)
 	{
-		if (get_grammar_rule_info(s).type & B_GRAMMAR_RULE)
+		if (get_grammar_rule_info(start_from).type & B_GRAMMAR_RULE)
 			return (false);
-		if (!ft_isspace(*s))
+		if (!ft_isspace(*start_from))
 			return (true);
-		s--;
+		start_from--;
 	}
 	return (true);
 }
