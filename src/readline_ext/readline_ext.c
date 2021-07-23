@@ -6,6 +6,8 @@
 
 t_readline_ret_type	readline_ext(const char *promt, char **o_read)
 {
+	if (*controll_c_pressed())
+		printf("\n");
 	*controll_c_pressed() = false;
 	*o_read = readline(promt);
 	if (*o_read == NULL)

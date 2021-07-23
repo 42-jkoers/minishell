@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "executable.h"
 #include "command_read.h"
 #include "utils.h"
 
@@ -30,7 +31,8 @@ static int	event_hook(void)
 static void	int_handler(int sig)
 {
 	(void)sig;
-	*controll_c_pressed() = true;
+	if (*is_executing_command())
+		*controll_c_pressed() = true;
 	rl_done = true;
 	return ;
 }
