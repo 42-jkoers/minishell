@@ -9,7 +9,7 @@
 static bool	is_valid_redirect(const char *cmd, const char *start_from)
 {
 	start_from--;
-	while (start_from >= cmd)
+	while (start_from > cmd)
 	{
 		if (get_grammar_rule_info(start_from).type & B_GRAMMAR_RULE)
 			return (false);
@@ -17,7 +17,7 @@ static bool	is_valid_redirect(const char *cmd, const char *start_from)
 			return (true);
 		start_from--;
 	}
-	return (true);
+	return (false);
 }
 
 static bool	ends_with_pipe(const char *cmd)
