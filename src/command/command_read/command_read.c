@@ -62,11 +62,13 @@ static bool
 	block.type = blocktype;
 	if (blocktype & B_ENV_DECLARATION)
 		clean_env_declaration(block.text);
-	if (!(blocktype & B_SINGLE_QUOTE_ONLY)
+	if (!(blocktype & B_SINGLE_QUOTE_ONLY) && blocktype != B_SINGLE_QUOTE
 		&& !expand_environment_variables_safe(&block, blocks))
 		return (false);
 	if (block.text[0])
 		list_push_safe(blocks, &block);
+	else
+		free(block.text);
 	return (true);
 }
 
