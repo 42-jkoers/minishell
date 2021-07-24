@@ -25,6 +25,7 @@ typedef enum e_blocktype
 	B_LESSER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 8,
 	B_PIPE = B_GRAMMAR_RULE | 1 << 10,
 	B_ENV_DECLARATION = 1 << 11,
+	B_SINGLE_QUOTE_ONLY = 1 << 10,
 }			t_blocktype;
 
 typedef struct s_block
