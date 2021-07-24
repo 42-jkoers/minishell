@@ -16,6 +16,7 @@ int	main(int argc, char **argv, const char **envp)
 	setup_signals();
 	(void)argc;
 	(void)argv;
+	env_set("?", "0");
 	while (true)
 	{
 		cmd = command_read();
