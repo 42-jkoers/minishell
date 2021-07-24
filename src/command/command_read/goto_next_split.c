@@ -1,15 +1,6 @@
 #include "command_read.h"
 #include "minishell.h"
 
-static t_blocktype	type_quote(char c)
-{
-	if (c == '\'')
-		return (B_SINGLE_QUOTE);
-	if (c == '"')
-		return (B_DOUBLE_QUOTE);
-	return (0);
-}
-
 static t_blocktype	set_start(char **start)
 {
 	while (**start)
@@ -31,22 +22,24 @@ static t_blocktype	set_start(char **start)
 	return (B_END);
 }
 
-// WARNING: It is important that the longest grammar rule comes first in the
-// array. Eg: "echo "a" >> x" matches ">" as seperator, when it should
-// match ">>"
-t_grammarinfo	get_grammar_rule_info(const char *str)
+static t_blocktype	set_end_env_declaration(
+	char **current, char **start, char **end)
 {
-	if (!ft_strncmp(str, ">>", 2))
-		return ((t_grammarinfo){B_DOUBLE_GREATER, 2});
-	if (!ft_strncmp(str, "<<", 2))
-		return ((t_grammarinfo){B_DOUBLE_LESSER, 2});
-	if (!ft_strncmp(str, ">", 1))
-		return ((t_grammarinfo){B_GREATER, 1});
-	if (!ft_strncmp(str, "<", 1))
-		return ((t_grammarinfo){B_LESSER, 1});
-	if (!ft_strncmp(str, "|", 1))
-		return ((t_grammarinfo){B_PIPE, 1});
-	return ((t_grammarinfo){B_ERROR, 0});
+	char		*current2;
+
+	current2 = *start;
+	while (!ft_isspace(*current2) && *current2 != '=')
+		current2++;
+	if (*current2 != '=')
+		return (0);
+	if (type_quote(current2[1]))
+		return (handle_quoted_block(
+				current, current2 + 2, end, B_ENV_DECLARATION));
+	while (!ft_isspace(*current2))
+		current2++;
+	*end = current2;
+	*current = current2;
+	return (B_ENV_DECLARATION);
 }
 
 static t_blocktype	set_end(char **current, char **start, char **end)
@@ -87,7 +80,10 @@ t_blocktype	goto_next_split(char **current, char **start, char **end)
 	if (blocktype & (B_ERROR | B_END))
 		return (blocktype);
 	if (blocktype & B_QUOTED)
-		return (handle_quoted_block(current, start, end, blocktype));
+		return (handle_quoted_block(current, *start, end, blocktype));
+	blocktype = set_end_env_declaration(current, start, end);
+	if (blocktype)
+		return (blocktype);
 	blocktype = set_end(current, start, end);
 	return (blocktype);
 }

@@ -6,7 +6,43 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static void
+// returns true on success
+static bool	expand_environment_variables_safe(t_block *block, t_list *blocks)
+{
+	t_block	*prev;
+	char	*expanded;
+	bool	ambiguous_redirect;
+
+	if (!ft_strchr(block->text, '$'))
+		return (true);
+	expanded = expand_environment_variables(block->text);
+	ambiguous_redirect = false;
+	if (blocks->count > 0)
+	{
+		prev = list_index_unchecked(blocks, blocks->count - 1);
+		ambiguous_redirect
+			= prev->type & B_REDIRECT && ft_strchr(expanded, ' ');
+		if (ambiguous_redirect)
+			printf("minishell: %s: ambiguous redirect\n", block->text);
+	}
+	free(block->text);
+	block->text = expanded;
+	block->type |= B_CONTAINS_EXPANDED_ENV;
+	return (!ambiguous_redirect);
+}
+
+void	clean_env_declaration(char *text)
+{
+	char	*equals;
+
+	equals = ft_strchr(text, '=');
+	if (!equals)
+		return ;
+	if (type_quote(equals[1]))
+		ft_memmove(equals + 1, equals + 2, ft_strlen(equals + 2) + 1);
+}
+
+static bool
 	push_block(char *start, size_t len, t_list *blocks, t_blocktype blocktype)
 {
 	t_block	block;
@@ -20,14 +56,18 @@ static void
 		list_push_safe(blocks, &(t_block){
 			.text = protect_malloc(ft_strdup("'''")),
 			.type = B_NORMAL});
-		return ;
+		return (true);
 	}
 	block.text = ft_strndup_unsafe(start, len);
 	block.type = blocktype;
+	if (blocktype & B_ENV_DECLARATION)
+		clean_env_declaration(block.text);
 	if (blocktype != B_SINGLE_QUOTE
-		&& blocktype != (B_SINGLE_QUOTE | B_DOLLAR_PREFIX))
-		expand_environment_variables(&block.text);
+		&& blocktype != (B_SINGLE_QUOTE | B_DOLLAR_PREFIX)
+		&& !expand_environment_variables_safe(&block, blocks))
+		return (false);
 	list_push_safe(blocks, &block);
+	return (true);
 }
 
 // cmd is the command typed in by the user, split it in spaces according to bash
@@ -46,7 +86,8 @@ static t_blocktype	get_cmd_split(t_list *blocks, const char *cmd)
 		blocktype = goto_next_split(&current, &start, &end);
 		if (blocktype & (B_ERROR | B_END))
 			return (blocktype);
-		push_block(start, end - start, blocks, blocktype);
+		if (!push_block(start, end - start, blocks, blocktype))
+			return (B_ERROR);
 	}
 }
 

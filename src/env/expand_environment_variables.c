@@ -43,27 +43,24 @@ static size_t	expand_and_push(char *env, t_list *expanded)
 	return (env_len);
 }
 
-// expects a freeable string
-void	expand_environment_variables(char **str)
+// returns mallocd string
+char 	*expand_environment_variables(const char *str)
 {
 	size_t	i;
 	t_list	expanded;
 
-	if (!ft_strchr(*str, '$'))
-		return ;
 	list_init_safe(&expanded, sizeof(char));
 	i = 0;
-	while ((*str)[i])
+	while (str[i])
 	{
-		if ((*str)[i] == '$')
+		if (str[i] == '$')
 		{
-			i += 1 + expand_and_push(*str + i + 1, &expanded);
+			i += 1 + expand_and_push((char *)str + i + 1, &expanded);
 			continue ;
 		}
-		list_push_safe(&expanded, *str + i);
+		list_push_safe(&expanded, str + i);
 		i++;
 	}
-	free(*str);
 	list_push_safe(&expanded, "");
-	*str = ((char *)expanded.data);
+	return (((char *)expanded.data));
 }

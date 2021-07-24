@@ -13,6 +13,7 @@ typedef enum e_blocktype
 	B_REDIRECT = 1 << 26,
 	B_DOLLAR_PREFIX = 1 << 25,
 	B_QUOTED = 1 << 24,
+	B_CONTAINS_EXPANDED_ENV = 1 << 23,
 	B_NO_CLOSING_QUOTE = B_ERROR | 1 << 0,
 	B_END = 1 << 1,
 	B_NORMAL = B_TEXT | 1 << 2,
@@ -23,6 +24,7 @@ typedef enum e_blocktype
 	B_GREATER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 7,
 	B_LESSER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 8,
 	B_PIPE = B_GRAMMAR_RULE | 1 << 10,
+	B_ENV_DECLARATION = 1 << 11,
 }			t_blocktype;
 
 typedef struct s_block
@@ -44,10 +46,11 @@ typedef struct s_grammarinfo
 	size_t		len;
 }				t_grammarinfo;
 
+t_blocktype		type_quote(char c);
 t_blocktype		goto_next_split(char **current, char **start, char **end);
-void			expand_environment_variables(char **str);
-t_blocktype		handle_quoted_block(char **current, char **start, char **end,
-					t_blocktype blocktype);
+char			*expand_environment_variables(const char *str);
+t_blocktype		handle_quoted_block(char **current, const char *start,
+					char **end, t_blocktype blocktype);
 t_grammarinfo	get_grammar_rule_info(const char *str);
 bool			handle_invalid_grammar_rule(const t_list *cmd);
 void			push_execs(t_list *execs, const t_list *cmd);
