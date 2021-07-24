@@ -44,7 +44,7 @@ static size_t	expand_and_push(char *env, t_list *expanded)
 }
 
 // returns mallocd string
-char 	*expand_environment_variables(const char *str)
+char	*expand_environment_variables(const char *str)
 {
 	size_t	i;
 	t_list	expanded;
