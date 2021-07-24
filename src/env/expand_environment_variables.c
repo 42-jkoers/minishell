@@ -49,6 +49,8 @@ char 	*expand_environment_variables(const char *str)
 	size_t	i;
 	t_list	expanded;
 
+	if (str[0] && str[ft_strlen(str) - 1] == '$')
+		return (protect_malloc(ft_strdup(str)));
 	list_init_safe(&expanded, sizeof(char));
 	i = 0;
 	while (str[i])
