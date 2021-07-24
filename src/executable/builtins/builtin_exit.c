@@ -1,9 +1,9 @@
-#include "t_executable.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include "t_exit_data.h"
 #include "ft_parse_utils.h"
+#include "executable.h"
 #include <sys/wait.h>
 
 // So exit does this:
@@ -55,7 +55,8 @@ void	builtin_exit_main_cleanup(t_exit_data *exit_data, pid_t child_pid)
 
 void	builtin_exit_child(t_exit_data *exit_data)
 {
-	ft_putstr_fd("exit\n", STDERR_FILENO);
+	if (*is_executing_command())
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (exit_data->print != NULL)
 		ft_putstr_fd(exit_data->print, STDERR_FILENO);
 	exit(exit_data->exit_code);

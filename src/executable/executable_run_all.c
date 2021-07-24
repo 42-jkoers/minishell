@@ -73,7 +73,10 @@ int	executable_run_all(t_list *executables)
 	}
 	pid = fork();
 	if (pid == 0)
+	{
+		*is_executing_command() = false;
 		exit(executable_raw_run_all(executables));
+	}
 	list_foreach(executables, (t_foreach_value)close_main_fds);
 	waitpid(pid, &wstatus, 0);
 	*is_executing_command() = false;

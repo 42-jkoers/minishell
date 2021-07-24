@@ -13,14 +13,15 @@ static void	log_env_data(char **variable)
 	int		i;
 	char	*eq;
 
+	if (ft_strncmp(*variable, "?=", 2) == 0)
+		return ;
 	ft_putstr_fd("declare -x ", STDOUT_FILENO);
 	eq = ft_strchr(*variable, '=');
 	if (!eq)
 		ft_putstr_fd(*variable, STDOUT_FILENO);
 	else
 	{
-		if (write(STDOUT_FILENO, *variable, (eq - *variable) / sizeof(char)
-				 + sizeof(char)) == -1)
+		if (write(STDOUT_FILENO, *variable, (eq - *variable) / 1) == -1)
 			 return ;
 		ft_putchar_fd('\'', STDOUT_FILENO);
 		i = 1;
