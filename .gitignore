@@ -4,5 +4,5 @@
 *.a
 *.o
 a.out
-/test_*
+/test*
 .vscode
