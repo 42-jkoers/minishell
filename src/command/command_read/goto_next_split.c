@@ -28,14 +28,14 @@ static t_blocktype	set_end_env_declaration(
 	char		*current2;
 
 	current2 = *start;
-	while (!ft_isspace(*current2) && *current2 != '=')
+	while (!ft_isspace(*current2) && *current2 != '=' && *current2)
 		current2++;
 	if (*current2 != '=')
 		return (0);
 	if (type_quote(current2[1]))
 		return (handle_quoted_block(
 				current, current2 + 2, end, B_ENV_DECLARATION));
-	while (!ft_isspace(*current2))
+	while (!ft_isspace(*current2) && *current2)
 		current2++;
 	*end = current2;
 	*current = current2;
