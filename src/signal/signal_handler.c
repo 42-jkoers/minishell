@@ -3,7 +3,9 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "ft_ternary.h"
 #include "executable.h"
+#include "signal_handler.h"
 #include "command_read.h"
 #include "utils.h"
 
@@ -16,9 +18,9 @@
 // I'd prefer if i can keep the original behaviour:
 //	only updating on key press but add the event when int_handler is called
 
-bool	*controll_c_pressed(void)
+t_controll_c_pressed_status	*controll_c_pressed(void)
 {
-	static bool	c_pressed = false;
+	static t_controll_c_pressed_status	c_pressed = false;
 
 	return (&c_pressed);
 }
@@ -31,8 +33,8 @@ static int	event_hook(void)
 static void	int_handler(int sig)
 {
 	(void)sig;
-	if (*is_executing_command())
-		*controll_c_pressed() = true;
+	*controll_c_pressed() |= ter_int(*is_executing_command(),
+		pressed_while_executing, pressed);
 	rl_done = true;
 	return ;
 }
