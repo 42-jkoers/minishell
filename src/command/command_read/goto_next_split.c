@@ -7,19 +7,19 @@ static t_blocktype	type_quote(char c)
 		return (B_SINGLE_QUOTE);
 	if (c == '"')
 		return (B_DOUBLE_QUOTE);
-	return (B_ERROR);
+	return (0);
 }
 
 static t_blocktype	set_start(char **start)
 {
 	while (**start)
 	{
-		if (type_quote(**start) & B_QUOTED)
+		if (type_quote(**start))
 		{
 			(*start)++;
 			return (type_quote((*start)[-1]));
 		}
-		if (**start == '$' && type_quote((*start)[1]) & B_QUOTED)
+		if (**start == '$' && type_quote((*start)[1]))
 		{
 			(*start) += 2;
 			return (type_quote((*start)[-1]) | B_DOLLAR_PREFIX);
