@@ -9,6 +9,13 @@
 #include "malloc_wrappers.h"
 #include "ft_loop.h"
 
+bool	*is_executing_command(void)
+{
+	static bool	is_executing_command = false;
+
+	return (&is_executing_command);
+}
+
 static int	get_exit_code(int wstatus)
 {
 	if (WIFEXITED(wstatus))
@@ -53,15 +60,22 @@ static void	close_main_fds(t_executable *executable)
 
 int	executable_run_all(t_list *executables)
 {
+	int		exit_code;
 	pid_t	pid;
 	int		wstatus;
 
+	*is_executing_command() = true;
 	if (executables->count <= 1)
-		return (executable_raw_run_all(executables));
+	{
+		exit_code = executable_raw_run_all(executables);
+		*is_executing_command() = false;
+		return (exit_code);
+	}
 	pid = fork();
 	if (pid == 0)
 		exit(executable_raw_run_all(executables));
 	list_foreach(executables, (t_foreach_value)close_main_fds);
 	waitpid(pid, &wstatus, 0);
+	*is_executing_command() = false;
 	return (get_exit_code(wstatus));
 }

@@ -37,8 +37,9 @@ void	executable_un_init(t_executable *executable);
 
 void	executable_add_arg(t_executable *executable, const char *arg);
 
+bool	*is_executing_command(void);
 int		executable_run_all(t_list *executables);
 
-void	executable_log(const t_executable* executable);
+void	executable_log(const t_executable *executable);
 
 #endif
