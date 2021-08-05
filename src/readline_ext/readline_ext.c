@@ -1,5 +1,6 @@
 #include "readline_ext.h"
 #include "signal_handler.h"
+#include <stdio.h>
 
 #include <readline/readline.h>
 #include <readline/readline.h>
