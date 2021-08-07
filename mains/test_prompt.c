@@ -12,7 +12,7 @@ void	print(const t_list *cmd)
 	while (i < cmd->count)
 	{
 		block = list_index_unchecked(cmd, i);
-		printf("\"%s\"", block->text);
+		printf("`%s`", block->text);
 		if (i + 1 != cmd->count)
 			printf(", ");
 		i++;

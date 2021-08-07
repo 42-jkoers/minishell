@@ -48,12 +48,11 @@ typedef struct s_grammarinfo
 }				t_grammarinfo;
 
 t_blocktype		type_quote(char c);
-t_blocktype		goto_next_split(char **current, char **start, char **end);
+t_blocktype		goto_next_split(char **start, char **end);
 char			*expand_environment_variables(const char *str);
-t_blocktype		handle_quoted_block(char **current, const char *start,
+t_blocktype		handle_quoted_block(const char *start,
 					char **end, t_blocktype blocktype);
 t_grammarinfo	get_grammar_rule_info(const char *str);
 bool			handle_invalid_grammar_rule(const t_list *cmd);
 void			push_execs(t_list *execs, const t_list *cmd);
-
 #endif
