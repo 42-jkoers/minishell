@@ -18,13 +18,6 @@
 // I'd prefer if i can keep the original behaviour:
 //	only updating on key press but add the event when int_handler is called
 
-t_controll_c_pressed_status	*controll_c_pressed(void)
-{
-	static t_controll_c_pressed_status	c_pressed = false;
-
-	return (&c_pressed);
-}
-
 static int	event_hook(void)
 {
 	return (0);
@@ -39,12 +32,21 @@ static void	int_handler(int sig)
 	return ;
 }
 
+#if __linux__
+// On linux this perfectly removes the ^\ you see, but on mac it just... breaks
 static void	quit_handler(int sig)
 {
 	(void)sig;
 	stupid_write(STDIN_FILENO, "\b \b\b \b", 6);
 	return ;
 }
+#else
+
+static void	quit_handler(int sig)
+{
+	(void)sig;
+}
+#endif
 
 void	setup_signals(void)
 {
