@@ -31,3 +31,11 @@ unsigned long	ter_ulong(bool condition, unsigned long if_true,
 		return (if_true);
 	return (if_false);
 }
+
+unsigned long long	ter_ullong(bool condition, unsigned long long if_true,
+	unsigned long long if_false)
+{
+	if (condition)
+		return (if_true);
+	return (if_false);
+}
