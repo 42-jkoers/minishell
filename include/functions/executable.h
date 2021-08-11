@@ -26,7 +26,8 @@ bool	executable_add_fd_file_redirect(t_executable *executable, int base_fd,
 			*file_path, t_file_redirect_mode redirect_mode);
 
 // Handless things like <<[end_string]
-void	executable_add_here_doc(t_executable *executable, const char
+// Returns false when ^C was pressed while writing
+bool	executable_add_here_doc(t_executable *executable, const char
 			*end_string);
 
 // Executable path can still be null when you have a bad exec, make sure to
