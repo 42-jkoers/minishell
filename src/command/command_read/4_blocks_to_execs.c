@@ -43,7 +43,7 @@ static void	push_exec(t_list *execs, const t_list *blocks, size_t *offset)
 	t_block			*block;
 
 	block = list_index_unchecked(blocks, *offset);
-	executable_init(&exec, block);
+	executable_init(&exec, block->text);
 	(*offset)++;
 	while (*offset < blocks->count)
 	{

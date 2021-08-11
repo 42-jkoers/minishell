@@ -15,7 +15,7 @@ int	read_and_execute_command()
 	t_list	execs;
 
 	raw_string = cmd_read_next();
-	if (!cmd_split_in_spaces(&split_in_spaces, raw_string));
+	if (!cmd_split_in_spaces(&split_in_spaces, raw_string))
 		return (-1);
 	if (!cmd_to_blocks(&blocks, &split_in_spaces))
 		return (-1);

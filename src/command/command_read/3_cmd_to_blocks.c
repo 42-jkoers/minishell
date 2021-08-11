@@ -8,7 +8,6 @@
 bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 {
 	size_t	i;
-	char	*current;
 	t_block	block;
 
 	list_init_safe(blocks, sizeof(t_block));

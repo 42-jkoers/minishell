@@ -27,7 +27,7 @@ static int	get_exit_code(int wstatus)
 	return (-1);
 }
 
-static int	executable_raw_run_all(t_list *execs)
+static int	executable_raw_run_all(const t_list *execs)
 {
 	t_executable	*executable;
 	pid_t			*pid;
