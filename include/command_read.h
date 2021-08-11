@@ -34,12 +34,12 @@ typedef struct s_block
 	t_blocktype	type;
 }		t_block;
 
-char			*read_next_command(void);
-t_list			command_read(void);
-void			command_read_destroy(t_list *cmd);
-int				run_command_as_executable(const t_list *cmd);
-// Negative if nothing is running
-pid_t			*get_running_executable(void);
+typedef enum e_status
+{
+	SUCCESS,
+	FAIL,
+	DONE,
+}		t_status;
 
 typedef struct s_grammarinfo
 {
@@ -47,12 +47,29 @@ typedef struct s_grammarinfo
 	size_t		len;
 }				t_grammarinfo;
 
+// IMPORTANT ORDER
+char			*cmd_read_next(void);
+bool			cmd_split_in_spaces(t_list *split, const char *cmd);
+bool			cmd_to_blocks(t_list *blocks, const t_list *cmd_split);
+bool			blocks_to_execs(t_list *execs, const t_list *blocks);
+int				run_execs(const t_list *execs);
+
+
+void			command_read_destroy(t_list *cmd);
+// Negative if nothing is running
+pid_t			*get_running_executable(void);
+
+
+// =============== PRIVATE HELPERS ===============
+
 t_blocktype		type_quote(char c);
-t_blocktype		goto_next_split(char **start, char **end);
-char			*expand_environment_variables(const char *str);
-t_blocktype		handle_quoted_block(const char *start,
-					char **end, t_blocktype blocktype);
 t_grammarinfo	get_grammar_rule_info(const char *str);
-bool			handle_invalid_grammar_rule(const t_list *cmd);
+
+t_status		goto_next_split(char **start, char **end);
+
+void			expand_environment_variables(char **str);
+void			remove_quotes(char **str);
+
 void			push_execs(t_list *execs, const t_list *cmd);
+
 #endif
