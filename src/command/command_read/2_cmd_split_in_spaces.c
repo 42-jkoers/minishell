@@ -25,10 +25,10 @@ static void	set_end(char **start, char **end)
 	quote = 0;
 	while (**end)
 	{
-		if ((!quote && ft_isspace(**end)) || (get_grammar_rule_info(*end)).type)
-			return ;
 		if (type_quote(**end))
-			quote = ter_char(**end == quote, 0, **start);
+			quote = ter_char(**end == quote, 0, **end);
+		if (!quote && (ft_isspace(**end) || (get_grammar_rule_info(*end)).type))
+			return ;
 		(*end)++;
 	}
 }
