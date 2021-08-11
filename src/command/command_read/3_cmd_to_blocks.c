@@ -11,7 +11,7 @@ bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 	char	*current;
 	t_block	block;
 
-	list_init(blocks, sizeof(t_block));
+	list_init_safe(blocks, sizeof(t_block));
 	i = 0;
 	while (i < cmd_split->count)
 	{
