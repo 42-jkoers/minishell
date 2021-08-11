@@ -22,16 +22,12 @@ static size_t	get_env_len(const char *env)
 static size_t	expand_and_push(char *env, t_list *expanded)
 {
 	const size_t	env_len = get_env_len(env);
-	char			last_char;
 	char			*to_push;
 	size_t			i;
 
 	if (env_len == 0)
 		return (0);
-	last_char = env[env_len];
-	env[env_len] = '\0';
-	to_push = (char *)env_get(env);
-	env[env_len] = last_char;
+	to_push = (char *)env_get_len(env, env_len);
 	if (!to_push)
 		return (env_len);
 	i = 0;
@@ -43,26 +39,31 @@ static size_t	expand_and_push(char *env, t_list *expanded)
 	return (env_len);
 }
 
-// returns mallocd string
-char	*expand_environment_variables(const char *str)
+// expects mallocd string
+void	expand_environment_variables(char **str)
 {
 	size_t	i;
 	t_list	expanded;
+	bool	quoted;
 
-	if (str[0] && str[ft_strlen(str) - 1] == '$')
-		return (protect_malloc(ft_strdup(str)));
+	if (!ft_strncmp(*str, "$", ~0))
+		return ;
 	list_init_safe(&expanded, sizeof(char));
 	i = 0;
-	while (str[i])
+	quoted = false;
+	while ((*str)[i])
 	{
-		if (str[i] == '$')
+		if ((*str)[i] == '\'')
+			quoted = !quoted;
+		if ((*str)[i] == '$' && !quoted)
+			i += 1 + expand_and_push((char *)*str + i + 1, &expanded);
+		else
 		{
-			i += 1 + expand_and_push((char *)str + i + 1, &expanded);
-			continue ;
+			list_push_safe(&expanded, str + i);
+			i++;
 		}
-		list_push_safe(&expanded, str + i);
-		i++;
 	}
 	list_push_safe(&expanded, "");
-	return (((char *)expanded.data));
+	free(*str);
+	*str = expanded.data;
 }
