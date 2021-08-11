@@ -8,6 +8,7 @@ t_list		*env_ptr(void);
 // copies a env pointer and sets that as the new env_ptr
 void		env_copy_ptr(const char **envp);
 
+const char	*env_get_len(const char *name, size_t name_len);
 const char	*env_get(const char *name);
 void		env_set(const char *name, const char *new_value);
 
