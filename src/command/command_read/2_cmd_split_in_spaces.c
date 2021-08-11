@@ -2,6 +2,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 #include "malloc_wrappers.h"
+#include "ft_ternary.h"
 
 static t_status	set_start(char **start)
 {
@@ -18,13 +19,16 @@ static t_status	set_start(char **start)
 
 static void	set_end(char **start, char **end)
 {
+	char	quote;
+
 	*end = *start;
+	quote = 0;
 	while (**end)
 	{
+		if ((!quote && ft_isspace(**end)) || (get_grammar_rule_info(*end)).type)
+			return ;
 		if (type_quote(**end))
-			return ;
-		if (ft_isspace(**end) || (get_grammar_rule_info(*end)).type)
-			return ;
+			quote = ter_char(**end == quote, 0, **start);
 		(*end)++;
 	}
 }
@@ -37,19 +41,8 @@ t_status	goto_next_split(char **start, char **end)
 
 	if (status != SUCCESS)
 		return (status);
-	if (type_quote(**start))
-	{
-		*end = ft_strchr(*start + 1, **start);
-		if (*end)
-			(*end)++;
-		if (!(*end))
-			return (FAIL);
-	}
-	else if (get_grammar_rule_info(*start).type)
-	{
+	if (get_grammar_rule_info(*start).type)
 		*end = *start + get_grammar_rule_info(*start).len;
-		return (SUCCESS);
-	}
 	else
 		set_end(start, end);
 	return (SUCCESS);
@@ -63,19 +56,19 @@ bool	cmd_split_in_spaces(t_list *split, const char *cmd)
 	char		*end;
 	t_status	status;
 
-	list_init_safe(&split, sizeof(char *));
+	list_init_safe(split, sizeof(char *));
 	start = (char *)cmd;
 	while (true)
 	{
 		status = goto_next_split(&start, &end);
 		if (status == FAIL)
 		{
-			list_free(&split, free);
+			list_free(split, free);
 			return (false);
 		}
-		list_push_safe(&split, ft_strndup_unsafe(start, end - start));
 		if (status == DONE)
 			return (true);
+		list_push_safe(split, ft_strndup_unsafe(start, end - start));
 		start = end;
 	}
 }
