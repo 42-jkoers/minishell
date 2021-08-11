@@ -4,15 +4,15 @@
 static bool	handle_unexpected_token(
 		size_t i,
 		const t_block *current,
-		const t_list *cmd,
+		const t_list *blocks,
 		bool prev_was_grammer_rule)
 {
 	if (!(current->type & B_GRAMMAR_RULE))
 		return (false);
-	if (i + 1 != cmd->count && !prev_was_grammer_rule)
+	if (i + 1 != blocks->count && !prev_was_grammer_rule)
 		return (false);
 	printf("minishell: syntax error near unexpected token ");
-	if (i + 1 == cmd->count && !prev_was_grammer_rule)
+	if (i + 1 == blocks->count && !prev_was_grammer_rule)
 		printf("`newline'\n");
 	else
 		printf("`%s'\n", current->text);
@@ -29,7 +29,7 @@ static bool	handle_unexpected_token(
 // returns false (but you expect it to return true)
 // >> foo
 
-bool	handle_invalid_grammar_rule(const t_list *cmd)
+bool	contains_invalid_grammar_rule(const t_list *blocks)
 {
 	size_t	i;
 	t_block	*current;
@@ -37,10 +37,10 @@ bool	handle_invalid_grammar_rule(const t_list *cmd)
 
 	prev_was_grammer_rule = true;
 	i = 0;
-	while (i < cmd->count)
+	while (i < blocks->count)
 	{
-		current = list_index_unchecked(cmd, i);
-		if (handle_unexpected_token(i, current, cmd, prev_was_grammer_rule))
+		current = list_index_unchecked(blocks, i);
+		if (handle_unexpected_token(i, current, blocks, prev_was_grammer_rule))
 			return (true);
 		prev_was_grammer_rule = current->type & B_GRAMMAR_RULE;
 		i++;
