@@ -7,7 +7,7 @@
 #include "signal_handler.h"
 
 // TODO: return -1?
-int	read_and_execute_command()
+int	read_and_execute_command(void)
 {
 	char	*raw_string;
 	t_list	split_in_spaces;

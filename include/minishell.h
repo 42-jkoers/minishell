@@ -15,5 +15,6 @@ char	*ft_strndup_unsafe(const char *str, size_t len);
 t_list	command_read(void);
 void	list_push_safe(t_list *list, const void *value);
 void	list_un_init_ptr(t_list *list);
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

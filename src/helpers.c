@@ -33,3 +33,8 @@ void	list_un_init_ptr(t_list *list)
 {
 	list_un_init(list, (t_free_values)free_ptr);
 }
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	return (ft_strncmp(s1, s2, ~0));
+}

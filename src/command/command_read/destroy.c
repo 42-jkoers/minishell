@@ -6,7 +6,7 @@ static void	del(t_block *block)
 	free(block->text);
 }
 
-void	command_read_destroy(t_list *cmd)
+void	free_blocks(t_list *blocks)
 {
-	list_un_init(cmd, (t_foreach_value)del);
+	list_un_init(blocks, (t_foreach_value)del);
 }

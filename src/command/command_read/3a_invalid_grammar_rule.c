@@ -29,7 +29,7 @@ static bool	handle_unexpected_token(
 // returns false (but you expect it to return true)
 // >> foo
 
-bool	contains_invalid_grammar_rule(const t_list *blocks)
+bool	invalid_grammar_rule(const t_list *blocks)
 {
 	size_t	i;
 	t_block	*current;

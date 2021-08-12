@@ -2,9 +2,43 @@
 #include "minishell.h"
 #include "malloc_wrappers.h"
 #include <stdlib.h>
+#include "ft_list.h"
+#include "ft_ternary.h"
 
-// TODO check for invalid cmd_split
-// TODO give correct type
+static t_blocktype	last_blocktype(const t_list *blocks)
+{
+	if (blocks->count == 0)
+		return (0);
+	return (((t_block *)list_index(blocks, blocks->count - 1))->type);
+}
+
+static bool	is_empty_string_as_excutable(
+		const t_list *blocks, t_block *block, const char *text)
+{
+	if (blocks->count == 0
+		&& (!ft_strcmp(text, "''") || !ft_strcmp(text, "\"\"")))
+	{
+		block->text = protect_malloc(ft_strdup("''"));
+		block->type = B_TEXT;
+		return (true);
+	}
+	return (false);
+}
+
+static t_block	to_block(const t_list *blocks, const char *text)
+{
+	t_block	block;
+
+	if (is_empty_string_as_excutable(blocks, &block, text))
+		return (block);
+	block.text = protect_malloc(ft_strdup(text));
+	if (last_blocktype(blocks) != B_DOUBLE_LESSER)
+		expand_environment_variables(&block.text);
+	remove_quotes(&block.text);
+	block.type = B_TEXT;
+	return (block);
+}
+
 bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 {
 	size_t	i;
@@ -14,12 +48,14 @@ bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 	i = 0;
 	while (i < cmd_split->count)
 	{
-		block.text = mc(ft_strdup(list_index_unchecked(cmd_split, i)));
-		expand_environment_variables(&block.text);
-		remove_quotes(&block.text);
-		block.type = B_NORMAL;
+		block = to_block(blocks, *(char **)list_index_unchecked(cmd_split, i));
 		list_push_safe(blocks, &block);
 		i++;
+	}
+	if (invalid_grammar_rule(blocks) || ambiguous_redirect(blocks, cmd_split))
+	{
+		free_blocks(blocks);
+		return (false);
 	}
 	return (true);
 }

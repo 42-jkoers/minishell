@@ -7,25 +7,20 @@
 // enum as a bit mask
 typedef enum e_blocktype
 {
-	B_ERROR = 1 << 29,
-	B_TEXT = 1 << 28,
-	B_GRAMMAR_RULE = 1 << 27,
-	B_REDIRECT = 1 << 26,
-	B_DOLLAR_PREFIX = 1 << 25,
-	B_QUOTED = 1 << 24,
-	B_CONTAINS_EXPANDED_ENV = 1 << 23,
-	B_NO_CLOSING_QUOTE = B_ERROR | 1 << 0,
-	B_END = 1 << 1,
-	B_NORMAL = B_TEXT | 1 << 2,
-	B_SINGLE_QUOTE = B_TEXT | B_QUOTED | 1 << 3,
-	B_DOUBLE_QUOTE = B_TEXT | B_QUOTED | 1 << 4,
-	B_DOUBLE_GREATER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 5,
-	B_DOUBLE_LESSER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 6,
-	B_GREATER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 7,
-	B_LESSER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 8,
+	B_ERROR = 1 << 0,
+	B_TEXT = 1 << 1,
+	B_GRAMMAR_RULE = 1 << 2,
+	B_REDIRECT = 1 << 3,
+	B_CONTAINS_EXPANDED_ENV = 1 << 4,
+	B_NO_CLOSING_QUOTE = B_ERROR | 1 << 5,
+	B_DOUBLE_GREATER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 6,
+	B_DOUBLE_LESSER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 7,
+	B_GREATER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 8,
+	B_LESSER = B_GRAMMAR_RULE | B_REDIRECT | 1 << 9,
 	B_PIPE = B_GRAMMAR_RULE | 1 << 10,
-	B_ENV_DECLARATION = 1 << 11,
-	B_SINGLE_QUOTE_ONLY = 1 << 10,
+	B_QUOTED = 1 << 11,
+	B_SINGLE_QUOTE = B_TEXT | B_QUOTED | 1 << 12,
+	B_DOUBLE_QUOTE = B_TEXT | B_QUOTED | 1 << 13,
 }			t_blocktype;
 
 typedef struct s_block
@@ -54,22 +49,18 @@ bool			cmd_to_blocks(t_list *blocks, const t_list *cmd_split);
 bool			blocks_to_execs(t_list *execs, const t_list *blocks);
 int				run_execs(const t_list *execs);
 
-
-void			command_read_destroy(t_list *cmd);
 // Negative if nothing is running
 pid_t			*get_running_executable(void);
 
-
 // =============== PRIVATE HELPERS ===============
-
+void			free_blocks(t_list *blocks);
+bool			invalid_grammar_rule(const t_list *blocks);
+bool			ambiguous_redirect(const t_list *blocks, const t_list *split);
 t_blocktype		type_quote(char c);
 t_grammarinfo	get_grammar_rule_info(const char *str);
-
 t_status		goto_next_split(char **start, char **end);
-
 void			expand_environment_variables(char **str);
 void			remove_quotes(char **str);
-
 void			push_execs(t_list *execs, const t_list *cmd);
 
 #endif
