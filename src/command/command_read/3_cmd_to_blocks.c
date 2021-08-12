@@ -25,11 +25,24 @@ static bool	is_empty_string_as_excutable(
 	return (false);
 }
 
+static bool	is_grammar_rule(t_block *block, const char *text)
+{
+	const t_grammarinfo info = get_grammar_rule_info(text);
+
+	if (!info.len)
+		return (false);
+	block->text = protect_malloc(ft_strdup(text));
+	block->type = info.type;
+	return (true);
+}
+
 static t_block	to_block(const t_list *blocks, const char *text)
 {
 	t_block	block;
 
 	if (is_empty_string_as_excutable(blocks, &block, text))
+		return (block);
+	if (is_grammar_rule(&block, text))
 		return (block);
 	block.text = protect_malloc(ft_strdup(text));
 	if (last_blocktype(blocks) != B_DOUBLE_LESSER)
