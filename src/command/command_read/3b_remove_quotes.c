@@ -17,7 +17,7 @@ void	remove_quotes(char **str)
 	src = *str;
 	dst = *str;
 	quote = 0;
-	while (*src && *dst)
+	while (*src)
 	{
 		if ((type_quote(*src) && !quote) || quote == *src)
 		{
