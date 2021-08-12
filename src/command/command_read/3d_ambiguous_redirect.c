@@ -8,10 +8,10 @@
 
 static bool	find_next_redirect(size_t *i, const t_list *blocks)
 {
-	while (*i + 1 < blocks->count)
+	while (*i + 2 < blocks->count)
 	{
 		(*i)++;
-		if (((t_block *)list_index_unchecked(blocks, *i))->type & B_REDIRECT)
+		if (((t_block *)list_index(blocks, *i))->type & B_REDIRECT)
 			return (true);
 	}
 	return (false);
@@ -23,21 +23,21 @@ bool	 ambiguous_redirect(const t_list *blocks, const t_list *split)
 	char	*text;
 	char	quote;
 
-	i = -1;
+	i = ~0;
 	quote = 0;
 	while (find_next_redirect(&i, blocks))
 	{
-		text = (char *)((t_block *)list_index_unchecked(blocks, i + 1))->text;
+		text = ((t_block *)list_index(blocks, i + 1))->text;
 		while (*text)
 		{
 			if (type_quote(*text))
 				quote = ter_char(quote == *text, 0, *text);
 			if (!quote && ft_isspace(*text))
 			{
-				printf("minishell: %s: ambiguous redirect\n", (char *)list_index_unchecked(split, i));
+				printf("minishell: %s: ambiguous redirect\n", *(char **)list_index(split, i));
 				return (true);
 			}
-			(*text)++;
+			text++;
 		}
 	}
 	return (false);
