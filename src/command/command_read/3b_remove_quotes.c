@@ -25,8 +25,7 @@ void	remove_quotes(char **str)
 			src++;
 			continue ;
 		}
-		if (dst != src)
-			*dst = *src;
+		*dst = *src;
 		dst++;
 		src++;
 	}
