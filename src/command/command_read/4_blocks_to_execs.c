@@ -3,6 +3,7 @@
 #include "minishell.h"
 #include "executable.h"
 #include "command_read.h"
+#include "malloc_wrappers.h"
 
 typedef struct s_redirect
 {
@@ -75,6 +76,7 @@ bool	blocks_to_execs(t_list *execs, const t_list *blocks)
 	size_t	offset;
 
 	offset = 0;
+	list_init_safe(execs, sizeof(t_executable));
 	push_exec(execs, blocks, &offset);
 	while (offset < blocks->count)
 	{

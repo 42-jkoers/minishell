@@ -56,10 +56,10 @@ void	expand_environment_variables(char **str)
 		if ((*str)[i] == '\'')
 			quoted = !quoted;
 		if ((*str)[i] == '$' && !quoted)
-			i += 1 + expand_and_push((char *)*str + i + 1, &expanded);
+			i += 1 + expand_and_push(*str + i + 1, &expanded);
 		else
 		{
-			list_push_safe(&expanded, str + i);
+			list_push_safe(&expanded, *str + i);
 			i++;
 		}
 	}

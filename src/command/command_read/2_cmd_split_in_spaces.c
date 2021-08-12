@@ -14,7 +14,7 @@ static t_status	set_start(char **start)
 			return (SUCCESS);
 		(*start)++;
 	}
-	return (FAIL);
+	return (DONE);
 }
 
 static void	set_end(char **start, char **end)
@@ -55,20 +55,17 @@ bool	cmd_split_in_spaces(t_list *split, const char *cmd)
 	char		*start;
 	char		*end;
 	t_status	status;
+	char		*push_me;
 
 	list_init_safe(split, sizeof(char *));
 	start = (char *)cmd;
 	while (true)
 	{
 		status = goto_next_split(&start, &end);
-		if (status == FAIL)
-		{
-			list_free(split, free);
-			return (false);
-		}
 		if (status == DONE)
 			return (true);
-		list_push_safe(split, ft_strndup_unsafe(start, end - start));
+		push_me = ft_strndup_unsafe(start, end - start);
+		list_push_safe(split, (void *)(&push_me));
 		start = end;
 	}
 }
