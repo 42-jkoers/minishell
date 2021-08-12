@@ -17,7 +17,7 @@ static bool	find_next_redirect(size_t *i, const t_list *blocks)
 	return (false);
 }
 
-bool	 ambiguous_redirect(const t_list *blocks, const t_list *split)
+bool	ambiguous_redirect(const t_list *blocks, const t_list *split)
 {
 	size_t	i;
 	char	*text;
@@ -34,7 +34,8 @@ bool	 ambiguous_redirect(const t_list *blocks, const t_list *split)
 				quote = ter_char(quote == *text, 0, *text);
 			if (!quote && ft_isspace(*text))
 			{
-				printf("minishell: %s: ambiguous redirect\n", *(char **)list_index(split, i));
+				printf("minishell: %s: ambiguous redirect\n", *(char **)
+					list_index(split, i));
 				return (true);
 			}
 			text++;

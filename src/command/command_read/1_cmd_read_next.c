@@ -37,11 +37,17 @@ static bool	ends_with_pipe(const char *cmd)
 
 // I feel like i over-used tail calls here, well, whatever
 
-static bool	is_empty_cmd(const char *cmd)
+static void	stupid_norm(char *cmd)
 {
 	while (ft_isspace(*cmd))
 		cmd++;
-	return (!(*cmd));
+	if (!(*cmd))
+	{
+		free(cmd);
+		return (cmd_read_next());
+	}
+	add_history(cmd);
+	return (cmd);
 }
 
 // Also frees cmd
@@ -52,12 +58,7 @@ static char	*handle_trailing_pipe(char *cmd)
 	t_readline_ret_type	ret;
 
 	if (!ends_with_pipe(cmd))
-	{
-		if (is_empty_cmd(cmd))
-			return cmd_read_next();
-		add_history(cmd);
-		return (cmd);
-	}
+		return (stupid_norm(cmd));
 	ret = readline_ext("> ", &pipe_read);
 	if (ret == CONTROL_C)
 	{
