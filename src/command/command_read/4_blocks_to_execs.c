@@ -18,7 +18,7 @@ static void	push_redirect(
 	t_redirect		r;
 	char			*path;
 
-	path = list_index_unchecked(blocks, *offset + 1);
+	path = ((t_block *)list_index_unchecked(blocks, *offset + 1))->text;
 	left = list_index_unchecked(execs, execs->count - 1);
 	*offset += 2;
 	if (type == B_DOUBLE_LESSER)
