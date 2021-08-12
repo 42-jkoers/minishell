@@ -2,6 +2,7 @@
 #include "t_fd_override.h"
 #include "env.h"
 #include "libft.h"
+#include "executable.h"
 
 #include <unistd.h>
 #include <stdlib.h>

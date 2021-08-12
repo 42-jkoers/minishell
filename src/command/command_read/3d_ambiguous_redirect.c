@@ -10,9 +10,9 @@ static bool	find_next_redirect(size_t *i, const t_list *blocks)
 {
 	while (*i + 1 < blocks->count)
 	{
+		(*i)++;
 		if (((t_block *)list_index_unchecked(blocks, *i))->type & B_REDIRECT)
 			return (true);
-		(*i)++;
 	}
 	return (false);
 }
@@ -23,7 +23,7 @@ bool	 ambiguous_redirect(const t_list *blocks, const t_list *split)
 	char	*text;
 	char	quote;
 
-	i = 0;
+	i = -1;
 	quote = 0;
 	while (find_next_redirect(&i, blocks))
 	{
