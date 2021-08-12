@@ -6,24 +6,6 @@
 #include "libft.h"
 #include "signal_handler.h"
 
-// TODO: return -1?
-int	read_and_execute_command(void)
-{
-	char	*raw_string;
-	t_list	split_in_spaces;
-	t_list	blocks;
-	t_list	execs;
-
-	raw_string = cmd_read_next();
-	if (!cmd_split_in_spaces(&split_in_spaces, raw_string))
-		return (-1);
-	if (!cmd_to_blocks(&blocks, &split_in_spaces))
-		return (-1);
-	if (!blocks_to_execs(&execs, &blocks))
-		return (-1);
-	return (run_execs(&execs));
-}
-
 // TODO: exit code??
 int	main(int argc, char **argv, const char **envp)
 {

@@ -43,6 +43,8 @@ typedef struct s_grammarinfo
 }				t_grammarinfo;
 
 // IMPORTANT ORDER
+int				read_and_execute_command(void);
+
 char			*cmd_read_next(void);
 bool			cmd_split_in_spaces(t_list *split, const char *cmd);
 bool			cmd_to_blocks(t_list *blocks, const t_list *cmd_split);
