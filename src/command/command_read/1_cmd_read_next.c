@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "readline_ext.h"
+#include <readline/history.h>
 
 // when cmd is "echo > |" this is to handle that error case
 static bool	is_valid_redirect(const char *cmd, const char *start_from)
