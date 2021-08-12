@@ -54,9 +54,9 @@ int	main(int argc, char **argv, const char **envp)
 		if (!cmd_split_in_spaces(&split_in_spaces, raw_string))
 			continue ;
 		print_split_in_spaces(&split_in_spaces);
-		// if (!cmd_to_blocks(&blocks, &split_in_spaces))
-		// 	continue ;
-		// print_blocks(&blocks);
+		if (!cmd_to_blocks(&blocks, &split_in_spaces))
+			continue ;
+		print_blocks(&blocks);
 		printf("\n");
 	}
 }
