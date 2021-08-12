@@ -37,7 +37,7 @@ static bool	ends_with_pipe(const char *cmd)
 
 // I feel like i over-used tail calls here, well, whatever
 
-static void	stupid_norm(char *cmd)
+static char*	stupid_norm(char *cmd)
 {
 	while (ft_isspace(*cmd))
 		cmd++;
