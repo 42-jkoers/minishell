@@ -27,7 +27,7 @@ void	*builtin_exit_main(const t_executable *command)
 	{
 		first_arg = *(char **)list_index(&command->args, 1);
 		current = 0;
-		if (!read_int(first_arg, &current, &exit_data->exit_code)
+		if (!read_llong(first_arg, &current, &exit_data->exit_code)
 			 || first_arg[current] != '\0')
 		{
 			exit_data->exit_code = 2;

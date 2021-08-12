@@ -64,6 +64,7 @@ src/ft_ternary/ft_ternary_ptr.c \
 src/ft_ternary/ft_ternary_floats.c \
 src/ft_ternary/ft_ternary_uints.c \
 src/ft_parse_utils/ft_parse_utils_skip.c \
+src/ft_parse_utils/ft_parse_floats.c \
 src/ft_parse_utils/ft_parse_utils.c \
 src/ft_str/ft_split.c \
 src/ft_str/ft_strmapi.c \

@@ -27,3 +27,10 @@ long	ter_long(bool condition, long if_true, long if_false)
 		return (if_true);
 	return (if_false);
 }
+
+long long	ter_llong(bool condition, long long if_true, long long if_false)
+{
+	if (condition)
+		return (if_true);
+	return (if_false);
+}
