@@ -50,7 +50,7 @@ t_status	goto_next_split(char **start, char **end)
 
 // splits command in valid spaces
 // `ls>> 'a b.txt'` --> [ls, >>, 'a b.txt']
-bool	cmd_split_in_spaces(t_list *split, const char *cmd)
+t_exitcode	cmd_split_in_spaces(t_list *split, const char *cmd)
 {
 	char		*start;
 	char		*end;
@@ -63,7 +63,7 @@ bool	cmd_split_in_spaces(t_list *split, const char *cmd)
 	{
 		status = goto_next_split(&start, &end);
 		if (status == DONE)
-			return (true);
+			return (E_SUCCESS);
 		push_me = ft_strndup_unsafe(start, end - start);
 		list_push_safe(split, (void *)(&push_me));
 		start = end;

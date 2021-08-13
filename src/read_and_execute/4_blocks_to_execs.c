@@ -70,7 +70,7 @@ static void	push_pipe_block(t_list *execs, const t_list *blocks, size_t *offset)
 }
 
 // parse cmd into execs
-bool	blocks_to_execs(t_list *execs, const t_list *blocks)
+t_exitcode	blocks_to_execs(t_list *execs, const t_list *blocks)
 {
 	t_block	*block;
 	size_t	offset;
@@ -86,5 +86,5 @@ bool	blocks_to_execs(t_list *execs, const t_list *blocks)
 		else if (block->type & B_REDIRECT)
 			push_redirect(execs, blocks, block->type, &offset);
 	}
-	return (true);
+	return (E_SUCCESS);
 }

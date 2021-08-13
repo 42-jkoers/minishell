@@ -52,7 +52,7 @@ static t_block	to_block(const t_list *blocks, const char *text)
 	return (block);
 }
 
-bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
+t_exitcode	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 {
 	size_t	i;
 	t_block	block;
@@ -66,6 +66,6 @@ bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 		i++;
 	}
 	if (invalid_grammar_rule(blocks) || ambiguous_redirect(blocks, cmd_split))
-		return (false);
-	return (true);
+		return (E_MISUSE_BUILTINS);
+	return (E_SUCCESS);
 }

@@ -21,7 +21,7 @@ static int	get_exit_code(int wstatus)
 	if (WIFEXITED(wstatus))
 		return (WEXITSTATUS(wstatus));
 	else if (WIFSIGNALED(wstatus))
-		return (128 + WTERMSIG(wstatus));
+		return (E_FATAL_ERROR_SIGNAL + WTERMSIG(wstatus));
 	else if (WIFSTOPPED(wstatus))
 		return (WSTOPSIG(wstatus));
 	return (-1);
@@ -58,7 +58,7 @@ static void	close_main_fds(t_executable *executable)
 	}
 }
 
-int	run_execs(const t_list *execs)
+t_exitcode	run_execs(const t_list *execs)
 {
 	int		exit_code;
 	pid_t	pid;

@@ -17,4 +17,17 @@ void	list_push_safe(t_list *list, const void *value);
 void	list_un_init_ptr(t_list *list);
 int		ft_strcmp(const char *s1, const char *s2);
 
+typedef enum e_exitcode
+{
+	E_SUCCESS = 0,
+	E_GENERAL_ERR = 1,
+	E_MISUSE_BUILTINS = 2,
+	E_CANNOT_EXECUTE = 126,
+	E_COMMAND_NOT_FOUND = 127,
+	E_INVALID_EXIT_ARGUMENT = 128,
+	E_FATAL_ERROR_SIGNAL = 128,
+	E_STOPPED_BY_CTRL_C = 130,
+	E_EXITSTATUS_OUT_OF_RANGE = 255,
+}		t_exitcode;
+
 #endif

@@ -2,6 +2,7 @@
 # define READ_AND_EXECUTE_H
 
 # include "ft_list.h"
+# include "minishell.h"
 # include <sys/types.h>
 
 // enum as a bit mask
@@ -43,13 +44,13 @@ typedef struct s_grammarinfo
 }				t_grammarinfo;
 
 // IMPORTANT ORDER
-int				read_and_execute_command(void);
+t_exitcode		read_and_execute_command(void);
 
 char			*cmd_read_next(void);
-bool			cmd_split_in_spaces(t_list *split, const char *cmd);
-bool			cmd_to_blocks(t_list *blocks, const t_list *cmd_split);
-bool			blocks_to_execs(t_list *execs, const t_list *blocks);
-int				run_execs(const t_list *execs);
+t_exitcode		cmd_split_in_spaces(t_list *split, const char *cmd);
+t_exitcode		cmd_to_blocks(t_list *blocks, const t_list *cmd_split);
+t_exitcode		blocks_to_execs(t_list *execs, const t_list *blocks);
+t_exitcode		run_execs(const t_list *execs);
 
 // Negative if nothing is running
 pid_t			*get_running_executable(void);
