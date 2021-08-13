@@ -27,7 +27,7 @@ static bool	is_empty_string_as_excutable(
 
 static bool	is_grammar_rule(t_block *block, const char *text)
 {
-	const t_grammarinfo info = get_grammar_rule_info(text);
+	const t_grammarinfo	info = get_grammar_rule_info(text);
 
 	if (!info.len)
 		return (false);

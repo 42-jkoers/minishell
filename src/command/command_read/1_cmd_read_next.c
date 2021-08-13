@@ -54,7 +54,7 @@ static char	*handle_trailing_pipe(char *cmd)
 	if (!ends_with_pipe(cmd))
 	{
 		if (is_empty_cmd(cmd))
-			return cmd_read_next();
+			return (cmd_read_next());
 		add_history(cmd);
 		return (cmd);
 	}
