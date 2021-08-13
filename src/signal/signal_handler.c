@@ -32,7 +32,8 @@ static void	int_handler(int sig)
 	return ;
 }
 
-/*	// TODO: Un-comment this, temporarely commented so i can easily quit on a hanging minishell
+/*	// TODO: Un-comment this,
+	temporarely commented so i can easily quit on a hanging minishell
 #if __linux__
 // On linux this perfectly removes the ^\ you see, but on mac it just... breaks
 static void	quit_handler(int sig)
@@ -50,9 +51,10 @@ static void	quit_handler(int sig)
 #endif
 */
 
+//signal(SIGQUIT, quit_handler);
+
 void	setup_signals(void)
 {
 	signal(SIGINT, int_handler);
-	//signal(SIGQUIT, quit_handler);
 	rl_event_hook = event_hook;
 }
