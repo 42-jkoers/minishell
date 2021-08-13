@@ -6,7 +6,7 @@
 #include "ft_ternary.h"
 #include "executable.h"
 #include "signal_handler.h"
-#include "command_read.h"
+#include "read_and_execute.h"
 #include "utils.h"
 
 // TODO: Look at how you can still use the default event hook

@@ -1,5 +1,5 @@
-#ifndef COMMAND_READ_H
-# define COMMAND_READ_H
+#ifndef READ_AND_EXECUTE_H
+# define READ_AND_EXECUTE_H
 
 # include "ft_list.h"
 # include <sys/types.h>
