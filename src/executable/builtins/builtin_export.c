@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "libft.h"
 #include "env.h"
+#include "minishell.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -54,7 +55,7 @@ static void	add_arg(char **variable)
 		env_set(name, eq + 1);
 	else
 	{
-		ft_putstr_fd("minishell: export: '", STDERR_FILENO);
+		ft_putstr_fd(SHELL": export: '", STDERR_FILENO);
 		ft_putstr_fd(name, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	}

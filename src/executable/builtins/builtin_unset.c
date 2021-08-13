@@ -1,6 +1,7 @@
 #include "t_executable.h"
 #include "utils.h"
 #include "env.h"
+#include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -15,7 +16,7 @@ static void	parse_unset(char **ret, char **current)
 	else
 	{
 		prev = *ret;
-		*ret = ft_strjoin_va(4, *ret, "minishell: unset: '", *current, "': not "
+		*ret = ft_strjoin_va(4, *ret, SHELL": unset: '", *current, "': not "
 				"a valid identifier\n");
 		if (prev)
 			free(prev);

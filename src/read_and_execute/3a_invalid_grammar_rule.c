@@ -11,7 +11,7 @@ static bool	handle_unexpected_token(
 		return (false);
 	if (i + 1 != blocks->count && !prev_was_grammer_rule)
 		return (false);
-	printf("minishell: syntax error near unexpected token ");
+	printf(SHELL": syntax error near unexpected token ");
 	if (i + 1 == blocks->count && !prev_was_grammer_rule)
 		printf("`newline'\n");
 	else

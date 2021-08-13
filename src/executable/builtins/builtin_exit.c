@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "t_exit_data.h"
 #include "ft_parse_utils.h"
+#include "minishell.h"
 #include "executable.h"
 #include <sys/wait.h>
 
@@ -31,11 +32,11 @@ void	*builtin_exit_main(const t_executable *command)
 			 || first_arg[current] != '\0')
 		{
 			exit_data->exit_code = 2;
-			exit_data->print = ft_strjoin_va(3, "minishell: exit: ", first_arg,
+			exit_data->print = ft_strjoin_va(3, SHELL": exit: ", first_arg,
 					": numeric argument required\n");
 		}
 		else if (command->args.count > 2)
-			*exit_data = (t_exit_data){.print = ft_strdup("minishell: exit: too"
+			*exit_data = (t_exit_data){.print = ft_strdup(SHELL": exit: too"
 					" many arguments\n"), .exit_code = 1, .actually_exit = false}
 				;
 	}

@@ -2,6 +2,7 @@
 #include "working_directory.h"
 #include "utils.h"
 #include "env.h"
+#include "minishell.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -21,7 +22,7 @@ void	*builtin_cd_main(const t_executable *command)
 	const char	*dir;
 
 	if (!(command->args.count >= 1 && command->args.count <= 2))
-		return (ft_strdup("minishell: cd: too many arguments\n"));
+		return (ft_strdup(SHELL": cd: too many arguments\n"));
 	if (command->args.count == 1)
 		dir = env_get("HOME");
 	else
@@ -33,7 +34,7 @@ void	*builtin_cd_main(const t_executable *command)
 	success = working_directory_set(path);
 	free(path);
 	if (!success)
-		return (ft_strjoin_va(3, "minishell: cd: ", dir, ": No such file or dir"
+		return (ft_strjoin_va(3, SHELL": cd: ", dir, ": No such file or dir"
 				"ectory\n"));
 	return (NULL);
 }

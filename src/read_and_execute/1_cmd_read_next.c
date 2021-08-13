@@ -82,7 +82,7 @@ char	*cmd_read_next(void)
 	t_readline_ret_type	ret;
 	char				*cmd;
 
-	ret = readline_ext("minishell$ ", &cmd);
+	ret = readline_ext(SHELL"$ ", &cmd);
 	if (ret == CONTROL_C)
 	{
 		free(cmd);

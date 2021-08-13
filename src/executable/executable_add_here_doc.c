@@ -24,7 +24,7 @@ static bool	read_here_doc(int fd, const char *end_string)
 		}
 		else if (ret == CONTROL_D)
 		{
-			printf("minishell: warning: here-document delimited by eof-of-file "
+			printf(SHELL": warning: here-document delimited by eof-of-file "
 				"(wanted `%s')\n", end_string);
 			break ;
 		}

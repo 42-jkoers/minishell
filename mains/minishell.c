@@ -16,6 +16,7 @@ int	main(int argc, char **argv, const char **envp)
 	(void)argc;
 	(void)argv;
 	env_set("?", "0");
+	env_set("0", SHELL);
 	while (true)
 	{
 		exitcode_str = protect_malloc(ft_itoa(read_and_execute_command()));
