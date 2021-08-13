@@ -5,7 +5,8 @@
 
 static void	log_env_data(char **variable)
 {
-	if (ft_strncmp(*variable, "?=", 2) == 0)
+	if (ft_strncmp(*variable, "?=", 2) == 0
+		|| ft_strncmp(*variable, "0=", 2) == 0)
 		return ;
 	ft_putstr_fd(*variable, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
