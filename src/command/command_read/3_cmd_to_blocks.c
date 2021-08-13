@@ -66,9 +66,6 @@ bool	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 		i++;
 	}
 	if (invalid_grammar_rule(blocks) || ambiguous_redirect(blocks, cmd_split))
-	{
-		free_blocks(blocks);
 		return (false);
-	}
 	return (true);
 }
