@@ -41,7 +41,7 @@ t_exitcode	read_and_execute_command(void)
 		r.exitcode = cmd_split_in_spaces(&r.split_in_spaces, r.raw_string);
 	if (!r.exitcode)
 		r.exitcode = cmd_to_blocks(&r.blocks, &r.split_in_spaces);
-	if (r.exitcode)
+	if (!r.exitcode)
 		r.exitcode = blocks_to_execs(&r.execs, &r.blocks);
 	if (!r.exitcode)
 		r.exitcode = run_execs(&r.execs);
