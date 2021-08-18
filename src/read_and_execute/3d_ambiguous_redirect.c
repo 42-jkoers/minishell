@@ -34,8 +34,8 @@ bool	ambiguous_redirect(const t_list *blocks, const t_list *split)
 				quote = ter_char(quote == *text, 0, *text);
 			if (!quote && ft_isspace(*text))
 			{
-				printf(SHELL" %s: ambiguous redirect\n",
-					*(char **)list_index(split, i));
+				printf(SHELL": %s: ambiguous redirect\n",
+					*(char **)list_index(split, i + 1));
 				return (true);
 			}
 			text++;

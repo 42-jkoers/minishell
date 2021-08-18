@@ -26,7 +26,10 @@ static size_t	expand_and_push(char *env, t_list *expanded)
 	size_t			i;
 
 	if (env_len == 0)
+	{
+		list_push_safe(expanded, "$");
 		return (0);
+	}
 	to_push = (char *)env_get_len(env, env_len);
 	if (!to_push)
 		return (env_len);
