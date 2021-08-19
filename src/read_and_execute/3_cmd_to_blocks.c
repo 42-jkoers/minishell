@@ -63,7 +63,7 @@ t_exitcode	cmd_to_blocks(t_list *blocks, const t_list *cmd_split)
 	{
 		block = to_block(blocks, *(char **)list_index_unchecked(cmd_split, i));
 		if (i == 0 && block.type & B_REDIRECT)
-			list_push_safe(blocks, &(t_block){"echo", B_TEXT});
+			list_push_safe(blocks, &(t_block){mc(ft_strdup("echo")), B_TEXT});
 		list_push_safe(blocks, &block);
 		i++;
 	}
