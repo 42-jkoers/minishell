@@ -1,6 +1,0 @@
-A naive implementation of bash, not complete but not not entirely useless, well, maybe really useless if you have bash
-But aside the uselessness of this minishell, its entirely perfect for what it tries to accomplish, nothing wierd happens when you give it wierd arguments, its all expected
-
-It contains 7 builtins: cd, echo, env, exit, export, pwd and unset
-
-It also has simple redirections, you can redirect to files or to other fd's, but not from fd's to files, its always from STDIN, because yeah.. parsing that wasn't required
