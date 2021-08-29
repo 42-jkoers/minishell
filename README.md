@@ -8,3 +8,7 @@ A simplified implementation of a bash shell written in C form the ground up.
 	* \>\>, <<, >, <, |  
 
 ![example](./example.png)
+
+## requirements
+On MacOS run
+> brew install readline
