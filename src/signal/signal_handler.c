@@ -32,25 +32,15 @@ static void	int_handler(int sig)
 	return ;
 }
 
-#if __linux__
-// On linux this perfectly removes the ^\ you see, but on mac it just... breaks
-static void	quit_handler(int sig)
-{
-	(void)sig;
-	stupid_write(STDIN_FILENO, "\b \b\b \b", 6);
-	return ;
-}
-#else
-
 static void	quit_handler(int sig)
 {
 	(void)sig;
 }
-#endif
 
 void	setup_signals(void)
 {
 	signal(SIGINT, int_handler);
 	signal(SIGQUIT, quit_handler);
 	rl_event_hook = event_hook;
+	rl_catch_signals = 0;
 }
