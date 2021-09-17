@@ -39,9 +39,12 @@ static bool	ends_with_pipe(const char *cmd)
 
 static char	*stupid_norm(char *cmd)
 {
-	while (ft_isspace(*cmd))
-		cmd++;
-	if (!(*cmd))
+	char	*c;
+
+	c = cmd;
+	while (ft_isspace(*c))
+		c++;
+	if (!(*c))
 	{
 		free(cmd);
 		return (cmd_read_next());
