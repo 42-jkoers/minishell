@@ -85,6 +85,8 @@ t_exitcode	blocks_to_execs(t_list *execs, const t_list *blocks)
 			push_pipe_block(execs, blocks, &offset);
 		else if (block->type & B_REDIRECT)
 			push_redirect(execs, blocks, block->type, &offset);
+		else
+			push_exec(execs, blocks, &offset);
 	}
 	return (E_SUCCESS);
 }
