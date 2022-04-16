@@ -1,5 +1,7 @@
-## MiniShell
-A simplified implementation of a bash shell written in C form the ground up.
+## Minishell
+
+This 42's curriculum project implements a simplified implementation of the bash shell written in C from the ground up.
+Build together with @jsimonis
 
 ### Featuring
 * Containing 7 builtins:
@@ -9,6 +11,12 @@ A simplified implementation of a bash shell written in C form the ground up.
 
 ![example](./example.png)
 
-## requirements
+## Requirements
 On MacOS run
 > brew install readline
+
+## Usage
+```
+make
+./minishell
+```
